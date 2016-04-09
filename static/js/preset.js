@@ -80,22 +80,21 @@ var Preset = function(name, data) {
     this.parse = function(data) {
         var keyboard = new Keyboard();
         var currentSettings = defaultSettings;
-        var element;
-        var position_x = position_y = 0;
-        var labelsData = [];
-        var labels = [];
+        var position_x = defaultSettings.x;
+        var position_y = defaultSettings.y;
         for(var i in data) {
             for(var j in data[i]) {
-                element = data[i][j];
+                var element = data[i][j];
                 if (typeof element == "string") {
-                    labelsData = Parser.ignoreFrontLabels(Parser.getLabels(element));
+                    var labelsData = Parser.ignoreFrontLabels(Parser.getLabels(element));
+                    var labels = [];
                     for(var k in labelsData) {
                         labels.push(new Label(labelsData[k].data, labelsData[k].position, currentSettings.f, currentSettings.t));
                     }
                     keyboard.keys.push(
                         new Key(labels,
-                            position_x + currentSettings.x, currentSettings.y, currentSettings.w,
-                            currentSettings.h, currentSettings.c,
+                            position_x + currentSettings.x, position_y + currentSettings.y,
+                            currentSettings.w, currentSettings.h, currentSettings.c,
                             currentSettings.r, currentSettings.rx, currentSettings.ry)
                     );
                     position_x += currentSettings.w;
@@ -104,8 +103,8 @@ var Preset = function(name, data) {
                     currentSettings = $.extend({}, currentSettings, element);
                 }
             }
-            ++position_y;
-            position_x = 0;
+            position_y += defaultSettings.h;
+            position_x = defaultSettings.x;
         }
         return keyboard;
     };
@@ -115,6 +114,7 @@ var Keyboard = function() {
     this.keys = [];
     this.element = $('<div></div>');
     this.draw = function() {
+        console.log(this.keys);
         for(var i in this.keys) {
             this.element.append(this.keys[i].draw());
         }
@@ -134,9 +134,14 @@ var Key = function(labels, x, y, width, height, color, rotation_angle, rotation_
     this.rotation_x = rotation_x;
     this.rotation_y = rotation_y;
     this.draw = function() {
+        this.element.html("Position X - Y : " + this.x + " - " + this.y + " <br>");
+        console.log(this.labels);
+
         for(var i in this.labels) {
+            console.log(this.labels);
             this.element.append(this.labels[i].draw());
         }
+        this.element.append("<br><hr>");
         return this.element;
     };
 };
