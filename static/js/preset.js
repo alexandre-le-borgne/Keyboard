@@ -44,14 +44,15 @@ var defaultSettings = {
     rx: 0,          // Position du centre de rotation en x
     ry: 0,          // Position du centre de rotation en y
     a: 0,           // Type de positionnement des labels
-    c: "#fff",   // Couleur de la touche
-    t: "#000"    // Couleur des labels
+    c: "#fff",      // Couleur de la touche
+    t: "#000"       // Couleur des labels
 };
 
 var Parser = function () {
 };
+
 Parser.getTextSize = function (size) {
-    return 6 + 2 * i;
+    return 6 + 2 * size;
 };
 
 Parser.getLabels = function (element) {
@@ -78,59 +79,60 @@ Parser.ignoreFrontLabels = function (labels) {
     return result;
 };
 
+Parser.parse = function (data) {
+    var keyboard = new Keyboard();
+    var currentSettings = defaultSettings;
+    var resetSettings = defaultSettings;
+    var position_x = defaultSettings.x;
+    var position_y = defaultSettings.y;
+    delete resetSettings.r;
+    delete resetSettings.rx;
+    delete resetSettings.ry;
+    for (var i in data) {
+        for (var j in data[i]) {
+            var element = JSON.parse(JSON.stringify(data[i][j])); // Deep copy
+            if (typeof element == "string") {
+                var labelsData = Parser.ignoreFrontLabels(Parser.getLabels(element));
+                var labels = [];
+                for (var k in labelsData) {
+                    labels.push(new Label(labelsData[k].data, labelsData[k].position, currentSettings.f, currentSettings.t));
+                }
+                keyboard.keys.push(
+                    new Key(labels,
+                        position_x + currentSettings.x, position_y + currentSettings.y,
+                        currentSettings.w, currentSettings.h, currentSettings.c,
+                        currentSettings.r, currentSettings.rx, currentSettings.ry)
+                );
+                position_x += currentSettings.w;
+                currentSettings = $.extend({}, currentSettings, resetSettings);
+            }
+            else {
+                if (typeof element["x"] !== "undefined") {
+                    position_x += element["x"];
+                    delete element["x"];
+                }
+                if (typeof element["y"] !== "undefined") {
+                    position_y += element["y"];
+                    delete element["y"]
+                }
+                currentSettings = $.extend({}, currentSettings, element);
+            }
+        }
+        position_y += defaultSettings.h;
+        position_x = defaultSettings.x;
+    }
+    return keyboard;
+};
+
 var Preset = function (name, data) {
     this.name = name;
     this.data = data;
 
     this.draw = function (selector) {
-        var keyboard = this.parse(this.data);
-        selector.html(keyboard.draw());
-    };
-
-    this.parse = function (data) {
-        var keyboard = new Keyboard();
-        var currentSettings = defaultSettings;
-        var resetSettings = defaultSettings;
-        var position_x = defaultSettings.x;
-        var position_y = defaultSettings.y;
-        delete resetSettings.r;
-        delete resetSettings.rx;
-        delete resetSettings.ry;
-        for (var i in data) {
-            for (var j in data[i]) {
-                var element = data[i][j];
-                if (typeof element == "string") {
-                    var labelsData = Parser.ignoreFrontLabels(Parser.getLabels(element));
-                    var labels = [];
-                    for (var k in labelsData) {
-                        labels.push(new Label(labelsData[k].data, labelsData[k].position, currentSettings.f, currentSettings.t));
-                    }
-                    keyboard.keys.push(
-                        new Key(labels,
-                            position_x + currentSettings.x, position_y + currentSettings.y,
-                            currentSettings.w, currentSettings.h, currentSettings.c,
-                            currentSettings.r, currentSettings.rx, currentSettings.ry)
-                    );
-                    position_x += currentSettings.w;
-                    currentSettings = $.extend({}, currentSettings, resetSettings);
-                    console.log(currentSettings);
-                }
-                else {
-                    if (typeof element["x"] !== "undefined") {
-                        position_x += element["x"];
-                        delete element["x"];
-                    }
-                    if (typeof element["y"] !== "undefined") {
-                        position_y += element["y"];
-                        delete element["y"]
-                    }
-                    currentSettings = $.extend({}, currentSettings, element);
-                }
-            }
-            position_y += defaultSettings.h;
-            position_x = defaultSettings.x;
-        }
-        return keyboard;
+        for(var i in this.data)
+            for(var j in this.data[i])
+                console.log(this.data[i][j]);
+        selector.html(Parser.parse(this.data).draw());
     };
 };
 
@@ -158,12 +160,12 @@ var Key = function (labels, x, y, width, height, color, rotation_angle, rotation
     this.rotation_y = rotation_y;
     this.draw = function () {
         var left = ((this.x * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE))) + "px";
-        var top = ((this.y * (Constantes.DISTANCE_TO_PX  + Constantes.BORDER_SIZE))) + "px";
+        var top = ((this.y * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE))) + "px";
         var height = ((this.height * Constantes.DISTANCE_TO_PX) + ((this.height - 1) * Constantes.BORDER_SIZE)) + "px";
         var width = ((this.width * Constantes.DISTANCE_TO_PX) + ((this.width - 1) * Constantes.BORDER_SIZE)) + "px";
         var child = this.element.css({
             "transform": "rotate(" + this.rotation_angle + "deg)",
-            "transform-origin": (Constantes.DISTANCE_TO_PX * this.rotation_x) + "px " + (Constantes.DISTANCE_TO_PX * this.rotation_y)+"px"
+            "transform-origin": (Constantes.DISTANCE_TO_PX * this.rotation_x) + "px " + (Constantes.DISTANCE_TO_PX * this.rotation_y) + "px"
         }).find(".key-border").css({
             "left": left,
             "top": top
