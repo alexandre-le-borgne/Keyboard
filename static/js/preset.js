@@ -1,7 +1,7 @@
 /**
  * Created by Alexandre on 09/04/2016.
  */
-var Positions = function() {
+var Positions = function () {
 };
 Positions.FRONT = 0;
 Positions.BOTTOM_LEFT = 1;
@@ -13,6 +13,11 @@ Positions.MIDDLE_RIGHT = 6;
 Positions.TOP_LEFT = 7;
 Positions.TOP_CENTER = 8;
 Positions.TOP_RIGHT = 9;
+
+var Constantes = function () {
+};
+Constantes.BORDER_SIZE = 12;
+Constantes.DISTANCE_TO_PX = 42;
 
 var convertPosition = {
     0: Positions.TOP_LEFT,
@@ -39,56 +44,65 @@ var defaultSettings = {
     rx: 0,          // Position du centre de rotation en x
     ry: 0,          // Position du centre de rotation en y
     a: 0,           // Type de positionnement des labels
-    c: "#cccccc",   // Couleur de la touche
-    t: "#000000"    // Couleur des labels
+    c: "#fff",   // Couleur de la touche
+    t: "#000"    // Couleur des labels
 };
 
-var Parser = function() {};
-Parser.getTextSize = function(size) {
-    return 6+2*i;
+var Parser = function () {
+};
+Parser.getTextSize = function (size) {
+    return 6 + 2 * i;
 };
 
-Parser.getLabels = function(element) {
+Parser.getLabels = function (element) {
     var labels = [];
+    if (element == "") {
+        labels.push({position: convertPosition[0], data: ""});
+        return labels;
+    }
     var sub = element.split("\n");
     var part;
-    for(var i in sub)
+    for (var i in sub)
         part = sub[i];
-        if(typeof part == "string" && part != "")
-            labels.push({position: convertPosition[i], data: part});
+    if (typeof part == "string" && part != "")
+        labels.push({position: convertPosition[i], data: part});
     return labels;
 };
 
-Parser.ignoreFrontLabels = function(labels) {
+Parser.ignoreFrontLabels = function (labels) {
     var result = [];
-    for(var i in labels) {
-        if(labels[i].position != Positions.FRONT)
+    for (var i in labels) {
+        if (labels[i].position != Positions.FRONT)
             result.push(labels[i])
     }
     return result;
 };
 
-var Preset = function(name, data) {
+var Preset = function (name, data) {
     this.name = name;
     this.data = data;
 
-    this.draw = function(selector) {
+    this.draw = function (selector) {
         var keyboard = this.parse(this.data);
         selector.html(keyboard.draw());
     };
 
-    this.parse = function(data) {
+    this.parse = function (data) {
         var keyboard = new Keyboard();
         var currentSettings = defaultSettings;
+        var resetSettings = defaultSettings;
         var position_x = defaultSettings.x;
         var position_y = defaultSettings.y;
-        for(var i in data) {
-            for(var j in data[i]) {
+        delete resetSettings.r;
+        delete resetSettings.rx;
+        delete resetSettings.ry;
+        for (var i in data) {
+            for (var j in data[i]) {
                 var element = data[i][j];
                 if (typeof element == "string") {
                     var labelsData = Parser.ignoreFrontLabels(Parser.getLabels(element));
                     var labels = [];
-                    for(var k in labelsData) {
+                    for (var k in labelsData) {
                         labels.push(new Label(labelsData[k].data, labelsData[k].position, currentSettings.f, currentSettings.t));
                     }
                     keyboard.keys.push(
@@ -98,8 +112,18 @@ var Preset = function(name, data) {
                             currentSettings.r, currentSettings.rx, currentSettings.ry)
                     );
                     position_x += currentSettings.w;
+                    currentSettings = $.extend({}, currentSettings, resetSettings);
+                    console.log(currentSettings);
                 }
                 else {
+                    if (typeof element["x"] !== "undefined") {
+                        position_x += element["x"];
+                        delete element["x"];
+                    }
+                    if (typeof element["y"] !== "undefined") {
+                        position_y += element["y"];
+                        delete element["y"]
+                    }
                     currentSettings = $.extend({}, currentSettings, element);
                 }
             }
@@ -110,20 +134,19 @@ var Preset = function(name, data) {
     };
 };
 
-var Keyboard = function() {
+var Keyboard = function () {
     this.keys = [];
     this.element = $('<div></div>');
-    this.draw = function() {
-        console.log(this.keys);
-        for(var i in this.keys) {
+    this.draw = function () {
+        for (var i in this.keys) {
             this.element.append(this.keys[i].draw());
         }
         return this.element;
     };
 };
 
-var Key = function(labels, x, y, width, height, color, rotation_angle, rotation_x, rotation_y) {
-    this.element = $('<div></div>');
+var Key = function (labels, x, y, width, height, color, rotation_angle, rotation_x, rotation_y) {
+    this.element = $('<div></div>').addClass("key-container").append($('<div></div>').addClass("key-border").append($('<div></div>').addClass("key")));
     this.labels = labels;
     this.x = x;
     this.y = y;
@@ -133,26 +156,36 @@ var Key = function(labels, x, y, width, height, color, rotation_angle, rotation_
     this.rotation_angle = rotation_angle;
     this.rotation_x = rotation_x;
     this.rotation_y = rotation_y;
-    this.draw = function() {
-        this.element.html("Position X - Y : " + this.x + " - " + this.y + " <br>");
-        console.log(this.labels);
-
-        for(var i in this.labels) {
-            console.log(this.labels);
-            this.element.append(this.labels[i].draw());
+    this.draw = function () {
+        var left = ((this.x * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE))) + "px";
+        var top = ((this.y * (Constantes.DISTANCE_TO_PX  + Constantes.BORDER_SIZE))) + "px";
+        var height = ((this.height * Constantes.DISTANCE_TO_PX) + ((this.height - 1) * Constantes.BORDER_SIZE)) + "px";
+        var width = ((this.width * Constantes.DISTANCE_TO_PX) + ((this.width - 1) * Constantes.BORDER_SIZE)) + "px";
+        var child = this.element.css({
+            "transform": "rotate(" + this.rotation_angle + "deg)",
+            "transform-origin": (Constantes.DISTANCE_TO_PX * this.rotation_x) + "px " + (Constantes.DISTANCE_TO_PX * this.rotation_y)+"px"
+        }).find(".key-border").css({
+            "left": left,
+            "top": top
+        }).find(".key").css({
+            "height": height,
+            "width": width,
+            "background-color": this.color
+        });
+        for (var i in this.labels) {
+            child.append(this.labels[i].draw());
         }
-        this.element.append("<br><hr>");
         return this.element;
     };
 };
 
-var Label = function(value, position, size, color) {
+var Label = function (value, position, size, color) {
     this.element = $('<div></div>');
     this.value = value;
     this.position = position;
     this.color = color;
     this.size = size;
-    this.draw = function() {
+    this.draw = function () {
         return this.element.text(value);
     };
 };
