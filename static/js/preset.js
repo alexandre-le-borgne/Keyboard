@@ -80,6 +80,7 @@ Parser.ignoreFrontLabels = function (labels) {
 };
 
 Parser.parse = function (data) {
+    data = JSON.parse(JSON.stringify(data));
     var keyboard = new Keyboard();
     var currentSettings = defaultSettings;
     var resetSettings = defaultSettings;
@@ -90,7 +91,7 @@ Parser.parse = function (data) {
     delete resetSettings.ry;
     for (var i in data) {
         for (var j in data[i]) {
-            var element = JSON.parse(JSON.stringify(data[i][j])); // Deep copy
+            var element = data[i][j]; // Deep copy
             if (typeof element == "string") {
                 var labelsData = Parser.ignoreFrontLabels(Parser.getLabels(element));
                 var labels = [];
@@ -127,13 +128,15 @@ Parser.parse = function (data) {
 var Preset = function (name, data) {
     this.name = name;
     this.data = data;
+    this.parsedData = null;
 
-    this.draw = function (selector) {;
-        var parsedData = Parser.parse(this.data).draw();
-        selector.html(parsedData.element).css({
-            "min-height": parsedData.height + "px",
-            "min-width": parsedData.width + "px"
+    this.draw = function (selector) {
+        this.parsedData = Parser.parse(this.data).draw();
+        selector.html(this.parsedData.element).css({
+            "min-height": this.parsedData.height + "px",
+            "min-width": this.parsedData.width + "px"
         });
+        return this;
     };
 };
 

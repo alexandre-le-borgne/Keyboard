@@ -12,8 +12,12 @@
 </head>
 <body>
 <div class="container">
-    <ul class="nav nav-pills">
+    <ul class="nav nav-pills" id="menu">
         <li class="active"><a href="#presets">Presets</a></li>
+        <li><a href="#layers-one">Layers I</a></li>
+        <li><a href="#layers-two">Layers II</a></li>
+        <li><a href="#colors">Colors</a></li>
+        <li><a href="#keys">Keys</a></li>
     </ul>
     <br>
     <div class="navbar navbar-default">
@@ -38,7 +42,8 @@
             </li>
         </ul>
         <form class="navbar-form pull-right">
-            <button type="button" class="btn btn-success hide">Confirmer ma sélection</button>
+            <button type="button" id="comfirm-keyboard" class="btn btn-success hide">Comfirmer ma sélection</button>
+            <button type="button" id="next-step" class="btn btn-primary hide">Etape suivante</button>
         </form>
     </div>
     <div id="preset" class="hide">
