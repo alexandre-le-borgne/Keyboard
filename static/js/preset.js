@@ -128,11 +128,12 @@ var Preset = function (name, data) {
     this.name = name;
     this.data = data;
 
-    this.draw = function (selector) {
-        for(var i in this.data)
-            for(var j in this.data[i])
-                console.log(this.data[i][j]);
-        selector.html(Parser.parse(this.data).draw());
+    this.draw = function (selector) {;
+        var parsedData = Parser.parse(this.data).draw();
+        selector.html(parsedData.element).css({
+            "min-height": parsedData.height + "px",
+            "min-width": parsedData.width + "px"
+        });
     };
 };
 
@@ -140,10 +141,16 @@ var Keyboard = function () {
     this.keys = [];
     this.element = $('<div></div>');
     this.draw = function () {
+        var keyData;
+        var height = 0;
+        var width = 0;
         for (var i in this.keys) {
-            this.element.append(this.keys[i].draw());
+            keyData = this.keys[i].draw();
+            if(keyData.height > height) height = keyData.height;
+            if(keyData.width > width) width = keyData.width;
+            this.element.append(keyData.element);
         }
-        return this.element;
+        return {element: this.element, height: height, width: width};
     };
 };
 
@@ -159,25 +166,25 @@ var Key = function (labels, x, y, width, height, color, rotation_angle, rotation
     this.rotation_x = rotation_x;
     this.rotation_y = rotation_y;
     this.draw = function () {
-        var left = ((this.x * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE))) + "px";
-        var top = ((this.y * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE))) + "px";
-        var height = ((this.height * Constantes.DISTANCE_TO_PX) + ((this.height - 1) * Constantes.BORDER_SIZE)) + "px";
-        var width = ((this.width * Constantes.DISTANCE_TO_PX) + ((this.width - 1) * Constantes.BORDER_SIZE)) + "px";
+        var left = (this.x * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE));
+        var top = (this.y * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE));
+        var height = (this.height * Constantes.DISTANCE_TO_PX) + ((this.height - 1) * Constantes.BORDER_SIZE);
+        var width = (this.width * Constantes.DISTANCE_TO_PX) + ((this.width - 1) * Constantes.BORDER_SIZE);
         var child = this.element.css({
             "transform": "rotate(" + this.rotation_angle + "deg)",
             "transform-origin": (Constantes.DISTANCE_TO_PX * this.rotation_x) + "px " + (Constantes.DISTANCE_TO_PX * this.rotation_y) + "px"
         }).find(".key-border").css({
-            "left": left,
-            "top": top
+            "left": left + "px",
+            "top": top + "px"
         }).find(".key").css({
-            "height": height,
-            "width": width,
+            "height": height + "px",
+            "width": width + "px",
             "background-color": this.color
         });
         for (var i in this.labels) {
             child.append(this.labels[i].draw());
         }
-        return this.element;
+        return {element: this.element, height: top + height + Constantes.BORDER_SIZE, width: left + width + Constantes.BORDER_SIZE};
     };
 };
 

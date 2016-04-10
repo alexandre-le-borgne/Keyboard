@@ -15,22 +15,57 @@
     <ul class="nav nav-pills">
         <li class="active"><a href="#presets">Presets</a></li>
     </ul>
-    <ul class="nav nav-pills">
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-               aria-expanded="false">
-                Selectionner un clavier <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" id="preset-list">
-            </ul>
-        </li>
-    </ul>
-    <div class="container">
-        <div class="page-header" id="preset-name">
-          <h1><small></small></h1>
-        </div>
+    <br>
+    <div class="navbar navbar-default">
+        <ul class="nav navbar-nav navbar-left">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                   aria-expanded="false">
+                    Selectionner un clavier <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" id="preset-list">
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                   aria-expanded="false">
+                    Selectionner un ergofip <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" id="ergofip-list">
+                </ul>
+            </li>
+        </ul>
+        <form class="navbar-form pull-right">
+            <button type="button" class="btn btn-success hide">Confirmer ma sélection</button>
+        </form>
     </div>
-    <div class="container" id="preset"></div>
+    <div id="preset" class="hide">
+        <div class="container">
+            <div class="page-header" id="preset-name">
+                <h1>
+                    <span></span>
+                    <small></small>
+                </h1>
+            </div>
+        </div>
+        <div class="container" id="preset-container"></div>
+    </div>
+    <div id="ergofip" class="hide">
+        <div class="container">
+            <div class="page-header" id="ergofip-name">
+                <h1>
+                    <span></span>
+                    <small></small>
+                </h1>
+            </div>
+        </div>
+        <div class="container" id="ergofip-container"></div>
+    </div>
+    <div class="hide" id="layers">
+
+    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->

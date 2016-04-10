@@ -1,8 +1,8 @@
-#preset {
+#preset-container, #ergofip-container {
     position: relative;
 }
 
-#preset-list li {
+#preset-list li, #ergofip-list li {
     cursor: pointer;
 }
 

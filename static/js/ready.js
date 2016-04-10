@@ -4,7 +4,8 @@
 
 $(function () {
     documentKeyDown();
-    loadPresets();
+    var keyboards = ["preset", "ergofip"];
+    loadKeyboards(keyboards);
 });
 
 $.fn.textNotInTag = function(text) {
@@ -24,30 +25,50 @@ function documentKeyDown() {
     });
 }
 
-function loadPresets() {
-    $.ajax({
-        url: "/static/json/presets.json",
-        dataType: "json"
-    }).done(function (response) {
-        var presets = response['presets'];
-        var preset;
-        for(var i in presets) {
-            preset = presets[i];
-            $('#preset-list').append(
-                $("<li></li>").text(preset['name']).data('preset', new Preset(preset['name'], preset['data'])));
-       }
-       loadPresetSelectionEvent();
+/*
+ Charge les claviers du fichier selector + "s.json" et les ajoute à "#"+selector+"-list"
+ */
+function loadKeyboards(selectors) {
+    var selector;
+    for(var i in selectors) {
+        selector = selectors[i];
+        console.log(selector);
+        console.log($("#" + selector + "-list"));
+        $.ajax({
+            url: "/static/json/" + selector + "s.json",
+            dataType: "json",
+            selector: selector
+        }).done(function (response) {
+            var presets = response['presets'];
+            var preset;
+
+            for (var j in presets) {
+                preset = presets[j];
+                $("#" + this.selector + "-list").append(
+                    $("<li></li>").text(preset['name']).data(this.selector, new Preset(preset['name'], preset['data'])));
+            }
+            loadSelectionEvent(selectors, this.selector);
+        });
+    }
+}
+
+function loadSelectionEvent(selectors, selector) {
+    $("#"+selector+"-list").find("li").click(function() {
+        for(var i in selectors) {
+            $("#" + selectors[i]).addClass("hide");
+        }
+        loadPreset(selector, $(this).data(selector));
     });
 }
 
-function loadPresetSelectionEvent() {
-    $("#preset-list").find("li").click(function() {
-        loadPreset($(this).data('preset'));
-    });
-}
-
-function loadPreset(preset) {
-    $("#preset-name").find("h1").textNotInTag(preset.name + " ").find("small").text("Chargement...");
-    preset.draw($("#preset"));
-    $("#preset-name").find("h1").find("small").text("");
+function loadPreset(selector, data) {
+    var name = $("#"+selector+"-name");
+    var container = $("#"+selector+"-container");
+    $("#" + selector).removeClass("hide");
+    console.log(data.name);
+    console.log(selector);
+    name.find("h1").find("span").text(data.name);
+    name.find("small").text("Chargement...");
+    data.draw(container);
+    name.find("h1").find("small").text("");
 }
