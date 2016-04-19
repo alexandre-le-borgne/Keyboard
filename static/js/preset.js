@@ -80,7 +80,9 @@ Parser.ignoreFrontLabels = function (labels) {
 };
 
 Parser.parse = function (data) {
-    data = JSON.parse(JSON.stringify(data));
+    // data = JSON.parse(JSON.stringify(data)); // Deep copy
+    data =  jQuery.extend(true, {}, data);
+
     var keyboard = new Keyboard();
     var currentSettings = defaultSettings;
     var resetSettings = defaultSettings;
@@ -91,7 +93,8 @@ Parser.parse = function (data) {
     delete resetSettings.ry;
     for (var i in data) {
         for (var j in data[i]) {
-            var element = data[i][j]; // Deep copy
+            var element = data[i][j];
+
             if (typeof element == "string") {
                 var labelsData = Parser.ignoreFrontLabels(Parser.getLabels(element));
                 var labels = [];
@@ -108,19 +111,32 @@ Parser.parse = function (data) {
                 currentSettings = $.extend({}, currentSettings, resetSettings);
             }
             else {
+                if (typeof element["rx"] !== "undefined") {
+                    position_x = element["rx"];
+                }
+
+                if (typeof element["y"] !== "undefined") {
+                    if (typeof element["ry"] !== "undefined") {
+                        position_y = element["ry"];
+                    }
+                    else if (typeof currentSettings["ry"] !== "undefined") {
+                        position_y = currentSettings["ry"];
+                    }
+                    position_y += element["y"];
+                    delete element["y"]
+                }
+
                 if (typeof element["x"] !== "undefined") {
                     position_x += element["x"];
                     delete element["x"];
                 }
-                if (typeof element["y"] !== "undefined") {
-                    position_y += element["y"];
-                    delete element["y"]
-                }
+
                 currentSettings = $.extend({}, currentSettings, element);
             }
+
         }
-        position_y += defaultSettings.h;
-        position_x = defaultSettings.x;
+        position_y += currentSettings.h;
+        position_x = ((typeof currentSettings.rx !== "undefined") ? currentSettings.rx : defaultSettings.x);
     }
     return keyboard;
 };
@@ -142,7 +158,7 @@ var Preset = function (name, data) {
 
 var Keyboard = function () {
     this.keys = [];
-    this.element = $('<div></div>');
+    this.element = $('<div></div>').addClass("keyboard");
     this.draw = function () {
         var keyData;
         var height = 0;
@@ -166,16 +182,18 @@ var Key = function (labels, x, y, width, height, color, rotation_angle, rotation
     this.height = height;
     this.color = color;
     this.rotation_angle = rotation_angle;
-    this.rotation_x = rotation_x;
-    this.rotation_y = rotation_y;
+    this.rotation_x = (typeof rotation_x !== "undefined" ? rotation_x : 0);
+    this.rotation_y = (typeof rotation_y !== "undefined" ? rotation_y : 0);
     this.draw = function () {
         var left = (this.x * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE));
         var top = (this.y * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE));
         var height = (this.height * Constantes.DISTANCE_TO_PX) + ((this.height - 1) * Constantes.BORDER_SIZE);
         var width = (this.width * Constantes.DISTANCE_TO_PX) + ((this.width - 1) * Constantes.BORDER_SIZE);
+        var rx = (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE) * this.rotation_x;
+        var ry = (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE) * this.rotation_y;
         var child = this.element.css({
             "transform": "rotate(" + this.rotation_angle + "deg)",
-            "transform-origin": (Constantes.DISTANCE_TO_PX * this.rotation_x) + "px " + (Constantes.DISTANCE_TO_PX * this.rotation_y) + "px"
+            "transform-origin": rx + "px " + ry + "px"
         }).find(".key-border").css({
             "left": left + "px",
             "top": top + "px"
