@@ -185,8 +185,8 @@ var Key = function (labels, x, y, width, height, color, rotation_angle, rotation
     this.height = height;
     this.color = color;
     this.rotation_angle = rotation_angle;
-    this.rotation_x = (typeof rotation_x !== "undefined" ? rotation_x : 0);
-    this.rotation_y = (typeof rotation_y !== "undefined" ? rotation_y : 0);
+    this.rotation_x = rotation_x || 0;
+    this.rotation_y = rotation_y || 0;
     this.draw = function () {
         var left = (this.x * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE));
         var top = (this.y * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE));

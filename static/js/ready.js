@@ -59,7 +59,7 @@ var dragDrop = function (classical, ergofip) {
         key.element.find(".key-border").droppable({
             hoverClass: "drop-hover",
             tolerance: "pointer",
-            drop: function( event, ui ) {
+            drop: function (event, ui) {
                 $(".key", this).data('key').copy(ui.draggable.find(".key").data("key"));
             }
         });
@@ -110,7 +110,7 @@ $(function () {
         var preset = $("#presets-classical").find("select option:selected").data('preset');
         if (preset) {
             classicalPreset = preset.draw($("#layers-one").find(".preset-classical").show().find(".preset"));
-            if(ergofipPresset) {
+            if (ergofipPresset) {
                 dragDrop(classicalPreset, ergofipPresset);
             }
             $("#layers-one").find(".preset-classical-empty").hide();
@@ -122,7 +122,7 @@ $(function () {
         var preset = $("#presets-ergofip").find("select option:selected").data('preset');
         if (preset) {
             ergofipPresset = preset.draw($("#layers-one").find(".preset-ergofip").show().find(".preset"));
-            if(classicalPreset) {
+            if (classicalPreset) {
                 dragDrop(classicalPreset, ergofipPresset);
             }
             $("#layers-one").find(".preset-ergofip-empty").hide();
@@ -144,7 +144,7 @@ $(function () {
         }
     });
 
-    $( ".preset-ergofip" ).selectable({
-      filter: ".key-border"
+    $(".preset-ergofip").selectable({
+        filter: ".key-border"
     });
 });
