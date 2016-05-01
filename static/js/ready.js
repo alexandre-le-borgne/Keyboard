@@ -1,104 +1,150 @@
 /**
  * Created by l14011190 on 09/03/16.
  */
+var classicalPreset;
+var ergofipPresset;
+var layers = [];
 
-$(function () {
-    var preset = null;
-    var ergofip = null;
-    var keyboards = ["preset", "ergofip"];
-    documentKeyDown();
-    loadKeyboards(keyboards);
+var loadClassicalPressets = function () {
+    $.ajax({
+        url: "/static/json/classicals.json",
+        dataType: "json"
+    }).done(function (response) {
+        var presets = response['presets'];
+        var preset;
 
-    $("#comfirm-keyboard").click(function () {
-        for (var i in keyboards) {
-            if (!$("#" + keyboards[i]).hasClass("hide")) {
-                var caret = $("#" + keyboards[i] + "-list").parent().find("a").find(".caret");
-                $("#" + keyboards[i] + "-list").parent().find("a").text(
-                    $("#" + keyboards[i] + "-name").find("span").text()
-                ).append(caret);
-                if(keyboards[i] == "preset") {
-                    preset = $(this).data("keyboard");
-                }
-                else {
-                    ergofip = $(this).data("keyboard");
-                }
-                if(preset && ergofip) {
-                    $("#next-step").hide().removeClass("hide").slideDown();
-                }
-            }
+        for (var j in presets) {
+            preset = presets[j];
+            $("#presets-classical").find('select').append(
+                $("<option></option>").text(preset['name']).data(
+                    'preset', new Preset(preset['name'], preset['data'])
+                )
+            );
         }
     });
-
-    $("#next-step").click(function() {
-        var total = $("#menu").find("li").length;
-        var current = $("#menu").find("li.active");
-        if(current.index() < total - 1) {
-            current.removeClass("active").parent().find("li:eq(" + (current.index() + 1) + ")").addClass("active");
-        }
-    });
-});
-
-$.fn.textNotInTag = function (text) {
-    this.html(this.html().replace(this.contents().filter(function () {
-        return this.nodeType == Node.TEXT_NODE;
-    }).text(), text));
-    return this;
 };
 
-var KEYS = [];
-function documentKeyDown() {
-    $(document).on('keydown', function (e) {
-        if ($.inArray(e.which, KEYS) == -1)
-            KEYS.push(e.which);
-    }).on('keyup', function (e) {
-        KEYS.splice($.inArray(e.which, KEYS), 1);
+var loadErgofipPressets = function () {
+    $.ajax({
+        url: "/static/json/ergofips.json",
+        dataType: "json"
+    }).done(function (response) {
+        var presets = response['presets'];
+        var preset;
+
+        for (var j in presets) {
+            preset = presets[j];
+            $("#presets-ergofip").find("select").append(
+                $("<option></option>").text(preset['name']).data(
+                    'preset', new Preset(preset['name'], preset['data'])
+                )
+            );
+        }
     });
-}
+};
 
-/*
- Charge les claviers du fichier keyboard + "s.json" et les ajoute à "#"+keyboard+"-list"
- */
-function loadKeyboards(keyboards) {
-    var keyboard;
-    for (var i in keyboards) {
-        keyboard = keyboards[i];
-        $.ajax({
-            url: "/static/json/" + keyboard + "s.json",
-            dataType: "json",
-            keyboard: keyboard
-        }).done(function (response) {
-            var presets = response['presets'];
-            var preset;
-
-            for (var j in presets) {
-                preset = presets[j];
-                $("#" + this.keyboard + "-list").append(
-                    $("<li></li>").text(preset['name']).data(
-                        this.keyboard, new Preset(preset['name'], preset['data'])));
-            }
-            loadSelectionEvent(keyboards, this.keyboard);
+var dragDrop = function (classical, ergofip) {
+    console.log(classical.keyboard);
+    var key;
+    for (var i in classical.keyboard.keys) {
+        key = classical.keyboard.keys[i];
+        key.element.draggable({
+            helper: "clone",
+            opacity: 0.9,
+            zIndex: 1000
         });
     }
-}
+    for (var j in ergofip.keyboard.keys) {
+        key = ergofip.keyboard.keys[j];
+        key.element.find(".key-border").droppable({
+            hoverClass: "drop-hover",
+            tolerance: "pointer",
+            drop: function( event, ui ) {
+                $(".key", this).data('key').copy(ui.draggable.find(".key").data("key"));
+            }
+        });
+    }
+};
 
-function loadSelectionEvent(keyboards, keyboard) {
-    $("#" + keyboard + "-list").find("li").click(function () {
-        for (var i in keyboards) {
-            $("#" + keyboards[i]).addClass("hide");
+$(function () {
+    $("#layers-one").find(".preset-classical").hide();
+    $("#layers-one").find(".preset-ergofip").hide();
+
+    $("#body").tabs({
+        activate: function (event, ui) {
+            $(ui.oldTab).removeClass("active");
+            $(ui.newTab).addClass("active");
         }
-        loadPreset(keyboard, $(this).data(keyboard));
     });
-}
+    $("#presets").tabs({
+        activate: function (event, ui) {
+            $(ui.oldTab).removeClass("active");
+            $(ui.newTab).addClass("active");
+        }
+    });
+    $("#layers-one").find(".preset-ergofip").tabs({
+        activate: function (event, ui) {
+            $(ui.oldTab).removeClass("active");
+            $(ui.newTab).addClass("active");
+        }
+    });
 
-function loadPreset(keyboard, data) {
-    var name = $("#" + keyboard + "-name");
-    var container = $("#" + keyboard + "-container");
-    var comfirm = $("#comfirm-keyboard");
+    $("#body").tabs("option", "active", 0);
+    $("#presets").tabs("option", "active", 0);
+    $("#layers-one").find(".preset-ergofip").tabs("option", "active", 0);
 
-    $("#" + keyboard).removeClass("hide");
-    name.find("h1").find("span").text(data.name);
-    name.find("small").text("Chargement...");
-    comfirm.data("keyboard", data.draw(container));
-    name.find("h1").find("small").text("");
-    comfirm.hide().removeClass("hide").slideDown();
-}
+    loadClassicalPressets();
+    loadErgofipPressets();
+
+    $("#layers-one").find(".preset-classical-empty").click(function () {
+        $("#body").tabs("option", "active", 0);
+        $("#presets").tabs("option", "active", 0);
+    });
+
+    $("#layers-one").find(".preset-ergofip-empty").click(function () {
+        $("#body").tabs("option", "active", 0);
+        $("#presets").tabs("option", "active", 1);
+    });
+
+    $("#presets-classical").find("button").click(function () {
+        var preset = $("#presets-classical").find("select option:selected").data('preset');
+        if (preset) {
+            classicalPreset = preset.draw($("#layers-one").find(".preset-classical").show().find(".preset"));
+            if(ergofipPresset) {
+                dragDrop(classicalPreset, ergofipPresset);
+            }
+            $("#layers-one").find(".preset-classical-empty").hide();
+            $("#presets").tabs("option", "active", 1);
+        }
+    });
+
+    $("#presets-ergofip").find("button").click(function () {
+        var preset = $("#presets-ergofip").find("select option:selected").data('preset');
+        if (preset) {
+            ergofipPresset = preset.draw($("#layers-one").find(".preset-ergofip").show().find(".preset"));
+            if(classicalPreset) {
+                dragDrop(classicalPreset, ergofipPresset);
+            }
+            $("#layers-one").find(".preset-ergofip-empty").hide();
+            $("#body").tabs("option", "active", 1);
+        }
+    });
+
+    $("#presets-classical").find("select").change(function () {
+        var preset = $("option:selected", this).data('preset');
+        if (preset) {
+            preset.draw($("#presets-classical").find(".preset"));
+        }
+    });
+
+    $("#presets-ergofip").find("select").change(function () {
+        var preset = $("option:selected", this).data('preset');
+        if (preset) {
+            preset.draw($("#presets-ergofip").find(".preset"));
+        }
+    });
+
+    $( ".preset-ergofip" ).selectable({
+      filter: ".key-border"
+    });
+});

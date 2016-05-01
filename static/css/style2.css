@@ -1,9 +1,10 @@
-#preset-container, #ergofip-container {
+.preset {
+    background-color: #00FFFF;
     position: relative;
 }
 
-#preset-list li, #ergofip-list li {
-    cursor: pointer;
+.preset-empty {
+    background-color: #ff79fb;
 }
 
 .key-border {
@@ -17,5 +18,13 @@
 
 .key {
     border-radius: 3px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.key-border.drop-hover, .key-border.ui-selected {
+    background-color: #28a4c9;
+}
+
+.key-border.ui-selecting {
+    background-color: deepskyblue;
 }

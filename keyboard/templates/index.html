@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="{% static "css/style2.css" %}">
 </head>
 <body>
-<div class="container">
-    <ul class="nav nav-pills" id="menu">
+<div class="container" id="body">
+    <ul class="nav nav-pills">
         <li class="active"><a href="#presets">Presets</a></li>
         <li><a href="#layers-one">Layers I</a></li>
         <li><a href="#layers-two">Layers II</a></li>
@@ -20,59 +20,132 @@
         <li><a href="#keys">Keys</a></li>
     </ul>
     <br>
-    <div class="navbar navbar-default">
-        <ul class="nav navbar-nav navbar-left">
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                   aria-expanded="false">
-                    Selectionner un clavier <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" id="preset-list">
-                </ul>
-            </li>
+    <div id="presets">
+        <ul class="nav nav-pills">
+            <li class="active"><a href="#presets-classical">Classical</a></li>
+            <li><a href="#presets-ergofip">Ergofip</a></li>
         </ul>
-        <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                   aria-expanded="false">
-                    Selectionner un ergofip <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" id="ergofip-list">
-                </ul>
-            </li>
-        </ul>
-        <form class="navbar-form pull-right">
-            <button type="button" id="comfirm-keyboard" class="btn btn-success hide">Comfirmer ma sélection</button>
-            <button type="button" id="next-step" class="btn btn-primary hide">Etape suivante</button>
-        </form>
-    </div>
-    <div id="preset" class="hide">
-        <div class="container">
-            <div class="page-header" id="preset-name">
-                <h1>
-                    <span></span>
-                    <small></small>
-                </h1>
-            </div>
+        <br>
+        <div id="presets-classical">
+            <select>
+                <option>Choose Keyboard Layout</option>
+                <option>----------------------</option>
+            </select>
+            <br>
+            <br>
+            <div class="preset"></div>
+            <br>
+            <button type="button" class="btn btn-success">Choose this one</button>
         </div>
-        <div class="container" id="preset-container"></div>
-    </div>
-    <div id="ergofip" class="hide">
-        <div class="container">
-            <div class="page-header" id="ergofip-name">
-                <h1>
-                    <span></span>
-                    <small></small>
-                </h1>
-            </div>
+        <div id="presets-ergofip">
+            <select>
+                <option>Choose Keyboard Layout</option>
+                <option>----------------------</option>
+            </select>
+            <br>
+            <br>
+            <div class="preset"></div>
+            <br>
+            <button type="button" class="btn btn-success">Choose this one</button>
         </div>
-        <div class="container" id="ergofip-container"></div>
     </div>
-    <div class="hide" id="layers">
+    <div id="layers-one">
+        <div class="preset-classical">
+            <div class="preset"></div>
+        </div>
+        <div class="preset-classical-empty">
+            <h2>
+                Choose a classical preset first
+            </h2>
+            <button type="button" class="btn btn-success">Take me to Classical Pressets >></button>
+        </div>
+        <br>
+        <div class="preset-ergofip">
+            <button type="button" class="btn btn-success pull-left">Add a layer</button>
+            <ul class="nav nav-pills list-inline">
+              <li role="presentation"><a href="#layers-one-preset-ergofip-1">1 >></a></li>
+            </ul>
+            <br>
+            <button class="btn btn-info" type="button">
+                Layer <span class="badge">1</span></a>
+            </button>
+            <button type="button" class="btn btn-warning pull-right">Reset</button>
+            <br><br>
+            <div class="preset" id="layers-one-preset-ergofip-1"></div>
+        </div>
+        <div class="preset-ergofip-empty">
+            <h2>
+                Choose an Ergofip preset first
+            </h2>
+            <button type="button" class="btn btn-success">Take me to Ergofip Pressets >></button>
+        </div>
+    </div>
+    <div id="layers-two">
 
     </div>
+    <div id="colors">
+
+    </div>
+    <div id="keys">
+
+    </div>
+{##}
+{##}
+{#    <br>#}
+{#    <div class="navbar navbar-default">#}
+{#        <ul class="nav navbar-nav navbar-left">#}
+{#            <li class="dropdown">#}
+{#                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"#}
+{#                   aria-expanded="false">#}
+{#                    Selectionner un clavier <span class="caret"></span>#}
+{#                </a>#}
+{#                <ul class="dropdown-menu" id="preset-list">#}
+{#                </ul>#}
+{#            </li>#}
+{#        </ul>#}
+{#        <ul class="nav navbar-nav">#}
+{#            <li class="dropdown">#}
+{#                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"#}
+{#                   aria-expanded="false">#}
+{#                    Selectionner un ergofip <span class="caret"></span>#}
+{#                </a>#}
+{#                <ul class="dropdown-menu" id="ergofip-list">#}
+{#                </ul>#}
+{#            </li>#}
+{#        </ul>#}
+{#        <form class="navbar-form pull-right">#}
+{#            <button type="button" id="comfirm-keyboard" class="btn btn-success hide">Comfirmer ma sélection</button>#}
+{#            <button type="button" id="next-step" class="btn btn-primary hide">Etape suivante</button>#}
+{#        </form>#}
+{#    </div>#}
+{#    <div id="preset" class="hide">#}
+{#        <div class="container">#}
+{#            <div class="page-header" id="preset-name">#}
+{#                <h1>#}
+{#                    <span></span>#}
+{#                    <small></small>#}
+{#                </h1>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="container" id="preset-container"></div>#}
+{#    </div>#}
+{#    <div id="ergofip" class="hide">#}
+{#        <div class="container">#}
+{#            <div class="page-header" id="ergofip-name">#}
+{#                <h1>#}
+{#                    <span></span>#}
+{#                    <small></small>#}
+{#                </h1>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="container" id="ergofip-container"></div>#}
+{#    </div>#}
+{#    <div class="hide" id="layers">#}
+{##}
+{#    </div>#}
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="{% static "js/preset.js" %}"></script>
