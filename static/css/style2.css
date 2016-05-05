@@ -19,6 +19,7 @@
 .key {
     border-radius: 3px;
     border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .key-border.drop-hover, .key-border.ui-selected {
@@ -27,4 +28,15 @@
 
 .key-border.ui-selecting {
     background-color: deepskyblue;
+}
+
+.key-label {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: table;
+}
+
+.key-label div {
+        display: table-cell;
 }
