@@ -7,45 +7,39 @@ var selectedErgofip;
 var layers = [];
 var currentTabLayersIndex = 1;
 
-var loadClassicalPressets = function () {
-    $.ajax({
-        url: "/static/json/classicals.json",
-        dataType: "json"
-    }).done(function (response) {
-        var presets = response['presets'];
-        var preset;
+var loadClassicalPressets = $.ajax({
+    url: "/static/json/classicals.json",
+    dataType: "json"
+}).done(function (response) {
+    var presets = response['presets'];
+    var preset;
 
-        for (var j in presets) {
-            preset = presets[j];
-            $("#presets-classical").find('select').append(
-                $("<option></option>").text(preset['name']).data(
-                    'preset', new Preset(preset['name'], preset['data'])
-                )
-            );
-        }
-    });
-};
+    for (var j in presets) {
+        preset = presets[j];
+        $("#presets-classical").find('select').append(
+            $("<option></option>").text(preset['name']).data(
+                'preset', new Preset(preset['name'], preset['data'])
+            )
+        );
+    }
+});
 
-var loadErgofipPressets = function () {
-    $.ajax({
-        url: "/static/json/ergofips.json",
-        dataType: "json"
-    }).done(function (response) {
-        var presets = response['presets'];
-        var preset;
+var loadErgofipPressets = $.ajax({
+    url: "/static/json/ergofips.json",
+    dataType: "json"
+}).done(function (response) {
+    var presets = response['presets'];
+    var preset;
 
-        for (var j in presets) {
-            preset = presets[j];
-            $("#presets-ergofip").find("select").append(
-                $("<option></option>").text(preset['name']).data(
-                    'preset', new Preset(preset['name'], preset['data'])
-                )
-            );
-        }
-        // todo a enlever
-        goto();
-    });
-};
+    for (var j in presets) {
+        preset = presets[j];
+        $("#presets-ergofip").find("select").append(
+            $("<option></option>").text(preset['name']).data(
+                'preset', new Preset(preset['name'], preset['data'])
+            )
+        );
+    }
+});
 
 var loadSelectableKeys = function (ergofip) {
     for (var j in ergofip.keyboard.keys) {
@@ -71,6 +65,11 @@ var dragDrop = function (classical, ergofip) {
     for (var i in classical.keyboard.keys) {
         key = classical.keyboard.keys[i];
         key.element.draggable({
+            // Permet de correctement positionner sous la souris la touche draggué lorsque celle-ci a une rotation
+            drag: function( event, ui ) {
+                ui.position.top = ui.position.top - $(this).position().top;
+                ui.position.left = ui.position.left - $(this).position().left;
+            },
             helper: "clone",
             opacity: 0.9,
             zIndex: 1000,
@@ -80,7 +79,7 @@ var dragDrop = function (classical, ergofip) {
     loadSelectableKeys(ergofip);
 };
 
-var goto = function () {
+var rapidLaunch = function () {
     var preset = $("#presets-classical").find("select option:eq(3)").data('preset');
     classicalPreset = preset.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
     selectedErgofip = $("#presets-ergofip").find("select option:eq(2)").data('preset');
@@ -139,6 +138,7 @@ $(function () {
             $(ui.newTab).addClass("active");
         }
     });
+
     $("#presets").tabs({
         activate: function (event, ui) {
             $(ui.oldTab).removeClass("active");
@@ -160,10 +160,16 @@ $(function () {
     $("#presets").tabs("option", "active", 0);
     $('#preset-ergofip').find('#preset-ergofip-container').tabs('option', 'active', 0);
 
-    loadClassicalPressets();
-    loadErgofipPressets();
+    $.when(
+        loadClassicalPressets,
+        loadErgofipPressets
+    ).done(function() { rapidLaunch(); });
 
-    $("#layers-one").find(".preset-classical-empty").click(function () {
+    // ------------------------------------------------------------------------------
+    // EVENTS
+    // ------------------------------------------------------------------------------
+
+     $("#layers-one").find(".preset-classical-empty").click(function () {
         $("#body").tabs("option", "active", 0);
         $("#presets").tabs("option", "active", 0);
     });
@@ -202,7 +208,14 @@ $(function () {
     $("#presets-classical").find("select").change(function () {
         var preset = $("option:selected", this).data('preset');
         if (preset) {
-            preset.draw($("#preset-ergofip-container").find(".preset"));
+            preset.draw($("#presets-classical").find(".preset"));
+        }
+    });
+
+    $("#presets-ergofip").find("select").change(function () {
+        var preset = $("option:selected", this).data('preset');
+        if (preset) {
+            preset.draw($("#presets-ergofip").find(".preset"));
         }
     });
 

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-
     <link rel="stylesheet" href="{% static "css/style.css" %}">
     <link rel="stylesheet" href="{% static "css/style2.css" %}">
 </head>
@@ -62,7 +61,6 @@
             </h2>
             <button type="button" class="btn btn-success">Take me to Classical Pressets >></button>
         </div>
-
     </div>
     <div id="layers-two">
         <h3>Keys for other layers</h3>
@@ -81,7 +79,7 @@
         </div>
     </div>
     <div id="colors">
-        <div></div>
+
     </div>
     <div id="keys">
 
@@ -101,13 +99,13 @@
             <ul class="nav nav-pills list-inline">
                 <li><a href="#layers-one-preset-ergofip-1">1 >></a></li>
             </ul>
-            <br>
-            <button class="btn btn-info" type="button">
-                Layer <span class="badge">1</span></a>
-            </button>
-            <button type="button" id="reset-layer" class="btn btn-warning pull-right">Reset</button>
+            <h3>
+                <span class="label label-info">
+                    Layer <span class="badge">1</span></a>
+                </span>
+                <button type="button" id="reset-layer" class="btn btn-warning pull-right">Reset</button>
             <button type="button" id="remove-layer" class="btn btn-danger pull-right">Remove</button>
-            <br><br>
+            </h3>
             <div class="presets">
                 <div class="preset" data-index="1" id="layers-one-preset-ergofip-1"></div>
             </div>
@@ -119,60 +117,6 @@
             <button type="button" class="btn btn-success">Take me to Ergofip Pressets >></button>
         </div>
     </div>
-    {##}
-    {##}
-    {#    <br>#}
-    {#    <div class="navbar navbar-default">#}
-    {#        <ul class="nav navbar-nav navbar-left">#}
-    {#            <li class="dropdown">#}
-    {#                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"#}
-    {#                   aria-expanded="false">#}
-    {#                    Selectionner un clavier <span class="caret"></span>#}
-    {#                </a>#}
-    {#                <ul class="dropdown-menu" id="preset-list">#}
-    {#                </ul>#}
-    {#            </li>#}
-    {#        </ul>#}
-    {#        <ul class="nav navbar-nav">#}
-    {#            <li class="dropdown">#}
-    {#                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"#}
-    {#                   aria-expanded="false">#}
-    {#                    Selectionner un ergofip <span class="caret"></span>#}
-    {#                </a>#}
-    {#                <ul class="dropdown-menu" id="ergofip-list">#}
-    {#                </ul>#}
-    {#            </li>#}
-    {#        </ul>#}
-    {#        <form class="navbar-form pull-right">#}
-    {#            <button type="button" id="comfirm-keyboard" class="btn btn-success hide">Comfirmer ma sélection</button>#}
-    {#            <button type="button" id="next-step" class="btn btn-primary hide">Etape suivante</button>#}
-    {#        </form>#}
-    {#    </div>#}
-    {#    <div id="preset" class="hide">#}
-    {#        <div class="container">#}
-    {#            <div class="page-header" id="preset-name">#}
-    {#                <h1>#}
-    {#                    <span></span>#}
-    {#                    <small></small>#}
-    {#                </h1>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#        <div class="container" id="preset-container"></div>#}
-    {#    </div>#}
-    {#    <div id="ergofip" class="hide">#}
-    {#        <div class="container">#}
-    {#            <div class="page-header" id="ergofip-name">#}
-    {#                <h1>#}
-    {#                    <span></span>#}
-    {#                    <small></small>#}
-    {#                </h1>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#        <div class="container" id="ergofip-container"></div>#}
-    {#    </div>#}
-    {#    <div class="hide" id="layers">#}
-    {##}
-    {#    </div>#}
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>

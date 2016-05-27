@@ -1,4 +1,4 @@
-#preset-ergofip-container .preset, #preset-classical-container .preset {
+.preset {
     background-color: #00FFFF;
     position: relative;
 }
@@ -58,7 +58,7 @@
 	border: 1px dotted black;
 }
 
-#layers-two #colors {
+#layers-two, #colors {
     background-color: #FFC;
     padding: 10px;
     text-align: center;
