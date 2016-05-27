@@ -1,4 +1,4 @@
-.preset {
+#preset-ergofip-container .preset, #preset-classical-container .preset {
     background-color: #00FFFF;
     position: relative;
 }
@@ -13,6 +13,9 @@
     background-color: #ccc;
     padding: 2px 5px 8px;
     display: inline-block;
+}
+
+.preset .key-border {
     position: absolute;
 }
 
@@ -22,12 +25,18 @@
     position: relative;
 }
 
+.ui-draggable .key {
+    cursor: move;
+}
 .key-border.drop-hover, .key-border.ui-selected {
     background-color: #28a4c9;
 }
 
 .key-border.ui-selecting {
     background-color: deepskyblue;
+}
+.key-border.drop-accept .key {
+ border: 2px dotted;
 }
 
 .key-label {
@@ -38,5 +47,34 @@
 }
 
 .key-label div {
-        display: table-cell;
+    display: table-cell;
+    text-shadow: black 1px 1px 0.1em;
+    color: #fff;
+}
+
+.ui-selectable-helper {
+	position: absolute;
+	z-index: 100;
+	border: 1px dotted black;
+}
+
+#layers-two #colors {
+    background-color: #FFC;
+    padding: 10px;
+    text-align: center;
+}
+
+/*#layers-two #special-keys #goto-keys {*/
+    /*width: 50%;*/
+/*}*/
+
+#layers-two #toggle-keys, #layers-two #goto-keys {
+    display: inline-block;
+    vertical-align: top;
+    width: 49%;
+}
+
+.keys .key-container {
+    margin-right: 5px;
+    display: inline-block;
 }
