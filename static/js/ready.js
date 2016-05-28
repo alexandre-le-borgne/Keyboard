@@ -129,31 +129,31 @@ var generateSpecialKeys = function () {
 var addMacro = function () {
     var macro = addSpecialKeys('⚐ ' + (++currentMacroIndex));
     var macroContainer = $('<div></div>').append(
-            $('<div></div>').append(macro).addClass('macro-key')
-        ).append(
-            $('<div></div>').addClass('keys').sortable({
-                cursor: 'move',
-                scope: '12313',
-                axis: "x",
+        $('<div></div>').append(macro).addClass('macro-key')
+    ).append(
+        $('<div></div>').addClass('keys').sortable({
+            cursor: 'move',
+            scope: '12313',
+            axis: "x",
 
-                // See https://github.com/angular-ui/ui-sortable/issues/19
-                start: function (e, ui) {
-                    $(e.target).data("ui-sortable").floating = true;
-                },
-                over: function (e, ui) {
-                    ui.sender.parent().addClass('sortable-hover');
-                },
-                out: function (e, ui) {
-                    ui.item.parent().parent().removeClass('sortable-hover');
-                }
-            })
-        ).append(
-            $('<div></div>').append(
-                $('<button></button>').text('Delete').click(function() {
-                    macroContainer.remove()
-                }).addClass('btn').addClass('btn-danger')
-            ).addClass('macro-delete')
-        ).addClass('macro');
+            // See https://github.com/angular-ui/ui-sortable/issues/19
+            start: function (e, ui) {
+                $(e.target).data("ui-sortable").floating = true;
+            },
+            over: function (e, ui) {
+                ui.sender.parent().addClass('sortable-hover');
+            },
+            out: function (e, ui) {
+                ui.item.parent().parent().removeClass('sortable-hover');
+            }
+        })
+    ).append(
+        $('<div></div>').append(
+            $('<button></button>').text('Delete').click(function () {
+                macroContainer.remove()
+            }).addClass('btn').addClass('btn-danger')
+        ).addClass('macro-delete')
+    ).addClass('macro');
     $('#keys').find('#macros').append(
         macroContainer
     );
