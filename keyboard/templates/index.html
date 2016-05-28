@@ -79,10 +79,57 @@
         </div>
     </div>
     <div id="colors">
-
+        <h1>Colors</h1>
+        <div class="color-div">
+            <div id="hexagon">
+                <img id="hexagonwheel" style="margin:20px;" src="static/img/colormap.gif" usemap="#colormap"
+                     alt="colormap">
+                <map id="colormap" name="colormap" onmouseout="mouseOutMap()"></map>
+                <div id="selectedhexagon" style="position: relative; width: 21px; height: 21px; display: block;
+            top: -99px; left: 128px; background-image: url('static/img/selectedcolor.gif');">
+                </div>
+            </div>
+        </div>
+        <div class="color-div" style="padding-left:50px; padding-right:50px;">
+            <div id="divpreview" style="opacity: 1; background-color: rgb(255, 255, 255);">
+                &nbsp;
+            </div>
+            <h3>...or enter a Color:</h3>
+            <div id="entercolorDIV" class="input-group">
+                <input type="text" id="entercolor" class="form-control" placeholder="Colorvalue"
+                       onfocus="clearWrongInput();">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="clickColor(0,-1,-1)">
+                                OK
+                            </button>
+                        </span>
+            </div>
+            <div id="wronginputDIV" style="display: none;">Wrong Input</div>
+            <br>
+            <div id="html5DIV">
+                <h3>...or use HTML5:</h3>
+                <input type="color" id="html5colorpicker" class="form-control" onchange="clickColor(0, -1, -1, 5)"
+                       value="#f0f000">
+            </div>
+        </div>
+        <div class="color-div" style="padding-left:50px; padding-right:50px;">
+            <h3>...and drag your color to your keys!</h3>
+            <div id="key" style="display: inline-block"></div>
+            <br><br>
+            <button type="button" id="colors-selected" class="btn btn-success">Apply to selected keys !</button>
+            <br>
+            <br>
+            <button type="button" id="colors-all" class="btn btn-success">Apply to all keys !</button>
+        </div>
     </div>
     <div id="keys">
+        <h1>Keys</h1>
+        <div id="macros">
 
+        </div>
+        <br>
+        <button id="keys-add-macro" class="btn btn-success">Add new macro !</button>
+        <br>
     </div>
     <div id="brands">
 
@@ -104,7 +151,7 @@
                     Layer <span class="badge">1</span></a>
                 </span>
                 <button type="button" id="reset-layer" class="btn btn-warning pull-right">Reset</button>
-            <button type="button" id="remove-layer" class="btn btn-danger pull-right">Remove</button>
+                <button type="button" id="remove-layer" class="btn btn-danger pull-right">Remove</button>
             </h3>
             <div class="presets">
                 <div class="preset" data-index="1" id="layers-one-preset-ergofip-1"></div>
@@ -126,5 +173,6 @@
 <script src="{% static "js/parser.js" %}"></script>
 <script src="{% static "js/preset.js" %}"></script>
 <script src="{% static "js/ready.js" %}"></script>
+<script src="{% static "js/color.js" %}"></script>
 </body>
 </html>

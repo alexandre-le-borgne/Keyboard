@@ -95,6 +95,11 @@ var Key = function (labels, x, y, width, height, color, rotation_angle, rotation
             }
         }
         this.color = key.color;
+        this.element.css('background-color', this.color);
+    };
+    this.copyColor = function (key) {
+        this.color = key.color;
+        this.element.find('.key').css('background-color', this.color);
     }
 };
 

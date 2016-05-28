@@ -28,6 +28,7 @@
 .ui-draggable .key {
     cursor: move;
 }
+
 .key-border.drop-hover, .key-border.ui-selected {
     background-color: #28a4c9;
 }
@@ -35,8 +36,9 @@
 .key-border.ui-selecting {
     background-color: deepskyblue;
 }
+
 .key-border.drop-accept .key {
- border: 2px dotted;
+    border: 2px dotted;
 }
 
 .key-label {
@@ -53,19 +55,19 @@
 }
 
 .ui-selectable-helper {
-	position: absolute;
-	z-index: 100;
-	border: 1px dotted black;
+    position: absolute;
+    z-index: 100;
+    border: 1px dotted black;
 }
 
-#layers-two, #colors {
+#layers-two, #colors, #keys {
     background-color: #FFC;
     padding: 10px;
     text-align: center;
 }
 
 /*#layers-two #special-keys #goto-keys {*/
-    /*width: 50%;*/
+/*width: 50%;*/
 /*}*/
 
 #layers-two #toggle-keys, #layers-two #goto-keys {
@@ -77,4 +79,48 @@
 .keys .key-container {
     margin-right: 5px;
     display: inline-block;
+}
+
+#colors {
+    height: 330px;
+}
+
+h1 {
+    text-align: left;
+    font-size: 63px;
+    margin: 0;
+}
+
+#colors #hexagon {
+    display: block;
+    float: left;
+}
+
+#colors .color-div {
+    float: left;
+    width: 33%;
+}
+
+.key-container.special:not(.color) .key-border {
+    background-color: #337AB7;
+}
+
+#keys .macro {
+    margin-top: 10px;
+    display: flex;
+    border: 1px solid #aaa;
+}
+
+#keys .macro.sortable-hover {
+    border: 2px dotted #aaa;
+}
+
+#keys .macro .macro-key {
+    border-right: 1px solid #aaa;
+    padding: 5px;
+}
+
+#keys .macro .keys {
+    padding: 5px;
+    width: 100%;
 }

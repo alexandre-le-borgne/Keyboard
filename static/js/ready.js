@@ -6,6 +6,8 @@ var ergofipPresset;
 var selectedErgofip;
 var layers = [];
 var currentTabLayersIndex = 1;
+var currentMacroIndex = 0;
+var colorKey;
 
 var loadClassicalPressets = $.ajax({
     url: "/static/json/classicals.json",
@@ -48,7 +50,19 @@ var loadSelectableKeys = function (ergofip) {
             hoverClass: "drop-hover",
             tolerance: "pointer",
             drop: function (event, ui) {
-                $(".key", this).data('key').copy(ui.draggable.find(".key").data("key"));
+                var key = ui.draggable.find(".key");
+                if (ui.draggable.hasClass('color')) {
+                    $(".key", this).data('key').copyColor(key.data("key"));
+                }
+                else {
+                    if (ui.draggable.hasClass('special')) {
+                        $(this).parent().addClass('special');
+                    }
+                    else {
+                        $(this).parent().removeClass('special');
+                    }
+                    $(".key", this).data('key').copy(key.data("key"));
+                }
             },
             activate: function (event, ui) {
                 $(this).addClass('drop-accept');
@@ -56,6 +70,14 @@ var loadSelectableKeys = function (ergofip) {
             deactivate: function (event, ui) {
                 $(this).removeClass('drop-accept');
             }
+        }).draggable({
+            connectToSortable: "#keys .macro .keys",
+            helper: "clone",
+            disabled: true,
+            scope: 'macro',
+            opacity: 0.9,
+            zIndex: 1000,
+            cursor: 'move'
         });
     }
 };
@@ -66,7 +88,7 @@ var dragDrop = function (classical, ergofip) {
         key = classical.keyboard.keys[i];
         key.element.draggable({
             // Permet de correctement positionner sous la souris la touche draggué lorsque celle-ci a une rotation
-            drag: function( event, ui ) {
+            drag: function (event, ui) {
                 ui.position.top = ui.position.top - $(this).position().top;
                 ui.position.left = ui.position.left - $(this).position().left;
             },
@@ -79,6 +101,90 @@ var dragDrop = function (classical, ergofip) {
     loadSelectableKeys(ergofip);
 };
 
+var addSpecialKeys = function (char) {
+    var labels = [];
+    labels[0] = new Label(char, Positions.TOP_RIGHT, defaultSettings.f, defaultSettings.t);
+    var key = new Key(labels, defaultSettings.x, defaultSettings.y, defaultSettings.w, defaultSettings.h,
+        defaultSettings.c, defaultSettings.r, defaultSettings.rx, defaultSettings.ry).draw().element;
+    key.draggable({
+        helper: 'clone',
+        opacity: 0.9,
+        zIndex: 1000,
+        cursor: 'move'
+    }).addClass('special');
+    return key;
+};
+
+var generateSpecialKeys = function () {
+    var gotoKeys = $('#layers-two').find('#goto-keys .keys');
+    var toggleKeys = $('#layers-two').find('#toggle-keys .keys');
+    gotoKeys.empty();
+    toggleKeys.empty();
+    for (var i = 0; i < Object.keys(layers).length; ++i) {
+        gotoKeys.append(addSpecialKeys('⇶ ' + (i + 1)));
+        toggleKeys.append(addSpecialKeys('⇫ ' + (i + 1)));
+    }
+};
+
+var addMacro = function () {
+    var macro = addSpecialKeys('⚐ ' + (++currentMacroIndex));
+    var macroContainer = $('<div></div>').append(
+            $('<div></div>').append(macro).addClass('macro-key')
+        ).append(
+            $('<div></div>').addClass('keys').sortable({
+                cursor: 'move',
+                scope: '12313',
+                axis: "x",
+
+                // See https://github.com/angular-ui/ui-sortable/issues/19
+                start: function (e, ui) {
+                    $(e.target).data("ui-sortable").floating = true;
+                },
+                over: function (e, ui) {
+                    ui.sender.parent().addClass('sortable-hover');
+                },
+                out: function (e, ui) {
+                    ui.item.parent().parent().removeClass('sortable-hover');
+                }
+            })
+        ).append(
+            $('<div></div>').append(
+                $('<button></button>').text('Delete').click(function() {
+                    macroContainer.remove()
+                }).addClass('btn').addClass('btn-danger')
+            ).addClass('macro-delete')
+        ).addClass('macro');
+    $('#keys').find('#macros').append(
+        macroContainer
+    );
+};
+
+var load = function () {
+    $("#preset-ergofip").find("#preset-ergofip-container").tabs({
+        beforeActivate: function (event, ui) {
+            var index = ui.newTab.index();
+            $('#layers-two').find('.keys .key-container').css('opacity', '1').draggable("enable");
+            $('#layers-two').find('#goto-keys .keys .key-container:eq(' + index + ')').add(
+                $('#layers-two').find('#toggle-keys .keys .key-container:eq(' + index + ')')
+            ).css('opacity', '0.5').draggable("disable");
+            $('#preset-ergofip').find('#preset-ergofip-container .badge').text(index + 1);
+            $(ui.oldTab).removeClass("active");
+            $(ui.newTab).addClass("active");
+        },
+        create: function (event, ui) {
+            generateSpecialKeys();
+            var index = ui.tab.index();
+            $(ui.tab).addClass("active");
+            $('#layers-two').find('#goto-keys .keys .key-container:eq(' + index + ')').add(
+                $('#layers-two').find('#toggle-keys .keys .key-container:eq(' + index + ')')
+            ).css('opacity', '0.5').draggable("disable");
+        },
+        show: 'fade',
+        hide: 'fade'
+    });
+    $('#preset-ergofip').find('#preset-ergofip-container').tabs('option', 'active', 0);
+};
+
 var rapidLaunch = function () {
     var preset = $("#presets-classical").find("select option:eq(3)").data('preset');
     classicalPreset = preset.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
@@ -88,38 +194,12 @@ var rapidLaunch = function () {
     dragDrop(classicalPreset, ergofipPresset);
     $("#layers-one").find("#preset-classical-empty").hide();
     $("#preset-ergofip").find("#preset-ergofip-empty").hide();
-    $("#body").tabs("option", "active", 1);
-};
-
-var addSpecialKeys = function (char, target) {
-    var labels = [];
-    labels[0] = new Label(char, Positions.TOP_RIGHT, defaultSettings.f, defaultSettings.t);
-    var key = new Key(labels, defaultSettings.x, defaultSettings.y, defaultSettings.w, defaultSettings.h,
-        defaultSettings.c, defaultSettings.r, defaultSettings.rx, defaultSettings.ry).draw().element;
-    key.draggable({
-        helper: "clone",
-        opacity: 0.9,
-        zIndex: 1000,
-        cursor: 'move'
-    });
-    return key
-};
-
-var generateSpecialKeys = function () {
-    var gotoKeys = $('#layers-two').find('#goto-keys').find('.keys');
-    var toggleKeys = $('#layers-two').find('#toggle-keys').find('.keys');
-    gotoKeys.empty();
-    toggleKeys.empty();
-    for (var i = 0; i < Object.keys(layers).length; ++i) {
-        gotoKeys.append(addSpecialKeys('⇶ ' + (i + 1)));
-        toggleKeys.append(addSpecialKeys('⇫ ' + (i + 1)));
-    }
+    $("#body").tabs("option", "active", 4);
 };
 
 $(function () {
     $("#layers-one").find("#preset-classical-container").hide();
-    $("#preset-ergofip").find("#preset-ergofip-container").hide();
-    $("#preset-ergofip").hide();
+    $("#preset-ergofip").hide().find("#preset-ergofip-container").hide();
 
     $("#body").tabs({
         activate: function (event, ui) {
@@ -130,8 +210,12 @@ $(function () {
                 $("#preset-ergofip").show();
             }
 
-            if (ui.newPanel.attr('id') == 'layers-two') {
-                generateSpecialKeys();
+            if (ui.newPanel.attr('id') == 'keys') {
+                $('#preset-ergofip').find(".key-border").draggable('option', 'disabled', false);
+            }
+
+            if (ui.oldPanel.attr('id') == 'keys') {
+                $('#preset-ergofip').find(".key-border").draggable('option', 'disabled', true);
             }
 
             $(ui.oldTab).removeClass("active");
@@ -146,30 +230,28 @@ $(function () {
         }
     });
 
-    $("#preset-ergofip").find("#preset-ergofip-container").tabs({
-        activate: function (event, ui) {
-            $('#preset-ergofip').find('#preset-ergofip-container .badge').text(ui.newTab.index() + 1);
-            $(ui.oldTab).removeClass("active");
-            $(ui.newTab).addClass("active");
-        },
-        show: 'fade',
-        hide: 'fade'
-    });
-
     $("#body").tabs("option", "active", 0);
     $("#presets").tabs("option", "active", 0);
-    $('#preset-ergofip').find('#preset-ergofip-container').tabs('option', 'active', 0);
+
+    colorKey = addSpecialKeys('').addClass('color');
+    colorKey.find('.key');
+    $('#colors #key').append(colorKey);
+
+    addMacro();
 
     $.when(
         loadClassicalPressets,
         loadErgofipPressets
-    ).done(function() { rapidLaunch(); });
+    ).done(function () {
+        rapidLaunch();
+        load();
+    });
 
     // ------------------------------------------------------------------------------
     // EVENTS
     // ------------------------------------------------------------------------------
 
-     $("#layers-one").find(".preset-classical-empty").click(function () {
+    $("#layers-one").find(".preset-classical-empty").click(function () {
         $("#body").tabs("option", "active", 0);
         $("#presets").tabs("option", "active", 0);
     });
@@ -224,25 +306,16 @@ $(function () {
         if (selectedErgofip) {
             var visiblePreset = $('#preset-ergofip-container').find('.preset:visible');
             var index = visiblePreset.attr('data-index');
-
             ++currentTabLayersIndex;
-
-
             var preset = $('<div></div>').addClass('preset')
                 .attr('id', 'layers-one-preset-ergofip-' + currentTabLayersIndex)
                 .attr('data-index', currentTabLayersIndex);
-            // console.log(preset);
             var ergofip = selectedErgofip.draw(preset);
-            loadSelectableKeys(ergofip);
-            // console.log(layers);
-            // for(var i = layers.length - 1; i > index; --i) {
-            //     layers[i + 1] = layers[i];
-            // }
-            layers[currentTabLayersIndex] = ergofip;
-            console.log(layers);
 
+            loadSelectableKeys(ergofip);
+
+            layers[currentTabLayersIndex] = ergofip;
             var link;
-            console.log(currentIndex);
             if (currentIndex === false) {
                 link = $('<li></li>').append(
                     $('<a></a>').attr('href', '#layers-one-preset-ergofip-' + currentTabLayersIndex).text('1 >>')
@@ -259,10 +332,8 @@ $(function () {
                 $("#preset-ergofip").find('ul li:eq(' + currentIndex + ')').after(link);
             }
             link.nextAll().find('a').each(function () {
-                console.log($(this));
                 $(this).text(($(this).parent().index() + 1) + ' >>');
             });
-
             generateSpecialKeys();
             $('#preset-ergofip').find('#preset-ergofip-container').tabs("refresh");
             $('#preset-ergofip').find('#preset-ergofip-container').tabs('option', 'active', currentIndex + 1);
@@ -283,10 +354,6 @@ $(function () {
             var label = preset.attr('aria-labelledby');
             var index = preset.attr('data-index');
             var link = $('#preset-ergofip').find('ul li a#' + label).parent();
-            // var nb = index;
-            // for(var i = index + 1; i < layers.length; ++i) {
-            //     layers[i - 1] = layers[i];
-            // }
             delete layers[index];
             link.nextAll().find('a').each(function () {
                 $(this).text(($(this).parent().index()) + ' >>');
@@ -294,7 +361,6 @@ $(function () {
             link.remove();
             preset.remove();
             generateSpecialKeys();
-            // console.log(currentTabLayersIndex);
             $('#preset-ergofip').find('#preset-ergofip-container').tabs("refresh");
             $('#preset-ergofip').find('#preset-ergofip-container').tabs('option', 'active', Object.keys(layers).length);
         }
@@ -302,6 +368,22 @@ $(function () {
 
     $("#preset-ergofip-container .presets").selectable({
         filter: ".key-border"
+    });
+
+    $('#colors #colors-selected').click(function () {
+        $('#preset-ergofip-container').find('.preset:visible .key-container .ui-selected').each(function () {
+            $(this).find('.key').data('key').copyColor(colorKey.find('.key').data('key'));
+        });
+    });
+
+    $('#colors #colors-all').click(function () {
+        $('#preset-ergofip-container').find('.preset:visible .key-container').each(function () {
+            $(this).find('.key').data('key').copyColor(colorKey.find('.key').data('key'));
+        });
+    });
+
+    $('#keys #keys-add-macro').click(function () {
+        addMacro();
     });
 
 });
