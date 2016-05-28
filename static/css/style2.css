@@ -112,7 +112,7 @@ h1 {
 }
 
 #keys .macro.sortable-hover {
-    border: 2px dotted #aaa;
+    border: 2px dotted #000;
 }
 
 #keys .macro .macro-key {
@@ -123,4 +123,8 @@ h1 {
 #keys .macro .keys {
     padding: 5px;
     width: 100%;
+}
+
+#keys #specials {
+    display: inline-block;
 }

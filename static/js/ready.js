@@ -74,15 +74,15 @@ var loadSelectableKeys = function (ergofip) {
             connectToSortable: "#keys .macro .keys",
             helper: "clone",
             disabled: true,
-            scope: 'macro',
             opacity: 0.9,
             zIndex: 1000,
-            cursor: 'move'
+            cursor: 'move',
+            scope: "macro"
         });
     }
 };
 
-var dragDrop = function (classical, ergofip) {
+var loadDraggableClassical = function (classical) {
     var key;
     for (var i in classical.keyboard.keys) {
         key = classical.keyboard.keys[i];
@@ -98,20 +98,23 @@ var dragDrop = function (classical, ergofip) {
             cursor: 'move'
         });
     }
-    loadSelectableKeys(ergofip);
 };
 
-var addSpecialKeys = function (char) {
+var addSpecialKeys = function (char, scope) {
     var labels = [];
     labels[0] = new Label(char, Positions.TOP_RIGHT, defaultSettings.f, defaultSettings.t);
     var key = new Key(labels, defaultSettings.x, defaultSettings.y, defaultSettings.w, defaultSettings.h,
         defaultSettings.c, defaultSettings.r, defaultSettings.rx, defaultSettings.ry).draw().element;
-    key.draggable({
+    var settings = {
+        connectToSortable: "#keys .macro .keys",
         helper: 'clone',
         opacity: 0.9,
         zIndex: 1000,
         cursor: 'move'
-    }).addClass('special');
+    };
+    if(typeof scope !== 'undefined')
+        settings.scope = scope;
+    key.draggable(settings).addClass('special');
     return key;
 };
 
@@ -133,7 +136,6 @@ var addMacro = function () {
     ).append(
         $('<div></div>').addClass('keys').sortable({
             cursor: 'move',
-            scope: '12313',
             axis: "x",
 
             // See https://github.com/angular-ui/ui-sortable/issues/19
@@ -191,7 +193,8 @@ var rapidLaunch = function () {
     selectedErgofip = $("#presets-ergofip").find("select option:eq(2)").data('preset');
     ergofipPresset = selectedErgofip.draw($("#preset-ergofip").find("#preset-ergofip-container").show().find(".preset"));
     layers[currentTabLayersIndex] = ergofipPresset;
-    dragDrop(classicalPreset, ergofipPresset);
+    loadDraggableClassical(classicalPreset);
+    loadSelectableKeys(ergofipPresset);
     $("#layers-one").find("#preset-classical-empty").hide();
     $("#preset-ergofip").find("#preset-ergofip-empty").hide();
     $("#body").tabs("option", "active", 4);
@@ -212,10 +215,12 @@ $(function () {
 
             if (ui.newPanel.attr('id') == 'keys') {
                 $('#preset-ergofip').find(".key-border").draggable('option', 'disabled', false);
+                $("#preset-ergofip-container .presets").selectable('option', 'disabled', true).find('.key-border').removeClass('ui-selected');
             }
 
             if (ui.oldPanel.attr('id') == 'keys') {
                 $('#preset-ergofip').find(".key-border").draggable('option', 'disabled', true);
+                $("#preset-ergofip-container .presets").selectable('option', 'disabled', false);
             }
 
             $(ui.oldTab).removeClass("active");
@@ -237,6 +242,8 @@ $(function () {
     colorKey.find('.key');
     $('#colors #key').append(colorKey);
 
+    $('#keys #specials').append(addSpecialKeys('Delay 10ms', 'macro'));
+
     addMacro();
 
     $.when(
@@ -251,7 +258,7 @@ $(function () {
     // EVENTS
     // ------------------------------------------------------------------------------
 
-    $("#layers-one").find(".preset-classical-empty").click(function () {
+    $("#layers-one").find("#preset-classical-empty button").click(function () {
         $("#body").tabs("option", "active", 0);
         $("#presets").tabs("option", "active", 0);
     });
@@ -265,9 +272,7 @@ $(function () {
         var preset = $("#presets-classical").find("select option:selected").data('preset');
         if (preset) {
             classicalPreset = preset.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
-            if (ergofipPresset) {
-                dragDrop(classicalPreset, ergofipPresset);
-            }
+            loadDraggableClassical(classicalPreset);
             $("#layers-one").find("#preset-classical-empty").hide();
             $("#presets").tabs("option", "active", 1);
         }
@@ -279,9 +284,7 @@ $(function () {
             ergofipPresset = selectedErgofip.draw($("#preset-ergofip").find("#preset-ergofip-container").show().find(".preset"));
             layers = [];
             layers[currentTabLayersIndex] = ergofipPresset;
-            if (classicalPreset) {
-                dragDrop(classicalPreset, ergofipPresset);
-            }
+            loadSelectableKeys(ergofipPresset);
             $("#preset-ergofip").find("#preset-ergofip-empty").hide();
             $("#body").tabs("option", "active", 1);
         }
@@ -335,6 +338,9 @@ $(function () {
                 $(this).text(($(this).parent().index() + 1) + ' >>');
             });
             generateSpecialKeys();
+            //if ($('nav li.active a').attr('href') == '#keys') {
+            //    preset.find(".key-border").draggable('option', 'disabled', false);
+            //}
             $('#preset-ergofip').find('#preset-ergofip-container').tabs("refresh");
             $('#preset-ergofip').find('#preset-ergofip-container').tabs('option', 'active', currentIndex + 1);
 
