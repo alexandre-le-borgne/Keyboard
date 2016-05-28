@@ -1,5 +1,5 @@
 /**
- * Created by Alexandre on 28/05/2016.
+ * See http://node.wogwog.fr/js/color.js
  */
 var hh = 0;
 var colorhex = 'FF0000';
