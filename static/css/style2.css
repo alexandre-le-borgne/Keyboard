@@ -23,6 +23,7 @@
     border-radius: 3px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
+    color: #fff;
 }
 
 .ui-draggable .key {
@@ -51,7 +52,6 @@
 .key-label div {
     display: table-cell;
     text-shadow: black 1px 1px 0.1em;
-    color: #fff;
 }
 
 .ui-selectable-helper {
@@ -127,4 +127,38 @@ h1 {
 
 #keys #specials {
     display: inline-block;
+}
+
+#brands .media {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border: 4px solid transparent;
+}
+
+#brands .media-body {
+    padding: 10px;
+}
+
+#brands .media.active {
+    border: 4px solid #ccc;
+}
+
+#brands .media span {
+    font-weight: bold;
+    font-size: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#brands .media img {
+    height: 250px;
+}
+
+#ergonomics div {
+    background-color: #DDD;
+    border: 2px solid #AAA;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    margin-top: 20px;
+    overflow-wrap: break-word;
 }

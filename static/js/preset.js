@@ -35,7 +35,7 @@ var Keyboard = function () {
     };
 };
 
-var Key = function (labels, x, y, width, height, color, rotation_angle, rotation_x, rotation_y) {
+var Key = function (labels, x, y, width, height, color, labelcolor, rotation_angle, rotation_x, rotation_y) {
     this.element = $('<div></div>').addClass("key-container").append(
         $('<div></div>').addClass("key-border").append(
             $('<div></div>').addClass("key").data('key', this)));
@@ -45,6 +45,7 @@ var Key = function (labels, x, y, width, height, color, rotation_angle, rotation
     this.width = width;
     this.height = height;
     this.color = color;
+    this.labelcolor = labelcolor;
     this.rotation_angle = rotation_angle;
     this.rotation_x = rotation_x || 0;
     this.rotation_y = rotation_y || 0;
@@ -64,7 +65,8 @@ var Key = function (labels, x, y, width, height, color, rotation_angle, rotation
         }).find(".key").css({
             "height": height + "px",
             "width": width + "px",
-            "background-color": this.color
+            "background-color": this.color,
+            "color": this.labelcolor
         });
         for (var i in this.labels) {
             child.append(this.labels[i].draw());
@@ -89,12 +91,13 @@ var Key = function (labels, x, y, width, height, color, rotation_angle, rotation
         this.labels = [];
         for (var i in key.labels) {
             label = key.labels[i];
-            this.labels.push(new Label(label.value, label.position, label.size, label.color));
+            this.labels.push(new Label(label.value, label.position, label.size));
             for (var i in this.labels) {
                 child.append(this.labels[i].draw());
             }
         }
         this.color = key.color;
+        this.labelcolor = key.labelcolor;
         this.element.css('background-color', this.color);
     };
     this.copyColor = function (key) {
@@ -103,13 +106,12 @@ var Key = function (labels, x, y, width, height, color, rotation_angle, rotation
     }
 };
 
-var Label = function (value, position, size, color) {
+var Label = function (value, position, size) {
     this.element = $('<div></div>').addClass('key-label').append(
         $('<div></div>')
     );
     this.value = value;
     this.position = position;
-    this.color = color;
     this.size = size;
     this.draw = function () {
         this.element.find('div').html(this.value).css({

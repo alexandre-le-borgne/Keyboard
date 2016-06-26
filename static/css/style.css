@@ -1,6 +1,6 @@
 * {
     margin: 0;
-    padding: 0;
+    /*padding: 0;*/
     outline: none;
     box-sizing: border-box;
 }
@@ -10,7 +10,7 @@ html {
 }
 
 body {
-    font: normal 14px Arial, Helvetica, sans-serif;
+    font: normal 14px Lato, Helvetica, Arial, Verdana, sans-serif;
     position: relative;
     min-height: 400px;
     height: 100%;

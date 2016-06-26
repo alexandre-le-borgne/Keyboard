@@ -10,20 +10,18 @@ Parser.getTextSize = function (size) {
 
 Parser.getTextAlign = function (position) {
     var align = 'left';
-    var convertedPosition = convertPosition[position];
-    if(convertedPosition == Positions.TOP_CENTER || convertedPosition == Positions.BOTTOM_CENTER || convertedPosition == Positions.MIDDLE_CENTER)
+    if(position == Positions.TOP_CENTER || position == Positions.BOTTOM_CENTER || position == Positions.MIDDLE_CENTER)
         align = 'center';
-    if(convertedPosition == Positions.TOP_RIGHT || convertedPosition == Positions.BOTTOM_RIGHT || convertedPosition == Positions.MIDDLE_RIGHT)
+    if(position == Positions.TOP_RIGHT || position == Positions.BOTTOM_RIGHT || position == Positions.MIDDLE_RIGHT)
         align = 'right';
     return align;
 };
 
 Parser.getVerticalAlign = function (position) {
     var align = 'top';
-    var convertedPosition = convertPosition[position];
-    if(convertedPosition == Positions.MIDDLE_LEFT || convertedPosition == Positions.MIDDLE_CENTER || convertedPosition == Positions.MIDDLE_RIGHT)
+    if(position == Positions.MIDDLE_LEFT || position == Positions.MIDDLE_CENTER || position == Positions.MIDDLE_RIGHT)
         align = 'middle';
-    if(convertedPosition == Positions.BOTTOM_LEFT || convertedPosition == Positions.BOTTOM_CENTER || convertedPosition == Positions.BOTTOM_RIGHT)
+    if(position == Positions.BOTTOM_LEFT || position == Positions.BOTTOM_CENTER || position == Positions.BOTTOM_RIGHT)
         align = 'bottom';
     return align;
 };
@@ -75,12 +73,12 @@ Parser.parse = function (data) {
                 var labelsData = Parser.ignoreFrontLabels(Parser.getLabels(currentSettings.a, element));
                 var labels = [];
                 for (var k in labelsData) {
-                    labels.push(new Label(labelsData[k].data, labelsData[k].position, currentSettings.f, currentSettings.t));
+                    labels.push(new Label(labelsData[k].data, convertPosition[labelsData[k].position], currentSettings.f));
                 }
                 keyboard.keys.push(
                     new Key(labels,
                         position_x + currentSettings.x, position_y + currentSettings.y,
-                        currentSettings.w, currentSettings.h, currentSettings.c,
+                        currentSettings.w, currentSettings.h, currentSettings.c, currentSettings.t,
                         currentSettings.r, currentSettings.rx, currentSettings.ry)
                 );
                 position_x += currentSettings.w;

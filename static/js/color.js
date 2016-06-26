@@ -127,6 +127,8 @@ function ToHex(x) {
     return hex.length == 1 ? '0' + hex : hex;
 }
 function rgbToHex(rgb) {
+    if(rgb.substring(0,3) == 'rgb')
+        rgb = rgb.substring(4, rgb.length - 1);
     var x = rgb.replace(/ /g, '');
     var a = x.split(',');
     var r = Number(a[0]);

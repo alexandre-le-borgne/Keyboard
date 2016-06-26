@@ -132,11 +132,144 @@
         <button id="keys-add-macro" class="btn btn-success">Add new macro !</button>
         <br>
     </div>
-    <div id="brands">
-
+    <div id="brands" class="col-md-10 col-md-offset-1">
+        <h1>Brands</h1>
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="{% static 'img/brown.gif' %}">
+                </a>
+            </div>
+            <div class="media-body">
+                <span>Cherry MX Brown Switches</span>
+                <ul>
+                    <li>Type: Tactile Switch</li>
+                    <li>Tactile: Yes</li>
+                    <li>Clicky: No</li>
+                    <li>Actuation Force: 55g (65G peak force)</li>
+                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
+                </ul>
+                <p>
+                    Cherry MX Clear switches have often been called "stiffer browns" though some users note that they
+                    have
+                    more of a tactile feel than browns do. This really can be a subjective topic, though this is another
+                    switch that could be considered "balanced." The force required is comparable to most rubber dome
+                    keyboards, with a nice tactile feedback to tell you the key has actuated. These switches are harder
+                    to
+                    find on keyboards.
+                </p>
+            </div>
+        </div>
+        <div class="media">
+            <div class="media-body">
+                <span>Cherry MX Red Switches</span>
+                <ul>
+                    <li>Type: Linear</li>
+                    <li>Tactile: No</li>
+                    <li>Clicky: No</li>
+                    <li>Actuation Force: 45g</li>
+                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
+                </ul>
+                <p>
+                    Cherry MX Reds are a very popular gaming switch option due to their low activation point and linear
+                    nature. Reds are a light switch, which allows for extremely fast keystrokes in serious situations.
+                    However, it should be noted that due to the ease of actuation on Red switches, people do often input
+                    accidental keystrokes, so make sure you know what you're in for.
+                </p>
+            </div>
+            <div class="media-right">
+                <a href="#">
+                    <img class="media-object" src="{% static 'img/red.gif' %}">
+                </a>
+            </div>
+        </div>
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="{% static 'img/black.gif' %}">
+                </a>
+            </div>
+            <div class="media-body">
+                <span>Cherry MX Black Switches</span>
+                <ul>
+                    <li>Type: Linear Switch</li>
+                    <li>Tactile: No</li>
+                    <li>Clicky: No</li>
+                    <li>Actuation Force: 60g (40g-80g overall)</li>
+                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
+                </ul>
+                <p>
+                    Cherry MX Black switches are linear (non-tactile) switches, these are considered one of the best
+                    switch types for gaming. When gaming, having a tactile bump does absolutely nothing because you're
+                    going to be bottoming out anyway. The actuation and release points are at the exact same position as
+                    well. This means that games which require a lot of double tapping become easier with Black switches
+                    than on any other keyswitch. However, most people don't enjoy typing on them that much do in part,
+                    to their linear nature.
+                </p>
+                <p>
+                    If you're a person who tends to hit a wrong key every so often while gaming, these will be
+                    beneficial
+                    in that the high actuation force will help prevent many of those accidental presses.
+                </p>
+            </div>
+        </div>
+        <div class="media">
+            <div class="media-body">
+                <span>Cherry MX Blue Switches</span>
+                <ul>
+                    <li>Type: Tactile &amp; Clicky Switch</li>
+                    <li>Tactile: Yes, precise</li>
+                    <li>Clicky: Yes</li>
+                    <li>Actuation Force: 50g (60g Peak Force)</li>
+                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
+                </ul>
+                <p>
+                    Cherry MX Blue switches are the best cherry switch for typing. The tactile bump can easily be felt,
+                    and the resistance is similar to your average keyboard. Although many people find them just fine for
+                    gaming, some don't like the fact that the release point is above the actuation point. This can cause
+                    some trouble with double-tapping. This is usually the case with someone who has experienced other
+                    mechanical switches before hand.
+                </p>
+            </div>
+            <div class="media-right">
+                <a href="#">
+                    <img class="media-object" src="{% static 'img/blue.gif' %}">
+                </a>
+            </div>
+        </div>
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="{% static 'img/white.gif' %}">
+                </a>
+            </div>
+            <div class="media-body">
+                <span>Cherry MX Clear Switches</span>
+                <ul>
+                    <li>Type: Tactile Switch</li>
+                    <li>Tactile: Yes</li>
+                    <li>Clicky: No</li>
+                    <li>Actuation Force: 55g (65G peak force)</li>
+                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
+                </ul>
+                <p>
+                    Cherry MX Clear switches have often been called "stiffer browns" though some users note that they
+                    have more of a tactile feel than browns do. This really can be a subjective topic, though this is
+                    another switch that could be considered "balanced." The force required is comparable to most rubber
+                    dome keyboards, with a nice tactile feedback to tell you the key has actuated. These switches are
+                    harder to find on keyboards.
+                </p>
+            </div>
+        </div>
     </div>
     <div id="ergonomics">
-
+        <h1>Ergonomics</h1>
+        <br>
+        <br>
+        <button type="button" class="btn btn-success" id="generate-source">
+            Generate source of your configuration
+        </button>
+        <div></div>
     </div>
 
     <br>
@@ -166,6 +299,166 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="popup-delay">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Choose the delay</h4>
+            </div>
+            <div class="modal-body">
+                <label class="control-label col-md-3 text-nowrap">Delay in ms:</label>
+                <input type="number" min="0">ms
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary save">Apply changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="popup-key">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit the key</h4>
+            </div>
+            <div class="modal-body">
+                <div class="key-container text-center"></div>
+                <br>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 text-nowrap">Top legend:</label>
+                        <div class="col-md-9">
+                            <div class="form-inline">
+                                <div class="form-group" style="margin-right: 0;">
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" style="max-width: 80px">
+                                        <input class="form-control" type="text" style="max-width: 50px">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin: 0;">
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" style="max-width: 80px">
+                                        <input class="form-control" type="text" style="max-width: 50px">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin: 0;">
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" style="max-width: 80px">
+                                        <input class="form-control" type="text" style="max-width: 50px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 text-nowrap">Center legend:</label>
+                        <div class="col-md-9">
+                            <div class="form-inline">
+                                <div class="form-group" style="margin-right: 0;">
+                                    <div class="input-group">
+                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin: 0;">
+                                    <div class="input-group">
+                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin: 0;">
+                                    <div class="input-group">
+                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 text-nowrap">Bottom legend:</label>
+                        <div class="col-md-9">
+                            <div class="form-inline">
+                                <div class="form-group" style="margin-right: 0;">
+                                    <div class="input-group">
+                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin: 0;">
+                                    <div class="input-group">
+                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin: 0;">
+                                    <div class="input-group">
+                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 text-nowrap">Legend color:</label>
+                        <div class="col-md-9">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input size="10" class="form-control" type="color" value="#000000"
+                                           style="width: 60px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 text-nowrap">Key color:</label>
+                        <div class="col-md-9">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input size="10" class="form-control" type="color" value="#000000"
+                                           style="width: 60px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {#        <div class="form-group">#}
+                    {#            <label class="control-label col-md-3 text-nowrap">Key width:</label>#}
+                    {#            <div class="col-md-9">#}
+                    {#                <div class="form-inline">#}
+                    {#                    <div class="form-group">#}
+                    {#                        <input size="10" class="form-control" type="text">#}
+                    {#                    </div>#}
+                    {#                </div>#}
+                    {#            </div>#}
+                    {#        </div>#}
+                    {#        <div class="form-group">#}
+                    {#            <label class="control-label col-md-3 text-nowrap">Key height:</label>#}
+                    {#            <div class="col-md-9">#}
+                    {#                <div class="form-inline">#}
+                    {#                    <div class="form-group">#}
+                    {#                        <input size="10" class="form-control" type="text">#}
+                    {#                    </div>#}
+                    {#                </div>#}
+                    {#            </div>#}
+                    {#        </div>#}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary save">Apply changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div>
+
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
@@ -175,5 +468,7 @@
 <script src="{% static "js/preset.js" %}"></script>
 <script src="{% static "js/ready.js" %}"></script>
 <script src="{% static "js/color.js" %}"></script>
+<script src="{% static "js/popup.js" %}"></script>
+<script src="{% static "js/render.js" %}"></script>
 </body>
 </html>

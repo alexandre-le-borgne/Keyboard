@@ -8,20 +8,33 @@ var layers = [];
 var currentTabLayersIndex = 1;
 var currentMacroIndex = 0;
 var colorKey;
+var classicalPressetsLoaded = [];
+
+var getClassicalPresset = function (name) {
+    var preset;
+    if (typeof classicalPressetsLoaded[name] == 'undefined') {
+        $.ajax({
+            url: "/classical/" + name.replace(' ', '_'),
+            dataType: "json"
+        }).done(function (response) {
+            preset = new Preset(name, response);
+            classicalPressetsLoaded[name] = preset;
+            preset.draw($("#presets-classical").find(".preset"));
+        });
+    }
+    else {
+        classicalPressetsLoaded[name].draw($("#presets-classical").find(".preset"));
+    }
+
+};
 
 var loadClassicalPressets = $.ajax({
-    url: "/static/json/classicals.json",
+    url: "/classicals",
     dataType: "json"
 }).done(function (response) {
-    var presets = response['presets'];
-    var preset;
-
-    for (var j in presets) {
-        preset = presets[j];
+    for (var j in response) {
         $("#presets-classical").find('select').append(
-            $("<option></option>").text(preset['name']).data(
-                'preset', new Preset(preset['name'], preset['data'])
-            )
+            $("<option></option>").text(response[j])
         );
     }
 });
@@ -112,9 +125,10 @@ var addSpecialKeys = function (char, scope) {
         zIndex: 1000,
         cursor: 'move'
     };
-    if(typeof scope !== 'undefined')
+    if (typeof scope !== 'undefined')
         settings.scope = scope;
     key.draggable(settings).addClass('special');
+    console.log(key.find('.key').data('key'));
     return key;
 };
 
@@ -181,23 +195,30 @@ var load = function () {
                 $('#layers-two').find('#toggle-keys .keys .key-container:eq(' + index + ')')
             ).css('opacity', '0.5').draggable("disable");
         },
-        show: 'fade',
-        hide: 'fade'
+        show: {effect: "fade", duration: 300},
+        hide: {effect: "fade", duration: 300}
     });
     $('#preset-ergofip').find('#preset-ergofip-container').tabs('option', 'active', 0);
 };
 
 var rapidLaunch = function () {
-    var preset = $("#presets-classical").find("select option:eq(3)").data('preset');
-    classicalPreset = preset.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
-    selectedErgofip = $("#presets-ergofip").find("select option:eq(2)").data('preset');
-    ergofipPresset = selectedErgofip.draw($("#preset-ergofip").find("#preset-ergofip-container").show().find(".preset"));
-    layers[currentTabLayersIndex] = ergofipPresset;
-    loadDraggableClassical(classicalPreset);
-    loadSelectableKeys(ergofipPresset);
-    $("#layers-one").find("#preset-classical-empty").hide();
-    $("#preset-ergofip").find("#preset-ergofip-empty").hide();
-    $("#body").tabs("option", "active", 4);
+    $.ajax({
+        url: "/classical/ANSI_104",
+        dataType: "json"
+    }).done(function (response) {
+        var preset = new Preset('ANSI 104', response);
+        classicalPressetsLoaded['ANSI 104'] = preset;
+        preset.draw($("#presets-classical").find(".preset"));
+        classicalPreset = preset.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
+        selectedErgofip = $("#presets-ergofip").find("select option:eq(2)").data('preset');
+        ergofipPresset = selectedErgofip.draw($("#preset-ergofip").find("#preset-ergofip-container").show().find(".preset"));
+        layers[currentTabLayersIndex] = ergofipPresset;
+        loadDraggableClassical(classicalPreset);
+        loadSelectableKeys(ergofipPresset);
+        $("#layers-one").find("#preset-classical-empty").hide();
+        $("#preset-ergofip").find("#preset-ergofip-empty").hide();
+        $("#body").tabs("option", "active", 1);
+    });
 };
 
 $(function () {
@@ -206,21 +227,35 @@ $(function () {
 
     $("#body").tabs({
         activate: function (event, ui) {
-            if (ui.newPanel.attr('id') == 'presets') {
+            if (ui.newPanel.attr('id') == 'presets' || ui.newPanel.attr('id') == 'brands' || ui.newPanel.attr('id') == 'ergonomics') {
                 $("#preset-ergofip").hide();
             }
             else {
                 $("#preset-ergofip").show();
             }
 
+            if (ui.newPanel.attr('id') == 'layers-one') {
+                $("#preset-ergofip-container .presets .key").off('click').click(function () {
+                    loadPopupKey($(this).data('key'));
+                })
+            }
+            else {
+                $("#preset-ergofip-container .presets .key").off('click');
+            }
+
+            if (ui.newPanel.attr('id') == 'colors') {
+                $("#preset-ergofip-container .presets").selectable('option', 'disabled', false);
+            }
+            else {
+                $("#preset-ergofip-container .presets").selectable('option', 'disabled', true).find('.key-border').removeClass('ui-selected');
+            }
+
             if (ui.newPanel.attr('id') == 'keys') {
                 $('#preset-ergofip').find(".key-border").draggable('option', 'disabled', false);
-                $("#preset-ergofip-container .presets").selectable('option', 'disabled', true).find('.key-border').removeClass('ui-selected');
             }
 
             if (ui.oldPanel.attr('id') == 'keys') {
                 $('#preset-ergofip').find(".key-border").draggable('option', 'disabled', true);
-                $("#preset-ergofip-container .presets").selectable('option', 'disabled', false);
             }
 
             $(ui.oldTab).removeClass("active");
@@ -242,7 +277,7 @@ $(function () {
     colorKey.find('.key');
     $('#colors #key').append(colorKey);
 
-    $('#keys #specials').append(addSpecialKeys('Delay 10ms', 'macro'));
+    $('#keys #specials').append(addSpecialKeys('Delay 10ms', 'macro').addClass('delay'));
 
     addMacro();
 
@@ -257,6 +292,10 @@ $(function () {
     // ------------------------------------------------------------------------------
     // EVENTS
     // ------------------------------------------------------------------------------
+
+    $("#keys #macros .keys").on('click', ' .delay .key', function () {
+        loadPopupDelay($(this));
+    });
 
     $("#layers-one").find("#preset-classical-empty button").click(function () {
         $("#body").tabs("option", "active", 0);
@@ -291,10 +330,7 @@ $(function () {
     });
 
     $("#presets-classical").find("select").change(function () {
-        var preset = $("option:selected", this).data('preset');
-        if (preset) {
-            preset.draw($("#presets-classical").find(".preset"));
-        }
+        getClassicalPresset($("option:selected", this).text());
     });
 
     $("#presets-ergofip").find("select").change(function () {
@@ -344,6 +380,11 @@ $(function () {
             $('#preset-ergofip').find('#preset-ergofip-container').tabs("refresh");
             $('#preset-ergofip').find('#preset-ergofip-container').tabs('option', 'active', currentIndex + 1);
 
+            // Réactualiser les tabs en haut pour rendre les touche du clavier dropable pour la page Keys
+            var bodyIndex = $("#body").tabs("option", "active");
+            $("#body").tabs("option", "active", 0);
+            $("#body").tabs("option", "active", bodyIndex);
+
         }
     });
 
@@ -390,6 +431,11 @@ $(function () {
 
     $('#keys #keys-add-macro').click(function () {
         addMacro();
+    });
+
+    $("#brands .media").click(function () {
+        $("#brands .media").removeClass('active');
+        $(this).addClass('active');
     });
 
 });

@@ -56,6 +56,6 @@ var defaultSettings = {
     rx: 0,          // Position du centre de rotation en x
     ry: 0,          // Position du centre de rotation en y
     a: 4,           // Type de positionnement des labels
-    c: "#fff",      // Couleur de la touche
-    t: "#000"       // Couleur des labels
+    c: "#FFFFFF",      // Couleur de la touche
+    t: "#FFFFFF"       // Couleur des labels
 };
