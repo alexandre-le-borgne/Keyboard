@@ -39,7 +39,7 @@
 }
 
 .key-border.drop-accept .key {
-    border: 2px dotted;
+    border: 2px dotted #666;
 }
 
 .key-label {

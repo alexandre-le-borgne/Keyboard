@@ -9,12 +9,13 @@ var currentTabLayersIndex = 1;
 var currentMacroIndex = 0;
 var colorKey;
 var classicalPressetsLoaded = [];
+var ergofipPressetsLoaded = [];
 
 var getClassicalPresset = function (name) {
     var preset;
     if (typeof classicalPressetsLoaded[name] == 'undefined') {
         $.ajax({
-            url: "/classical/" + name.replace(' ', '_'),
+            url: "/classical/" + name,
             dataType: "json"
         }).done(function (response) {
             preset = new Preset(name, response);
@@ -28,30 +29,43 @@ var getClassicalPresset = function (name) {
 
 };
 
+var getErgofipPresset = function (name) {
+    var preset;
+    if (typeof ergofipPressetsLoaded[name] == 'undefined') {
+        $.ajax({
+            url: "/ergofip/" + name,
+            dataType: "json"
+        }).done(function (response) {
+            preset = new Preset(name, response);
+            ergofipPressetsLoaded[name] = preset;
+            preset.draw($("#presets-ergofip").find(".preset"));
+        });
+    }
+    else {
+        ergofipPressetsLoaded[name].draw($("#presets-ergofip").find(".preset"));
+    }
+
+};
+
+
 var loadClassicalPressets = $.ajax({
     url: "/classicals",
     dataType: "json"
 }).done(function (response) {
-    for (var j in response) {
+    for (var i in response) {
         $("#presets-classical").find('select').append(
-            $("<option></option>").text(response[j])
+            $("<option></option>").text(response[i])
         );
     }
 });
 
 var loadErgofipPressets = $.ajax({
-    url: "/static/json/ergofips.json",
+    url: "/ergofips",
     dataType: "json"
 }).done(function (response) {
-    var presets = response['presets'];
-    var preset;
-
-    for (var j in presets) {
-        preset = presets[j];
+    for (var i in response) {
         $("#presets-ergofip").find("select").append(
-            $("<option></option>").text(preset['name']).data(
-                'preset', new Preset(preset['name'], preset['data'])
-            )
+            $("<option></option>").text(response[i])
         );
     }
 });
@@ -115,7 +129,7 @@ var loadDraggableClassical = function (classical) {
 
 var addSpecialKeys = function (char, scope) {
     var labels = [];
-    labels[0] = new Label(char, Positions.TOP_RIGHT, defaultSettings.f, defaultSettings.t);
+    labels[0] = new Label(char, Positions.MIDDLE_CENTER, defaultSettings.f, defaultSettings.t);
     var key = new Key(labels, defaultSettings.x, defaultSettings.y, defaultSettings.w, defaultSettings.h,
         defaultSettings.c, defaultSettings.r, defaultSettings.rx, defaultSettings.ry).draw().element;
     var settings = {
@@ -203,21 +217,28 @@ var load = function () {
 
 var rapidLaunch = function () {
     $.ajax({
-        url: "/classical/ANSI_104",
+        url: "/classical/ANSI 104",
         dataType: "json"
     }).done(function (response) {
-        var preset = new Preset('ANSI 104', response);
-        classicalPressetsLoaded['ANSI 104'] = preset;
-        preset.draw($("#presets-classical").find(".preset"));
-        classicalPreset = preset.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
-        selectedErgofip = $("#presets-ergofip").find("select option:eq(2)").data('preset');
-        ergofipPresset = selectedErgofip.draw($("#preset-ergofip").find("#preset-ergofip-container").show().find(".preset"));
-        layers[currentTabLayersIndex] = ergofipPresset;
-        loadDraggableClassical(classicalPreset);
-        loadSelectableKeys(ergofipPresset);
-        $("#layers-one").find("#preset-classical-empty").hide();
-        $("#preset-ergofip").find("#preset-ergofip-empty").hide();
-        $("#body").tabs("option", "active", 1);
+        var classical = new Preset('ANSI 104', response);
+        classicalPressetsLoaded['ANSI 104'] = classical;
+        classical.draw($("#presets-classical").find(".preset"));
+        classicalPreset = classical.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
+
+        $.ajax({
+            url: "/ergofip/French",
+            dataType: "json"
+        }).done(function (response) {
+            var ergofip = new Preset('French', response);
+            ergofipPressetsLoaded['French'] = ergofip;
+            ergofipPresset = ergofip.draw($("#preset-ergofip").find("#preset-ergofip-container").show().find(".preset"));
+            layers[currentTabLayersIndex] = ergofipPresset;
+            loadDraggableClassical(classicalPreset);
+            loadSelectableKeys(ergofipPresset);
+            $("#layers-one").find("#preset-classical-empty").hide();
+            $("#preset-ergofip").find("#preset-ergofip-empty").hide();
+            $("#body").tabs("option", "active", 1);
+        });
     });
 };
 
@@ -308,7 +329,8 @@ $(function () {
     });
 
     $("#presets-classical").find("button").click(function () {
-        var preset = $("#presets-classical").find("select option:selected").data('preset');
+        var preset = classicalPressetsLoaded[$("#presets-classical").find("select option:selected").text()];
+        console.log($("#presets-classical").find("select option:selected").val());
         if (preset) {
             classicalPreset = preset.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
             loadDraggableClassical(classicalPreset);
@@ -318,7 +340,7 @@ $(function () {
     });
 
     $("#presets-ergofip").find("button").click(function () {
-        selectedErgofip = $("#presets-ergofip").find("select option:selected").data('preset');
+        selectedErgofip = ergofipPressetsLoaded[$("#presets-ergofip").find("select option:selected").text()];
         if (selectedErgofip) {
             ergofipPresset = selectedErgofip.draw($("#preset-ergofip").find("#preset-ergofip-container").show().find(".preset"));
             layers = [];
@@ -334,10 +356,7 @@ $(function () {
     });
 
     $("#presets-ergofip").find("select").change(function () {
-        var preset = $("option:selected", this).data('preset');
-        if (preset) {
-            preset.draw($("#presets-ergofip").find(".preset"));
-        }
+        getErgofipPresset($("option:selected", this).text());
     });
 
     $('#preset-ergofip').find('#add-layer').click(function () {
