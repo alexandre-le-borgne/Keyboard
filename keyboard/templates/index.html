@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
@@ -11,464 +12,529 @@
     <link rel="stylesheet" href="{% static "css/style2.css" %}">
 </head>
 <body>
-<div class="container" id="body">
-    <ul class="nav nav-pills">
-        <li class="active"><a href="#presets">Presets</a></li>
-        <li><a href="#layers-one">Layers I</a></li>
-        <li><a href="#layers-two">Layers II</a></li>
-        <li><a href="#colors">Colors</a></li>
-        <li><a href="#keys">Keys</a></li>
-        <li><a href="#brands">Brands</a></li>
-        <li><a href="#ergonomics">Ergonomics</a></li>
-    </ul>
-    <br>
-    <div id="presets">
+
+<div class="container">
+    <form class="pull-right" style="position: relative" name="ui" action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}"/>
+        <input name="language" type="hidden"/>
+        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+           aria-expanded="false">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_language_info for LANGUAGE_CODE as lang %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {{ lang.name_local }}
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            {% for language in languages %}
+                <li><a href="#"
+                       onclick="document.ui.language.value='{{ language.code }}'; document.ui.submit();">{{ language.name_local }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
+    <div id="body">
         <ul class="nav nav-pills">
-            <li class="active"><a href="#presets-classical">Classical</a></li>
-            <li><a href="#presets-ergofip">Ergofip</a></li>
+            <li class="active"><a href="#presets">{% trans "Presets" %}</a></li>
+            <li><a href="#layers-one">{% trans "Layers I" %}</a></li>
+            <li><a href="#layers-two">{% trans "Layers II" %}</a></li>
+            <li><a href="#colors">{% trans "Colors" %}</a></li>
+            <li><a href="#keys">{% trans "Keys" %}</a></li>
+            <li><a href="#brands">{% trans "Brands" %}</a></li>
+            <li><a href="#ergonomics">{% trans "Ergonomics" %}</a></li>
         </ul>
         <br>
-        <div id="presets-classical">
-            <select>
-                <option>Choose Keyboard Layout</option>
-                <option>----------------------</option>
-            </select>
+        <div id="presets">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="#presets-classical">{% trans "Classical" %}</a></li>
+                <li><a href="#presets-ergofip">Ergofip</a></li>
+            </ul>
             <br>
-            <br>
-            <div class="preset"></div>
-            <br>
-            <button type="button" class="btn btn-success">Choose this one</button>
-        </div>
-        <div id="presets-ergofip">
-            <select>
-                <option>Choose Keyboard Layout</option>
-                <option>----------------------</option>
-            </select>
-            <br>
-            <br>
-            <div class="preset"></div>
-            <br>
-            <button type="button" class="btn btn-success">Choose this one</button>
-        </div>
-    </div>
-    <div id="layers-one">
-        <div id="preset-classical-container">
-            <div class="preset"></div>
-        </div>
-        <div id="preset-classical-empty">
-            <h2>
-                Choose a classical preset first
-            </h2>
-            <button type="button" class="btn btn-success">Take me to Classical Pressets >></button>
-        </div>
-    </div>
-    <div id="layers-two">
-        <h3>Keys for other layers</h3>
-        <br>
-        <div>
-            <div id="goto-keys">
-                <h3>Keys to go to another layer</h3>
+            <div id="presets-classical">
+                <select>
+                    <option>{% trans "Choose Keyboard Layout" %}</option>
+                    <option>----------------------</option>
+                </select>
                 <br>
-                <div class="keys"></div>
+                <br>
+                <div class="preset"></div>
+                <br>
+                <button type="button" class="btn btn-success">{% trans "Choose this one" %}</button>
             </div>
-            <div id="toggle-keys">
-                <h3>Keys to toggle another layer</h3>
+            <div id="presets-ergofip">
+                <select>
+                    <option>{% trans "Choose Keyboard Layout" %}</option>
+                    <option>----------------------</option>
+                </select>
                 <br>
-                <div class="keys"></div>
+                <br>
+                <div class="preset"></div>
+                <br>
+                <button type="button" class="btn btn-success">{% trans "Choose this one" %}</button>
             </div>
         </div>
-    </div>
-    <div id="colors">
-        <h1>Colors</h1>
-        <div class="color-div">
-            <div id="hexagon">
-                <img id="hexagonwheel" style="margin:20px;" src="static/img/colormap.gif" usemap="#colormap"
-                     alt="colormap">
-                <map id="colormap" name="colormap" onmouseout="mouseOutMap()"></map>
-                <div id="selectedhexagon" style="position: relative; width: 21px; height: 21px; display: block;
-            top: -99px; left: 128px; background-image: url('static/img/selectedcolor.gif');">
+        <div id="layers-one">
+            <div id="preset-classical-container">
+                <div class="preset"></div>
+            </div>
+            <div id="preset-classical-empty">
+                <h2>
+                    {% trans "Choose a classical preset first" %}
+                </h2>
+                <button type="button" class="btn btn-success">{% trans "Take me to Classical Pressets" %} >></button>
+            </div>
+        </div>
+        <div id="layers-two">
+            <h3>{% trans "Keys for other layers" %}</h3>
+            <br>
+            <div>
+                <div id="goto-keys">
+                    <h3>{% trans "Keys to go to another layer" %}</h3>
+                    <br>
+                    <div class="keys"></div>
+                </div>
+                <div id="toggle-keys">
+                    <h3>{% trans "Keys to toggle another layer" %}</h3>
+                    <br>
+                    <div class="keys"></div>
                 </div>
             </div>
         </div>
-        <div class="color-div" style="padding-left:50px; padding-right:50px;">
-            <div id="divpreview" style="opacity: 1; background-color: rgb(255, 255, 255);">
-                &nbsp;
+        <div id="colors">
+            <h1>{% trans "Colors" %}</h1>
+            <div class="color-div">
+                <div id="hexagon">
+                    <img id="hexagonwheel" style="margin:20px;" src="static/img/colormap.gif" usemap="#colormap"
+                         alt="colormap">
+                    <map id="colormap" name="colormap" onmouseout="mouseOutMap()"></map>
+                    <div id="selectedhexagon" style="position: relative; width: 21px; height: 21px; display: block;
+            top: -99px; left: 128px; background-image: url('static/img/selectedcolor.gif');">
+                    </div>
+                </div>
             </div>
-            <h3>...or enter a Color:</h3>
-            <div id="entercolorDIV" class="input-group">
-                <input type="text" id="entercolor" class="form-control" placeholder="Colorvalue"
-                       onfocus="clearWrongInput();">
+            <div class="color-div" style="padding-left:50px; padding-right:50px;">
+                <div id="divpreview" style="opacity: 1; background-color: rgb(255, 255, 255);">
+                    &nbsp;
+                </div>
+                <h3>{% trans "...or enter a Color :" %}</h3>
+                <div id="entercolorDIV" class="input-group">
+                    <input type="text" id="entercolor" class="form-control" placeholder="Colorvalue"
+                           onfocus="clearWrongInput();">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" onclick="clickColor(0,-1,-1)">
                                 OK
                             </button>
                         </span>
-            </div>
-            <div id="wronginputDIV" style="display: none;">Wrong Input</div>
-            <br>
-            <div id="html5DIV">
-                <h3>...or use HTML5:</h3>
-                <input type="color" id="html5colorpicker" class="form-control" onchange="clickColor(0, -1, -1, 5)"
-                       value="#f0f000">
-            </div>
-        </div>
-        <div class="color-div" style="padding-left:50px; padding-right:50px;">
-            <h3>...and drag your color to your keys!</h3>
-            <div id="key" style="display: inline-block"></div>
-            <br><br>
-            <button type="button" id="colors-selected" class="btn btn-success">Apply to selected keys !</button>
-            <br>
-            <br>
-            <button type="button" id="colors-all" class="btn btn-success">Apply to all keys !</button>
-        </div>
-    </div>
-    <div id="keys">
-        <h1>Keys</h1>
-        <h3>Add delay between keys in your macro</h3>
-        <div id="specials"></div>
-        <br>
-        <div id="macros"></div>
-        <br>
-        <button id="keys-add-macro" class="btn btn-success">Add new macro !</button>
-        <br>
-    </div>
-    <div id="brands" class="col-md-10 col-md-offset-1">
-        <h1>Brands</h1>
-        <div class="media">
-            <div class="media-left">
-                <a href="#">
-                    <img class="media-object" src="{% static 'img/brown.gif' %}">
-                </a>
-            </div>
-            <div class="media-body">
-                <span>Cherry MX Brown Switches</span>
-                <ul>
-                    <li>Type: Tactile Switch</li>
-                    <li>Tactile: Yes</li>
-                    <li>Clicky: No</li>
-                    <li>Actuation Force: 55g (65G peak force)</li>
-                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
-                </ul>
-                <p>
-                    Cherry MX Clear switches have often been called "stiffer browns" though some users note that they
-                    have
-                    more of a tactile feel than browns do. This really can be a subjective topic, though this is another
-                    switch that could be considered "balanced." The force required is comparable to most rubber dome
-                    keyboards, with a nice tactile feedback to tell you the key has actuated. These switches are harder
-                    to
-                    find on keyboards.
-                </p>
-            </div>
-        </div>
-        <div class="media">
-            <div class="media-body">
-                <span>Cherry MX Red Switches</span>
-                <ul>
-                    <li>Type: Linear</li>
-                    <li>Tactile: No</li>
-                    <li>Clicky: No</li>
-                    <li>Actuation Force: 45g</li>
-                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
-                </ul>
-                <p>
-                    Cherry MX Reds are a very popular gaming switch option due to their low activation point and linear
-                    nature. Reds are a light switch, which allows for extremely fast keystrokes in serious situations.
-                    However, it should be noted that due to the ease of actuation on Red switches, people do often input
-                    accidental keystrokes, so make sure you know what you're in for.
-                </p>
-            </div>
-            <div class="media-right">
-                <a href="#">
-                    <img class="media-object" src="{% static 'img/red.gif' %}">
-                </a>
-            </div>
-        </div>
-        <div class="media">
-            <div class="media-left">
-                <a href="#">
-                    <img class="media-object" src="{% static 'img/black.gif' %}">
-                </a>
-            </div>
-            <div class="media-body">
-                <span>Cherry MX Black Switches</span>
-                <ul>
-                    <li>Type: Linear Switch</li>
-                    <li>Tactile: No</li>
-                    <li>Clicky: No</li>
-                    <li>Actuation Force: 60g (40g-80g overall)</li>
-                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
-                </ul>
-                <p>
-                    Cherry MX Black switches are linear (non-tactile) switches, these are considered one of the best
-                    switch types for gaming. When gaming, having a tactile bump does absolutely nothing because you're
-                    going to be bottoming out anyway. The actuation and release points are at the exact same position as
-                    well. This means that games which require a lot of double tapping become easier with Black switches
-                    than on any other keyswitch. However, most people don't enjoy typing on them that much do in part,
-                    to their linear nature.
-                </p>
-                <p>
-                    If you're a person who tends to hit a wrong key every so often while gaming, these will be
-                    beneficial
-                    in that the high actuation force will help prevent many of those accidental presses.
-                </p>
-            </div>
-        </div>
-        <div class="media">
-            <div class="media-body">
-                <span>Cherry MX Blue Switches</span>
-                <ul>
-                    <li>Type: Tactile &amp; Clicky Switch</li>
-                    <li>Tactile: Yes, precise</li>
-                    <li>Clicky: Yes</li>
-                    <li>Actuation Force: 50g (60g Peak Force)</li>
-                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
-                </ul>
-                <p>
-                    Cherry MX Blue switches are the best cherry switch for typing. The tactile bump can easily be felt,
-                    and the resistance is similar to your average keyboard. Although many people find them just fine for
-                    gaming, some don't like the fact that the release point is above the actuation point. This can cause
-                    some trouble with double-tapping. This is usually the case with someone who has experienced other
-                    mechanical switches before hand.
-                </p>
-            </div>
-            <div class="media-right">
-                <a href="#">
-                    <img class="media-object" src="{% static 'img/blue.gif' %}">
-                </a>
-            </div>
-        </div>
-        <div class="media">
-            <div class="media-left">
-                <a href="#">
-                    <img class="media-object" src="{% static 'img/white.gif' %}">
-                </a>
-            </div>
-            <div class="media-body">
-                <span>Cherry MX Clear Switches</span>
-                <ul>
-                    <li>Type: Tactile Switch</li>
-                    <li>Tactile: Yes</li>
-                    <li>Clicky: No</li>
-                    <li>Actuation Force: 55g (65G peak force)</li>
-                    <li>Key Travel: 2mm to actuation, 4mm to bottom</li>
-                </ul>
-                <p>
-                    Cherry MX Clear switches have often been called "stiffer browns" though some users note that they
-                    have more of a tactile feel than browns do. This really can be a subjective topic, though this is
-                    another switch that could be considered "balanced." The force required is comparable to most rubber
-                    dome keyboards, with a nice tactile feedback to tell you the key has actuated. These switches are
-                    harder to find on keyboards.
-                </p>
-            </div>
-        </div>
-    </div>
-    <div id="ergonomics">
-        <h1>Ergonomics</h1>
-        <br>
-        <br>
-        <button type="button" class="btn btn-success" id="generate-source">
-            Generate source of your configuration
-        </button>
-        <div></div>
-    </div>
-
-    <br>
-
-    <div id="preset-ergofip">
-        <div id="preset-ergofip-container">
-            <button type="button" class="btn btn-success pull-left" id="add-layer">Add a layer</button>
-            <ul class="nav nav-pills list-inline">
-                <li><a href="#layers-one-preset-ergofip-1">1 >></a></li>
-            </ul>
-            <h3>
-                <span class="label label-info">
-                    Layer <span class="badge">1</span></a>
-                </span>
-                <button type="button" id="reset-layer" class="btn btn-warning pull-right">Reset</button>
-                <button type="button" id="remove-layer" class="btn btn-danger pull-right">Remove</button>
-            </h3>
-            <div class="presets">
-                <div class="preset" data-index="1" id="layers-one-preset-ergofip-1"></div>
-            </div>
-        </div>
-        <div id="preset-ergofip-empty">
-            <h2>
-                Choose an Ergofip preset first
-            </h2>
-            <button type="button" class="btn btn-success">Take me to Ergofip Pressets >></button>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="popup-delay">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Choose the delay</h4>
-            </div>
-            <div class="modal-body">
-                <label class="control-label col-md-3 text-nowrap">Delay in ms:</label>
-                <input type="number" min="0">ms
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary save">Apply changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="popup-key">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit the key</h4>
-            </div>
-            <div class="modal-body">
-                <div class="key-container text-center"></div>
+                </div>
+                <div id="wronginputDIV" style="display: none;">{% trans "Wrong Input" %}</div>
                 <br>
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 text-nowrap">Top legend:</label>
-                        <div class="col-md-9">
-                            <div class="form-inline">
-                                <div class="form-group" style="margin-right: 0;">
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" style="max-width: 80px">
-                                        <input class="form-control" type="text" style="max-width: 50px">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="margin: 0;">
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" style="max-width: 80px">
-                                        <input class="form-control" type="text" style="max-width: 50px">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="margin: 0;">
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" style="max-width: 80px">
-                                        <input class="form-control" type="text" style="max-width: 50px">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 text-nowrap">Center legend:</label>
-                        <div class="col-md-9">
-                            <div class="form-inline">
-                                <div class="form-group" style="margin-right: 0;">
-                                    <div class="input-group">
-                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="margin: 0;">
-                                    <div class="input-group">
-                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="margin: 0;">
-                                    <div class="input-group">
-                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 text-nowrap">Bottom legend:</label>
-                        <div class="col-md-9">
-                            <div class="form-inline">
-                                <div class="form-group" style="margin-right: 0;">
-                                    <div class="input-group">
-                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="margin: 0;">
-                                    <div class="input-group">
-                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="margin: 0;">
-                                    <div class="input-group">
-                                        <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                        <input size="4" class="form-control" type="text" style="max-width: 50px">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 text-nowrap">Legend color:</label>
-                        <div class="col-md-9">
-                            <div class="form-inline">
-                                <div class="form-group">
-                                    <input size="10" class="form-control" type="color" value="#000000"
-                                           style="width: 60px">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 text-nowrap">Key color:</label>
-                        <div class="col-md-9">
-                            <div class="form-inline">
-                                <div class="form-group">
-                                    <input size="10" class="form-control" type="color" value="#000000"
-                                           style="width: 60px">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {#        <div class="form-group">#}
-                    {#            <label class="control-label col-md-3 text-nowrap">Key width:</label>#}
-                    {#            <div class="col-md-9">#}
-                    {#                <div class="form-inline">#}
-                    {#                    <div class="form-group">#}
-                    {#                        <input size="10" class="form-control" type="text">#}
-                    {#                    </div>#}
-                    {#                </div>#}
-                    {#            </div>#}
-                    {#        </div>#}
-                    {#        <div class="form-group">#}
-                    {#            <label class="control-label col-md-3 text-nowrap">Key height:</label>#}
-                    {#            <div class="col-md-9">#}
-                    {#                <div class="form-inline">#}
-                    {#                    <div class="form-group">#}
-                    {#                        <input size="10" class="form-control" type="text">#}
-                    {#                    </div>#}
-                    {#                </div>#}
-                    {#            </div>#}
-                    {#        </div>#}
-                </form>
+                <div id="html5DIV">
+                    <h3>{% trans "...or use HTML5:" %}</h3>
+                    <input type="color" id="html5colorpicker" class="form-control" onchange="clickColor(0, -1, -1, 5)"
+                           value="#f0f000">
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary save">Apply changes</button>
+            <div class="color-div" style="padding-left:50px; padding-right:50px;">
+                <h3>{% trans "...and drag your color to your keys !" %}</h3>
+                <div id="key" style="display: inline-block"></div>
+                <br><br>
+                <button type="button" id="colors-selected" class="btn btn-success">
+                    {% trans "Apply to selected keys !" %}</button>
+                <br>
+                <br>
+                <button type="button" id="colors-all" class="btn btn-success">{% trans "Apply to all keys !" %}</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div>
+        </div>
+        <div id="keys">
+            <h1>{% trans "Keys" %}</h1>
+            <h3>{% trans "Add delay between keys in your macro" %}</h3>
+            <div id="specials"></div>
+            <br>
+            <div id="macros"></div>
+            <br>
+            <button id="keys-add-macro" class="btn btn-success">{% trans "Add new macro !" %}</button>
+            <br>
+        </div>
+        <div id="brands" class="col-md-10 col-md-offset-1">
+            <h1>{% trans "Brands" %}</h1>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="{% static 'img/brown.gif' %}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <span>{% trans "Cherry MX Brown Switches" %}</span>
+                    <ul>
+                        <li>{% trans "Type:" %} {% trans "Tactile Switch" %}</li>
+                        <li>{% trans "Tactile:" %} {% trans "Yes" %}</li>
+                        <li>{% trans "Clicky:" %} {% trans "No" %}</li>
+                        <li>{% trans "Actuation Force:" %} {% trans "55g (65G peak force)" %}</li>
+                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                    </ul>
+                    <p>
+                        {% blocktrans %}
+                            Cherry MX Clear switches have often been called 'stiffer browns' though some users note that
+                            they
+                            have more of a tactile feel than browns do. This really can be a subjective topic, though
+                            this
+                            is another
+                            switch that could be considered "balanced." The force required is comparable to most rubber
+                            dome
+                            keyboards, with a nice tactile feedback to tell you the key has actuated. These switches are
+                            harder
+                            to find on keyboards.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-body">
+                    <span>Cherry MX Red Switches</span>
+                    <ul>
+                        <li>{% trans "Type:" %} {% trans "Linear" %}</li>
+                        <li>{% trans "Tactile:" %} {% trans "No" %}</li>
+                        <li>{% trans "Clicky:" %} {% trans "No" %}</li>
+                        <li>{% trans "Actuation Force:" %} {% trans "45g" %}</li>
+                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                    </ul>
+                    <p>
+                        {% blocktrans %}
+                            Cherry MX Reds are a very popular gaming switch option due to their low activation point and
+                            linear
+                            nature. Reds are a light switch, which allows for extremely fast keystrokes in serious
+                            situations.
+                            However, it should be noted that due to the ease of actuation on Red switches, people do
+                            often
+                            input
+                            accidental keystrokes, so make sure you know what you're in for.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+                <div class="media-right">
+                    <a href="#">
+                        <img class="media-object" src="{% static 'img/red.gif' %}">
+                    </a>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="{% static 'img/black.gif' %}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <span>Cherry MX Black Switches</span>
+                    <ul>
+                        <li>{% trans "Type:" %} {% trans "Linear Switch" %}</li>
+                        <li>{% trans "Tactile:" %} {% trans "No" %}</li>
+                        <li>{% trans "Clicky:" %} {% trans "No" %}</li>
+                        <li>{% trans "Actuation Force:" %} {% trans "60g (40g-80g overall)" %}</li>
+                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                    </ul>
+                    <p>
+                        {% blocktrans %}
+                            Cherry MX Black switches are linear (non-tactile) switches, these are considered one of the
+                            best
+                            switch types for gaming. When gaming, having a tactile bump does absolutely nothing because
+                            you're
+                            going to be bottoming out anyway. The actuation and release points are at the exact same
+                            position as
+                            well. This means that games which require a lot of double tapping become easier with Black
+                            switches
+                            than on any other keyswitch. However, most people don't enjoy typing on them that much do in
+                            part,
+                            to their linear nature.
+                        {% endblocktrans %}
+                    </p>
+                    <p>
+                        {% blocktrans %}
+                            If you're a person who tends to hit a wrong key every so often while gaming, these will be
+                            beneficial
+                            in that the high actuation force will help prevent many of those accidental presses.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-body">
+                    <span>Cherry MX Blue Switches</span>
+                    <ul>
+                        <li>{% trans "Type:" %} {% trans "Tactile &amp; Clicky Switch" %}</li>
+                        <li>{% trans "Tactile:" %} {% trans "Yes, precise" %}</li>
+                        <li>{% trans "Clicky:" %} {% trans "Yes" %}</li>
+                        <li>{% trans "Actuation Force:" %} {% trans "50g (60g Peak Force)" %}</li>
+                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                    </ul>
+                    <p>
+                        {% blocktrans %}
+                            Cherry MX Blue switches are the best cherry switch for typing. The tactile bump can easily
+                            be
+                            felt,
+                            and the resistance is similar to your average keyboard. Although many people find them just
+                            fine
+                            for
+                            gaming, some don't like the fact that the release point is above the actuation point. This
+                            can
+                            cause
+                            some trouble with double-tapping. This is usually the case with someone who has experienced
+                            other
+                            mechanical switches before hand.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+                <div class="media-right">
+                    <a href="#">
+                        <img class="media-object" src="{% static 'img/blue.gif' %}">
+                    </a>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="{% static 'img/white.gif' %}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <span>Cherry MX Clear Switches</span>
+                    <ul>
+                        <li>{% trans "Type:" %} {% trans "Tactile Switch" %}</li>
+                        <li>{% trans "Tactile:" %} {% trans "Yes" %}</li>
+                        <li>{% trans "Clicky:" %} {% trans "No" %}</li>
+                        <li>{% trans "Actuation Force:" %} {% trans "55g (65G peak force)" %}</li>
+                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                    </ul>
+                    <p>
+                        {% blocktrans %}
+                            Cherry MX Clear switches have often been called "stiffer browns" though some users note that
+                            they
+                            have more of a tactile feel than browns do. This really can be a subjective topic, though
+                            this
+                            is
+                            another switch that could be considered "balanced." The force required is comparable to most
+                            rubber
+                            dome keyboards, with a nice tactile feedback to tell you the key has actuated. These
+                            switches
+                            are
+                            harder to find on keyboards.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="ergonomics">
+            <h1>{% trans "Ergonomics" %}</h1>
+            <br>
+            <br>
+            <button type="button" class="btn btn-success" id="generate-source">
+                {% trans "Generate source of your configuration" %}
+            </button>
+            <div></div>
+        </div>
 
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="{% static "js/consts.js" %}"></script>
-<script src="{% static "js/parser.js" %}"></script>
-<script src="{% static "js/preset.js" %}"></script>
-<script src="{% static "js/ready.js" %}"></script>
-<script src="{% static "js/color.js" %}"></script>
-<script src="{% static "js/popup.js" %}"></script>
-<script src="{% static "js/render.js" %}"></script>
+        <br>
+
+        <div id="preset-ergofip">
+            <div id="preset-ergofip-container">
+                <button type="button" class="btn btn-success pull-left"
+                        id="add-layer">{% trans "Add a layer" %}</button>
+                <ul class="nav nav-pills list-inline">
+                    <li><a href="#layers-one-preset-ergofip-1">1 >></a></li>
+                </ul>
+                <h3>
+                <span class="label label-info">
+                    {% trans "Layer" %} <span class="badge">1</span></a>
+                </span>
+                    <button type="button" id="reset-layer"
+                            class="btn btn-warning pull-right">{% trans "Reset" %}</button>
+                    <button type="button" id="remove-layer"
+                            class="btn btn-danger pull-right">{% trans "Remove" %}</button>
+                </h3>
+                <div class="presets">
+                    <div class="preset" data-index="1" id="layers-one-preset-ergofip-1"></div>
+                </div>
+            </div>
+            <div id="preset-ergofip-empty">
+                <h2>
+                    {% trans "Choose an Ergofip preset first" %}
+                </h2>
+                <button type="button" class="btn btn-success">{% trans "Take me to Ergofip Pressets" %} >></button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="popup-delay">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{% trans "Close" %}"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{% trans "Choose the delay" %}</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="control-label col-md-3 text-nowrap">{% trans "Delay in ms:" %}</label>
+                    <input type="number" min="0">ms
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+                    <button type="button" class="btn btn-primary save">{% trans "Apply changes" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="popup-key">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{% trans "Close" %}"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{% trans "Edit the key" %}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="key-container text-center"></div>
+                    <br>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 text-nowrap">{% trans "Top legend :" %}</label>
+                            <div class="col-md-9">
+                                <div class="form-inline">
+                                    <div class="form-group" style="margin-right: 0;">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" style="max-width: 80px">
+                                            <input class="form-control" type="text" style="max-width: 50px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin: 0;">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" style="max-width: 80px">
+                                            <input class="form-control" type="text" style="max-width: 50px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin: 0;">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" style="max-width: 80px">
+                                            <input class="form-control" type="text" style="max-width: 50px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 text-nowrap">{% trans "Center legend :" %}</label>
+                            <div class="col-md-9">
+                                <div class="form-inline">
+                                    <div class="form-group" style="margin-right: 0;">
+                                        <div class="input-group">
+                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                            <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin: 0;">
+                                        <div class="input-group">
+                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                            <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin: 0;">
+                                        <div class="input-group">
+                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                            <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 text-nowrap">{% trans "Bottom legend :" %}</label>
+                            <div class="col-md-9">
+                                <div class="form-inline">
+                                    <div class="form-group" style="margin-right: 0;">
+                                        <div class="input-group">
+                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                            <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin: 0;">
+                                        <div class="input-group">
+                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                            <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin: 0;">
+                                        <div class="input-group">
+                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
+                                            <input size="4" class="form-control" type="text" style="max-width: 50px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 text-nowrap">{% trans "Legend color :" %}</label>
+                            <div class="col-md-9">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <input size="10" class="form-control" type="color" value="#000000"
+                                               style="width: 60px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 text-nowrap">{% trans "Key color :" %}</label>
+                            <div class="col-md-9">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <input size="10" class="form-control" type="color" value="#000000"
+                                               style="width: 60px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {#        <div class="form-group">#}
+                        {#            <label class="control-label col-md-3 text-nowrap">Key width:</label>#}
+                        {#            <div class="col-md-9">#}
+                        {#                <div class="form-inline">#}
+                        {#                    <div class="form-group">#}
+                        {#                        <input size="10" class="form-control" type="text">#}
+                        {#                    </div>#}
+                        {#                </div>#}
+                        {#            </div>#}
+                        {#        </div>#}
+                        {#        <div class="form-group">#}
+                        {#            <label class="control-label col-md-3 text-nowrap">Key height:</label>#}
+                        {#            <div class="col-md-9">#}
+                        {#                <div class="form-inline">#}
+                        {#                    <div class="form-group">#}
+                        {#                        <input size="10" class="form-control" type="text">#}
+                        {#                    </div>#}
+                        {#                </div>#}
+                        {#            </div>#}
+                        {#        </div>#}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+                    <button type="button" class="btn btn-primary save">{% trans "Apply changes" %}</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    <script src="{% static "js/consts.js" %}"></script>
+    <script src="{% static "js/parser.js" %}"></script>
+    <script src="{% static "js/preset.js" %}"></script>
+    <script src="{% static "js/ready.js" %}"></script>
+    <script src="{% static "js/color.js" %}"></script>
+    <script src="{% static "js/popup.js" %}"></script>
+    <script src="{% static "js/render.js" %}"></script>
 </body>
 </html>

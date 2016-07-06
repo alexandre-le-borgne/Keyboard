@@ -298,7 +298,7 @@ $(function () {
     colorKey.find('.key');
     $('#colors #key').append(colorKey);
 
-    $('#keys #specials').append(addSpecialKeys('Delay 10ms', 'macro').addClass('delay'));
+    $('#keys #specials').append(addSpecialKeys(gettext('Delay')+' 10ms', 'macro').addClass('delay'));
 
     addMacro();
 

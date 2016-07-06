@@ -25,7 +25,7 @@ var positionToInputs = function(position) {
 var clone;
 $(function () {
     $('#popup-delay .save').click(function() {
-        $('#popup-delay').data('key').find('.key-label div').text('Delay ' + $('#popup-delay input').val() + 'ms');
+        $('#popup-delay').data('key').find('.key-label div').text(gettext('Delay') + ' ' + $('#popup-delay input').val() + 'ms');
         $('#popup-delay').modal('hide');
     });
 
