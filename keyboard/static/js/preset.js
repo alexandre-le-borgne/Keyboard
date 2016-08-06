@@ -1,14 +1,51 @@
 /**
  * Created by Alexandre on 09/04/2016.
  */
+var createPresetFromParser = function (name, data) {
+    return new Preset(name, Parser.parse(data));
+};
 
-var Preset = function (name, data) {
+var parseKeysFromSave = function (keys) {
+    var keysParsed = [];
+    var i, j, key, labels, label;
+    for (i in keys) {
+        key = keys[i];
+        labels = [];
+        for (j in key.labels) {
+            label = key.labels[j];
+            labels.push(new Label(label.value, label.position, label.size));
+        }
+        keysParsed.push(new Key(labels, key.x, key.y, key.width, key.height, key.color, key.labelcolor, key.rotation_angle, key.rotation_x, key.rotation_y))
+    }
+    return keysParsed;
+};
+
+var createLayersFromSave = function (data) {
+    var layers = [];
+    var name = data.preset.name;
+    var i, layer, keyboard;
+    for (i in data.layers) {
+        layer = data.layers[i];
+        keyboard = new Keyboard();
+        keyboard.keys = parseKeysFromSave(layer.keys);
+        layers.push(new Preset(name, keyboard));
+    }
+
+    keyboard = new Keyboard();
+    keyboard.keys = parseKeysFromSave(data.preset.keyboard.keys);
+    var preset = new Preset(name, keyboard);
+
+    return {
+        layers: layers,
+        preset: preset
+    };
+};
+
+var Preset = function (name, keyboard) {
     this.name = name;
-    this.data = data;
     this.parsedData = null;
-    this.keyboard = null;
+    this.keyboard = keyboard;
     this.draw = function (selector) {
-        this.keyboard = Parser.parse(this.data);
         this.parsedData = this.keyboard.draw();
         selector.html(this.parsedData.element).css({
             "min-height": this.parsedData.height + "px",
@@ -46,7 +83,7 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
     this.height = height;
     this.color = color;
     this.labelcolor = labelcolor;
-    this.rotation_angle = rotation_angle;
+    this.rotation_angle = rotation_angle || 0;
     this.rotation_x = rotation_x || 0;
     this.rotation_y = rotation_y || 0;
     this.draw = function () {
@@ -71,13 +108,13 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
         for (var i in this.labels) {
             child.append(this.labels[i].draw());
         }
-        if (typeof this.rotation_angle == "undefined") {
-            height = top + height + Constantes.BORDER_SIZE;
-            width = left + width + Constantes.BORDER_SIZE;
-        }
-        else {
+        if (this.rotation_angle) {
             height = top + ry / 2 + Constantes.BORDER_SIZE;
             width = left + rx / 2 + Constantes.BORDER_SIZE;
+        }
+        else {
+            height = top + height + Constantes.BORDER_SIZE;
+            width = left + width + Constantes.BORDER_SIZE;
         }
         return {
             element: this.element,

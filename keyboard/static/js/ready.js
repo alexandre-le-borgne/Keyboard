@@ -18,7 +18,7 @@ var getClassicalPresset = function (name) {
             url: "/classical/" + name,
             dataType: "json"
         }).done(function (response) {
-            preset = new Preset(name, response);
+            preset = createPresetFromParser(name, response);
             classicalPressetsLoaded[name] = preset;
             preset.draw($("#presets-classical").find(".preset"));
         });
@@ -36,7 +36,7 @@ var getErgofipPresset = function (name) {
             url: "/ergofip/" + name,
             dataType: "json"
         }).done(function (response) {
-            preset = new Preset(name, response);
+            preset = createPresetFromParser(name, response);
             ergofipPressetsLoaded[name] = preset;
             preset.draw($("#presets-ergofip").find(".preset"));
         });
@@ -142,7 +142,6 @@ var addSpecialKeys = function (char, scope) {
     if (typeof scope !== 'undefined')
         settings.scope = scope;
     key.draggable(settings).addClass('special');
-    console.log(key.find('.key').data('key'));
     return key;
 };
 
@@ -220,7 +219,7 @@ var rapidLaunch = function () {
         url: "/classical/ANSI 104",
         dataType: "json"
     }).done(function (response) {
-        var classical = new Preset('ANSI 104', response);
+        var classical = createPresetFromParser('ANSI 104', response);
         classicalPressetsLoaded['ANSI 104'] = classical;
         classical.draw($("#presets-classical").find(".preset"));
         classicalPreset = classical.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
@@ -229,8 +228,9 @@ var rapidLaunch = function () {
             url: "/ergofip/French",
             dataType: "json"
         }).done(function (response) {
-            var ergofip = new Preset('French', response);
+            var ergofip = createPresetFromParser('French', response);
             ergofipPressetsLoaded['French'] = ergofip;
+            selectedErgofip = ergofip;
             ergofipPresset = ergofip.draw($("#preset-ergofip").find("#preset-ergofip-container").show().find(".preset"));
             layers[currentTabLayersIndex] = ergofipPresset;
             loadDraggableClassical(classicalPreset);
@@ -330,7 +330,6 @@ $(function () {
 
     $("#presets-classical").find("button").click(function () {
         var preset = classicalPressetsLoaded[$("#presets-classical").find("select option:selected").text()];
-        console.log($("#presets-classical").find("select option:selected").val());
         if (preset) {
             classicalPreset = preset.draw($("#layers-one").find("#preset-classical-container").show().find(".preset"));
             loadDraggableClassical(classicalPreset);

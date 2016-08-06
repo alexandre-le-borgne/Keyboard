@@ -34,10 +34,8 @@ var renderLayers = function () {
 
     });
     return {
-        preset: {
-            name: selectedErgofip.name,
-            layers: layers
-        }
+        preset: selectedErgofip,
+        layers: layers
     };
 };
 
