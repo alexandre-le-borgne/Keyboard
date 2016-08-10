@@ -45,11 +45,14 @@ var Preset = function (name, keyboard) {
     this.name = name;
     this.parsedData = null;
     this.keyboard = keyboard;
+    this.clone = function() {
+        return new Preset(this.name, this.keyboard.clone());
+    };
     this.draw = function (selector) {
-        this.parsedData = this.keyboard.draw();
-        selector.html(this.parsedData.element).css({
-            "min-height": this.parsedData.height + "px",
-            "min-width": this.parsedData.width + "px"
+        var keyboard = this.keyboard.draw();
+        selector.html(keyboard.element).css({
+            "min-height": keyboard.height + "px",
+            "min-width": keyboard.width + "px"
         });
         return this;
     };
@@ -58,6 +61,14 @@ var Preset = function (name, keyboard) {
 var Keyboard = function () {
     this.keys = [];
     this.element = $('<div></div>').addClass("keyboard");
+    this.clone = function() {
+        var keyboard = new Keyboard();
+        var i;
+        for(i in this.keys) {
+            keyboard.keys.push(this.keys[i].clone());
+        }
+        return keyboard;
+    };
     this.draw = function () {
         var keyData;
         var height = 0;
@@ -86,6 +97,15 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
     this.rotation_angle = rotation_angle || 0;
     this.rotation_x = rotation_x || 0;
     this.rotation_y = rotation_y || 0;
+    this.clone = function() {
+        var labels = [];
+        var i;
+        for(i in this.labels) {
+            labels.push(this.labels[i].clone());
+        }
+        return new Key(labels, this.x, this.y, this.width, this.height, this.color, this.labelcolor,
+            this.rotation_angle, this.rotation_x, this.rotation_y);
+    };
     this.draw = function () {
         var left = (this.x * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE));
         var top = (this.y * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE));
@@ -150,6 +170,9 @@ var Label = function (value, position, size) {
     this.value = value;
     this.position = position;
     this.size = size;
+    this.clone = function() {
+        return new Label(this.value, this.position, this.size);
+    };
     this.draw = function () {
         this.element.find('div').html(this.value).css({
             'font-size': Parser.getTextSize(this.size) + 'px',

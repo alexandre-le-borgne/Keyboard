@@ -1,8 +1,8 @@
 /**
  * Created by l14011190 on 09/03/16.
  */
-var classicalPreset;
-var ergofipPresset;
+var classicalPreset; // Clavier classique actuelement choisit et déssiné
+var ergofipPresset; // Clavier ergofip actuelement choisit
 var selectedErgofip;
 var layers = [];
 var currentTabLayersIndex = 1;
@@ -11,6 +11,11 @@ var colorKey;
 var classicalPressetsLoaded = [];
 var ergofipPressetsLoaded = [];
 
+/**
+ * Récupérer un clavier classique par son nom s'il n'a pas déjà été chargé et le déssiné sur la 1ere page de
+ * prévisualisation des claviers
+ * @param name
+ */
 var getClassicalPresset = function (name) {
     var preset;
     if (typeof classicalPressetsLoaded[name] == 'undefined') {
@@ -29,6 +34,11 @@ var getClassicalPresset = function (name) {
 
 };
 
+/**
+ * Récupérer un clavier ergofip par son nom s'il n'a pas déjà été chargé et le déssiné sur la 1ere page de
+ * prévisualisation des claviers
+ * @param name
+ */
 var getErgofipPresset = function (name) {
     var preset;
     if (typeof ergofipPressetsLoaded[name] == 'undefined') {
@@ -76,6 +86,10 @@ var loadSelectableKeys = function (ergofip) {
         key.element.find(".key-border").droppable({
             hoverClass: "drop-hover",
             tolerance: "pointer",
+            accept: function(ui) {
+                // Refuser que les touches dans les macros ne soient droppable dans les layers de l'ergofip
+                return $(ui).closest('#macros .keys').length == 0;
+            },
             drop: function (event, ui) {
                 var key = ui.draggable.find(".key");
                 if (ui.draggable.hasClass('color')) {
@@ -137,10 +151,11 @@ var addSpecialKeys = function (char, scope) {
         helper: 'clone',
         opacity: 0.9,
         zIndex: 1000,
-        cursor: 'move'
+        cursor: 'move',
     };
     if (typeof scope !== 'undefined')
         settings.scope = scope;
+    console.log(settings);
     key.draggable(settings).addClass('special');
     return key;
 };
@@ -164,7 +179,6 @@ var addMacro = function () {
         $('<div></div>').addClass('keys').sortable({
             cursor: 'move',
             axis: "x",
-
             // See https://github.com/angular-ui/ui-sortable/issues/19
             start: function (e, ui) {
                 $(e.target).data("ui-sortable").floating = true;
@@ -174,6 +188,10 @@ var addMacro = function () {
             },
             out: function (e, ui) {
                 ui.item.parent().parent().removeClass('sortable-hover');
+            },
+            beforeStop: function (event, ui) {
+                if(!ui.item.parent().parent().hasClass('sortable-hover'))
+                    ui.item.remove();
             }
         })
     ).append(
@@ -298,7 +316,7 @@ $(function () {
     colorKey.find('.key');
     $('#colors #key').append(colorKey);
 
-    $('#keys #specials').append(addSpecialKeys(gettext('Delay')+' 10ms', 'macro').addClass('delay'));
+    $('#keys #specials').append(addSpecialKeys(gettext('Delay') + ' 10ms', 'macro').addClass('delay'));
 
     addMacro();
 
@@ -367,7 +385,7 @@ $(function () {
             var preset = $('<div></div>').addClass('preset')
                 .attr('id', 'layers-one-preset-ergofip-' + currentTabLayersIndex)
                 .attr('data-index', currentTabLayersIndex);
-            var ergofip = selectedErgofip.draw(preset);
+            var ergofip = selectedErgofip.clone().draw(preset);
 
             loadSelectableKeys(ergofip);
 
