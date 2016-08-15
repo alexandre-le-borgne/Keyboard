@@ -70,10 +70,11 @@ var Keyboard = function () {
         return keyboard;
     };
     this.draw = function () {
-        var keyData;
+        var keyData, i;
         var height = 0;
         var width = 0;
-        for (var i in this.keys) {
+        this.element.html('');
+        for (i in this.keys) {
             keyData = this.keys[i].draw();
             if (keyData.height > height) height = keyData.height;
             if (keyData.width > width) width = keyData.width;
@@ -124,7 +125,7 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
             "width": width + "px",
             "background-color": this.color,
             "color": this.labelcolor
-        });
+        }).empty();
         for (var i in this.labels) {
             child.append(this.labels[i].draw());
         }
@@ -136,6 +137,7 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
             height = top + height + Constantes.BORDER_SIZE;
             width = left + width + Constantes.BORDER_SIZE;
         }
+
         return {
             element: this.element,
             height: height,
