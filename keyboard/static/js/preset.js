@@ -43,7 +43,6 @@ var createLayersFromSave = function (data) {
 
 var Preset = function (name, keyboard) {
     this.name = name;
-    this.parsedData = null;
     this.keyboard = keyboard;
     this.clone = function() {
         return new Preset(this.name, this.keyboard.clone());
@@ -87,7 +86,7 @@ var Keyboard = function () {
 var Key = function (labels, x, y, width, height, color, labelcolor, rotation_angle, rotation_x, rotation_y) {
     this.element = $('<div></div>').addClass("key-container").append(
         $('<div></div>').addClass("key-border").append(
-            $('<div></div>').addClass("key").data('key', this)));
+            $('<div></div>').addClass("key")));
     this.labels = labels;
     this.x = x;
     this.y = y;
@@ -125,7 +124,7 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
             "width": width + "px",
             "background-color": this.color,
             "color": this.labelcolor
-        }).empty();
+        }).data('key', this).empty();
         for (var i in this.labels) {
             child.append(this.labels[i].draw());
         }
@@ -145,10 +144,10 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
         };
     };
     this.copy = function (key) {
-        var label;
+        var label, i;
         var child = this.element.find('.key').empty();
         this.labels = [];
-        for (var i in key.labels) {
+        for (i in key.labels) {
             label = key.labels[i];
             this.labels.push(new Label(label.value, label.position, label.size));
             for (var i in this.labels) {

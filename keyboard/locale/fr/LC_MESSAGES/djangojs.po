@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-06 22:19+0200\n"
+"POT-Creation-Date: 2016-08-21 17:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\keyboard\static\js\popup.js:28 .\keyboard\static\js\ready.js.c:301
+#: .\keyboard\static\js\popup.js:19 .\keyboard\static\js\ready.js.c:320
 msgid "Delay"
 msgstr "Délai"
+
+#: .\keyboard\static\js\ready.js:361
+msgid ""
+"This action will remove the current configuration of keyboards !\n"
+"Are you sure you want to continue ?"
+msgstr ""
+"Cette action va supprimer la configuration actuelle des claviers !\n"
+"Êtes-vous sur de vouloir continuer ?"

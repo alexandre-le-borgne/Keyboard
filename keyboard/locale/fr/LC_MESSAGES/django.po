@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-06 22:23+0200\n"
+"POT-Creation-Date: 2016-08-21 17:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,355 +25,364 @@ msgstr "Français"
 msgid "English"
 msgstr "Anglais"
 
-#: .\keyboard\templates\index.html:17
+#: .\keyboard\templates\index.html:40
 msgid "Presets"
 msgstr "Claviers"
 
-#: .\keyboard\templates\index.html:18
+#: .\keyboard\templates\index.html:41
 msgid "Layers I"
 msgstr "Placement des touches"
 
-#: .\keyboard\templates\index.html:19
+#: .\keyboard\templates\index.html:42
 msgid "Layers II"
 msgstr "Couches"
 
-#: .\keyboard\templates\index.html:20 .\keyboard\templates\index.html.py:83
+#: .\keyboard\templates\index.html:43 .\keyboard\templates\index.html:106
 msgid "Colors"
 msgstr "Couleurs"
 
-#: .\keyboard\templates\index.html:21 .\keyboard\templates\index.html:128
+#: .\keyboard\templates\index.html:44 .\keyboard\templates\index.html:151
 msgid "Keys"
 msgstr "Touches"
 
-#: .\keyboard\templates\index.html:22 .\keyboard\templates\index.html:138
+#: .\keyboard\templates\index.html:45 .\keyboard\templates\index.html:161
 msgid "Brands"
 msgstr "Marques"
 
-#: .\keyboard\templates\index.html:23 .\keyboard\templates\index.html:296
+#: .\keyboard\templates\index.html:46 .\keyboard\templates\index.html:328
 msgid "Ergonomics"
 msgstr "Formes"
 
-#: .\keyboard\templates\index.html:28
+#: .\keyboard\templates\index.html:51
 msgid "Classical"
 msgstr "Classique"
 
-#: .\keyboard\templates\index.html:34 .\keyboard\templates\index.html.py:45
+#: .\keyboard\templates\index.html:57 .\keyboard\templates\index.html.py:68
 msgid "Choose Keyboard Layout"
 msgstr "Choisir un clavier"
 
-#: .\keyboard\templates\index.html:41 .\keyboard\templates\index.html.py:52
+#: .\keyboard\templates\index.html:64 .\keyboard\templates\index.html.py:75
 msgid "Choose this one"
 msgstr "Choisir ce clavier"
 
-#: .\keyboard\templates\index.html:61
+#: .\keyboard\templates\index.html:84
 msgid "Choose a classical preset first"
 msgstr "Choissisez d'abord un clavier classique"
 
-#: .\keyboard\templates\index.html:63
+#: .\keyboard\templates\index.html:86
 msgid "Take me to Classical Pressets"
 msgstr "Allez à la selection des claviers classiques"
 
-#: .\keyboard\templates\index.html:67
+#: .\keyboard\templates\index.html:90
 msgid "Keys for other layers"
 msgstr "Touches de changement de couche"
 
-#: .\keyboard\templates\index.html:71
+#: .\keyboard\templates\index.html:94
 msgid "Keys to go to another layer"
 msgstr "Touches de selection d'une couche"
 
-#: .\keyboard\templates\index.html:76
+#: .\keyboard\templates\index.html:99
 msgid "Keys to toggle another layer"
 msgstr "Touche d'activation/désactivation d'une couche"
 
-#: .\keyboard\templates\index.html:98
+#: .\keyboard\templates\index.html:121
 msgid "...or enter a Color :"
 msgstr "..ou choissisez une couleur"
 
-#: .\keyboard\templates\index.html:108
+#: .\keyboard\templates\index.html:131
 msgid "Wrong Input"
 msgstr "Mauvais choix"
 
-#: .\keyboard\templates\index.html:111
+#: .\keyboard\templates\index.html:134
 msgid "...or use HTML5:"
 msgstr "..ou utilisez le HTML5"
 
-#: .\keyboard\templates\index.html:117
+#: .\keyboard\templates\index.html:140
 msgid "...and drag your color to your keys !"
 msgstr "..et déplacer votre couleur sur les touches !"
 
-#: .\keyboard\templates\index.html:121
+#: .\keyboard\templates\index.html:144
 msgid "Apply to selected keys !"
 msgstr "Appliquer sur les touches selectionnées !"
 
-#: .\keyboard\templates\index.html:124
+#: .\keyboard\templates\index.html:147
 msgid "Apply to all keys !"
 msgstr "Appliquer à toutes les touches de la couche"
 
-#: .\keyboard\templates\index.html:129
+#: .\keyboard\templates\index.html:152
 msgid "Add delay between keys in your macro"
 msgstr "Ajouter du délai entre les touches d'une macro"
 
-#: .\keyboard\templates\index.html:134
+#: .\keyboard\templates\index.html:157
 msgid "Add new macro !"
 msgstr "Ajouter une macro !"
 
-#: .\keyboard\templates\index.html:146
+#: .\keyboard\templates\index.html:169
 msgid "Cherry MX Brown Switches"
 msgstr ""
 
-#: .\keyboard\templates\index.html:148 .\keyboard\templates\index.html:172
-#: .\keyboard\templates\index.html:205 .\keyboard\templates\index.html:238
-#: .\keyboard\templates\index.html:273
+#: .\keyboard\templates\index.html:171 .\keyboard\templates\index.html:197
+#: .\keyboard\templates\index.html:231 .\keyboard\templates\index.html:265
+#: .\keyboard\templates\index.html:303
 msgid "Type:"
 msgstr "Type:"
 
-#: .\keyboard\templates\index.html:148 .\keyboard\templates\index.html:273
+#: .\keyboard\templates\index.html:171 .\keyboard\templates\index.html:303
 msgid "Tactile Switch"
 msgstr "Touche tactile"
 
-#: .\keyboard\templates\index.html:149 .\keyboard\templates\index.html:173
-#: .\keyboard\templates\index.html:206 .\keyboard\templates\index.html:239
-#: .\keyboard\templates\index.html:274
+#: .\keyboard\templates\index.html:172 .\keyboard\templates\index.html:198
+#: .\keyboard\templates\index.html:232 .\keyboard\templates\index.html:266
+#: .\keyboard\templates\index.html:304
 msgid "Tactile:"
 msgstr ""
 
-#: .\keyboard\templates\index.html:149 .\keyboard\templates\index.html:240
-#: .\keyboard\templates\index.html:274
+#: .\keyboard\templates\index.html:172 .\keyboard\templates\index.html:267
+#: .\keyboard\templates\index.html:304
 msgid "Yes"
 msgstr "Oui"
 
-#: .\keyboard\templates\index.html:150 .\keyboard\templates\index.html:174
-#: .\keyboard\templates\index.html:207 .\keyboard\templates\index.html:240
-#: .\keyboard\templates\index.html:275
+#: .\keyboard\templates\index.html:173 .\keyboard\templates\index.html:199
+#: .\keyboard\templates\index.html:233 .\keyboard\templates\index.html:267
+#: .\keyboard\templates\index.html:305
 msgid "Clicky:"
 msgstr ""
 
-#: .\keyboard\templates\index.html:150 .\keyboard\templates\index.html:173
-#: .\keyboard\templates\index.html:174 .\keyboard\templates\index.html:206
-#: .\keyboard\templates\index.html:207 .\keyboard\templates\index.html:275
+#: .\keyboard\templates\index.html:173 .\keyboard\templates\index.html:198
+#: .\keyboard\templates\index.html:199 .\keyboard\templates\index.html:232
+#: .\keyboard\templates\index.html:233 .\keyboard\templates\index.html:305
 msgid "No"
 msgstr "Non"
 
-#: .\keyboard\templates\index.html:151 .\keyboard\templates\index.html:175
-#: .\keyboard\templates\index.html:208 .\keyboard\templates\index.html:241
-#: .\keyboard\templates\index.html:276
+#: .\keyboard\templates\index.html:174 .\keyboard\templates\index.html:200
+#: .\keyboard\templates\index.html:234 .\keyboard\templates\index.html:268
+#: .\keyboard\templates\index.html:306
 msgid "Actuation Force:"
 msgstr ""
 
-#: .\keyboard\templates\index.html:151 .\keyboard\templates\index.html:276
+#: .\keyboard\templates\index.html:174 .\keyboard\templates\index.html:306
 msgid "55g (65G peak force)"
 msgstr ""
 
-#: .\keyboard\templates\index.html:152 .\keyboard\templates\index.html:176
-#: .\keyboard\templates\index.html:209 .\keyboard\templates\index.html:242
-#: .\keyboard\templates\index.html:277
+#: .\keyboard\templates\index.html:175 .\keyboard\templates\index.html:201
+#: .\keyboard\templates\index.html:235 .\keyboard\templates\index.html:269
+#: .\keyboard\templates\index.html:307
 msgid "Key Travel:"
 msgstr "Déplacement de touche"
 
-#: .\keyboard\templates\index.html:152 .\keyboard\templates\index.html:176
-#: .\keyboard\templates\index.html:209 .\keyboard\templates\index.html:242
-#: .\keyboard\templates\index.html:277
+#: .\keyboard\templates\index.html:175 .\keyboard\templates\index.html:201
+#: .\keyboard\templates\index.html:235 .\keyboard\templates\index.html:269
+#: .\keyboard\templates\index.html:307
 msgid "2mm to actuation, 4mm to bottom"
 msgstr ""
 
-#: .\keyboard\templates\index.html:155
+#: .\keyboard\templates\index.html:178
 msgid ""
 "\n"
-"                        Cherry MX Clear switches have often been called "
+"                            Cherry MX Clear switches have often been called "
 "'stiffer browns' though some users note that\n"
-"                        they\n"
-"                        have more of a tactile feel than browns do. This "
-"really can be a subjective topic, though this\n"
-"                        is another\n"
-"                        switch that could be considered \"balanced.\" The "
-"force required is comparable to most rubber dome\n"
-"                        keyboards, with a nice tactile feedback to tell you "
-"the key has actuated. These switches are\n"
-"                        harder\n"
-"                        to find on keyboards.\n"
-"                    "
+"                            they\n"
+"                            have more of a tactile feel than browns do. This "
+"really can be a subjective topic, though\n"
+"                            this\n"
+"                            is another\n"
+"                            switch that could be considered \"balanced.\" "
+"The force required is comparable to most rubber\n"
+"                            dome\n"
+"                            keyboards, with a nice tactile feedback to tell "
+"you the key has actuated. These switches are\n"
+"                            harder\n"
+"                            to find on keyboards.\n"
+"                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:172
+#: .\keyboard\templates\index.html:197
 msgid "Linear"
 msgstr "Linéaire"
 
-#: .\keyboard\templates\index.html:175
+#: .\keyboard\templates\index.html:200
 msgid "45g"
 msgstr ""
 
-#: .\keyboard\templates\index.html:179
+#: .\keyboard\templates\index.html:204
 msgid ""
 "\n"
-"                        Cherry MX Reds are a very popular gaming switch "
+"                            Cherry MX Reds are a very popular gaming switch "
 "option due to their low activation point and\n"
-"                        linear\n"
-"                        nature. Reds are a light switch, which allows for "
-"extremely fast keystrokes in serious\n"
-"                        situations.\n"
-"                        However, it should be noted that due to the ease of "
-"actuation on Red switches, people do often\n"
-"                        input\n"
-"                        accidental keystrokes, so make sure you know what "
-"you're in for.\n"
-"                    "
+"                            linear\n"
+"                            nature. Reds are a light switch, which allows "
+"for extremely fast keystrokes in serious\n"
+"                            situations.\n"
+"                            However, it should be noted that due to the ease "
+"of actuation on Red switches, people do\n"
+"                            often\n"
+"                            input\n"
+"                            accidental keystrokes, so make sure you know "
+"what you're in for.\n"
+"                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:205
+#: .\keyboard\templates\index.html:231
 msgid "Linear Switch"
 msgstr "Touche linéaire"
 
-#: .\keyboard\templates\index.html:208
+#: .\keyboard\templates\index.html:234
 msgid "60g (40g-80g overall)"
 msgstr ""
 
-#: .\keyboard\templates\index.html:212
-msgid ""
-"\n"
-"                        Cherry MX Black switches are linear (non-tactile) "
-"switches, these are considered one of the best\n"
-"                        switch types for gaming. When gaming, having a "
-"tactile bump does absolutely nothing because\n"
-"                        you're\n"
-"                        going to be bottoming out anyway. The actuation and "
-"release points are at the exact same\n"
-"                        position as\n"
-"                        well. This means that games which require a lot of "
-"double tapping become easier with Black\n"
-"                        switches\n"
-"                        than on any other keyswitch. However, most people "
-"don't enjoy typing on them that much do in\n"
-"                        part,\n"
-"                        to their linear nature.\n"
-"                    "
-msgstr ""
-
-#: .\keyboard\templates\index.html:226
-msgid ""
-"\n"
-"                        If you're a person who tends to hit a wrong key "
-"every so often while gaming, these will be\n"
-"                        beneficial\n"
-"                        in that the high actuation force will help prevent "
-"many of those accidental presses.\n"
-"                    "
-msgstr ""
-
 #: .\keyboard\templates\index.html:238
+msgid ""
+"\n"
+"                            Cherry MX Black switches are linear (non-"
+"tactile) switches, these are considered one of the\n"
+"                            best\n"
+"                            switch types for gaming. When gaming, having a "
+"tactile bump does absolutely nothing because\n"
+"                            you're\n"
+"                            going to be bottoming out anyway. The actuation "
+"and release points are at the exact same\n"
+"                            position as\n"
+"                            well. This means that games which require a lot "
+"of double tapping become easier with Black\n"
+"                            switches\n"
+"                            than on any other keyswitch. However, most "
+"people don't enjoy typing on them that much do in\n"
+"                            part,\n"
+"                            to their linear nature.\n"
+"                        "
+msgstr ""
+
+#: .\keyboard\templates\index.html:253
+msgid ""
+"\n"
+"                            If you're a person who tends to hit a wrong key "
+"every so often while gaming, these will be\n"
+"                            beneficial\n"
+"                            in that the high actuation force will help "
+"prevent many of those accidental presses.\n"
+"                        "
+msgstr ""
+
+#: .\keyboard\templates\index.html:265
 msgid "Tactile &amp; Clicky Switch"
 msgstr ""
 
-#: .\keyboard\templates\index.html:239
+#: .\keyboard\templates\index.html:266
 msgid "Yes, precise"
 msgstr "Oui, précis"
 
-#: .\keyboard\templates\index.html:241
+#: .\keyboard\templates\index.html:268
 msgid "50g (60g Peak Force)"
 msgstr ""
 
-#: .\keyboard\templates\index.html:245
+#: .\keyboard\templates\index.html:272
 msgid ""
 "\n"
-"                        Cherry MX Blue switches are the best cherry switch "
-"for typing. The tactile bump can easily be\n"
-"                        felt,\n"
-"                        and the resistance is similar to your average "
-"keyboard. Although many people find them just fine\n"
-"                        for\n"
-"                        gaming, some don't like the fact that the release "
-"point is above the actuation point. This can\n"
-"                        cause\n"
-"                        some trouble with double-tapping. This is usually "
-"the case with someone who has experienced\n"
-"                        other\n"
-"                        mechanical switches before hand.\n"
-"                    "
+"                            Cherry MX Blue switches are the best cherry "
+"switch for typing. The tactile bump can easily\n"
+"                            be\n"
+"                            felt,\n"
+"                            and the resistance is similar to your average "
+"keyboard. Although many people find them just\n"
+"                            fine\n"
+"                            for\n"
+"                            gaming, some don't like the fact that the "
+"release point is above the actuation point. This\n"
+"                            can\n"
+"                            cause\n"
+"                            some trouble with double-tapping. This is "
+"usually the case with someone who has experienced\n"
+"                            other\n"
+"                            mechanical switches before hand.\n"
+"                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:280
+#: .\keyboard\templates\index.html:310
 msgid ""
 "\n"
-"                        Cherry MX Clear switches have often been called "
+"                            Cherry MX Clear switches have often been called "
 "\"stiffer browns\" though some users note that\n"
-"                        they\n"
-"                        have more of a tactile feel than browns do. This "
-"really can be a subjective topic, though this\n"
-"                        is\n"
-"                        another switch that could be considered \"balanced."
-"\" The force required is comparable to most\n"
-"                        rubber\n"
-"                        dome keyboards, with a nice tactile feedback to tell "
-"you the key has actuated. These switches\n"
-"                        are\n"
-"                        harder to find on keyboards.\n"
-"                    "
+"                            they\n"
+"                            have more of a tactile feel than browns do. This "
+"really can be a subjective topic, though\n"
+"                            this\n"
+"                            is\n"
+"                            another switch that could be considered "
+"\"balanced.\" The force required is comparable to most\n"
+"                            rubber\n"
+"                            dome keyboards, with a nice tactile feedback to "
+"tell you the key has actuated. These\n"
+"                            switches\n"
+"                            are\n"
+"                            harder to find on keyboards.\n"
+"                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:300
+#: .\keyboard\templates\index.html:332
 msgid "Generate source of your configuration"
 msgstr "Générer le code source de votre configuration"
 
-#: .\keyboard\templates\index.html:309
+#: .\keyboard\templates\index.html:342
 msgid "Add a layer"
 msgstr "Ajouter une couche"
 
-#: .\keyboard\templates\index.html:315
+#: .\keyboard\templates\index.html:348
 msgid "Layer"
 msgstr "Couches"
 
-#: .\keyboard\templates\index.html:317
+#: .\keyboard\templates\index.html:351
 msgid "Reset"
 msgstr "Réinitialiser"
 
-#: .\keyboard\templates\index.html:318
+#: .\keyboard\templates\index.html:353
 msgid "Remove"
 msgstr "Supprimer"
 
-#: .\keyboard\templates\index.html:326
+#: .\keyboard\templates\index.html:361
 msgid "Choose an Ergofip preset first"
 msgstr "Choissisez d'abord un clavier Ergofip"
 
-#: .\keyboard\templates\index.html:328
+#: .\keyboard\templates\index.html:363
 msgid "Take me to Ergofip Pressets"
 msgstr "Allez à la selection des claviers Ergofip"
 
-#: .\keyboard\templates\index.html:336 .\keyboard\templates\index.html:345
-#: .\keyboard\templates\index.html:355 .\keyboard\templates\index.html:483
+#: .\keyboard\templates\index.html:371 .\keyboard\templates\index.html:380
+#: .\keyboard\templates\index.html:390 .\keyboard\templates\index.html:518
 msgid "Close"
 msgstr "Fermer"
 
-#: .\keyboard\templates\index.html:338
+#: .\keyboard\templates\index.html:373
 msgid "Choose the delay"
 msgstr "Choisir le délai"
 
-#: .\keyboard\templates\index.html:341
+#: .\keyboard\templates\index.html:376
 msgid "Delay in ms:"
 msgstr "Délai en ms:"
 
-#: .\keyboard\templates\index.html:346 .\keyboard\templates\index.html:484
+#: .\keyboard\templates\index.html:381 .\keyboard\templates\index.html:519
 msgid "Apply changes"
 msgstr "Appliquer les modifications"
 
-#: .\keyboard\templates\index.html:357
+#: .\keyboard\templates\index.html:392
 msgid "Edit the key"
 msgstr "Editer la touche"
 
-#: .\keyboard\templates\index.html:364
+#: .\keyboard\templates\index.html:399
 msgid "Top legend :"
 msgstr "Légende du haut"
 
-#: .\keyboard\templates\index.html:389
+#: .\keyboard\templates\index.html:424
 msgid "Center legend :"
 msgstr "Légende du centre"
 
-#: .\keyboard\templates\index.html:414
+#: .\keyboard\templates\index.html:449
 msgid "Bottom legend :"
 msgstr "Légende du bas"
 
-#: .\keyboard\templates\index.html:439
+#: .\keyboard\templates\index.html:474
 msgid "Legend color :"
 msgstr "Couleur des légendes"
 
-#: .\keyboard\templates\index.html:450
+#: .\keyboard\templates\index.html:485
 msgid "Key color :"
 msgstr "Couleur de la touche"
