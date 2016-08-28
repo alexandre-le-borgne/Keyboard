@@ -149,10 +149,9 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
         this.labels = [];
         for (i in key.labels) {
             label = key.labels[i];
-            this.labels.push(new Label(label.value, label.position, label.size));
-            for (var i in this.labels) {
-                child.append(this.labels[i].draw());
-            }
+            label = new Label(label.value, label.position, label.size);
+            this.labels.push(label);
+            child.append(label.draw());
         }
         this.color = key.color;
         this.labelcolor = key.labelcolor;
