@@ -64,7 +64,7 @@
                 <button type="button" style="display: none;"
                         class="btn btn-success">{% trans "Choose this one" %}</button>
             </div>
-            <div id="presets-ergofip">
+            <div id="presets-ergofip" style="display: none">
                 <select>
                     <option>{% trans "Choose Keyboard Layout" %}</option>
                     <option>----------------------</option>
@@ -77,7 +77,7 @@
                         class="btn btn-success">{% trans "Choose this one" %}</button>
             </div>
         </div>
-        <div id="layers-one">
+        <div id="layers-one" style="display: none">
             <div id="preset-classical-container">
                 <div class="preset"></div>
             </div>
@@ -88,7 +88,7 @@
                 <button type="button" class="btn btn-success">{% trans "Take me to Classical Pressets" %} >></button>
             </div>
         </div>
-        <div id="layers-two">
+        <div id="layers-two" style="display: none">
             <h3>{% trans "Keys for other layers" %}</h3>
             <br>
             <div>
@@ -104,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <div id="colors" class="hide">
+        <div id="colors" style="display: none" class="hide">
             <h1>{% trans "Colors" %}</h1>
             <div class="color-div">
                 <div id="hexagon">
@@ -149,7 +149,7 @@
                 <button type="button" id="colors-all" class="btn btn-success">{% trans "Apply to all keys !" %}</button>
             </div>
         </div>
-        <div id="keys">
+        <div id="keys" style="display: none">
             <h1>{% trans "Keys" %}</h1>
             <h3>{% trans "Add delay between keys in your macro" %}</h3>
             <div id="specials"></div>
@@ -159,7 +159,7 @@
             <button id="keys-add-macro" class="btn btn-success">{% trans "Add new macro !" %}</button>
             <br>
         </div>
-        <div id="brands" class="col-md-10 col-md-offset-1">
+        <div id="brands" style="display: none" class="col-md-10 col-md-offset-1">
             <h1>{% trans "Brands" %}</h1>
             <div class="media">
                 <div class="media-left">
@@ -326,7 +326,7 @@
                 </div>
             </div>
         </div>
-        <div id="ergonomics">
+        <div style="display: none" id="ergonomics">
             <h1>{% trans "Ergonomics" %}</h1>
             <br>
             <br>
@@ -338,7 +338,7 @@
 
         <br>
 
-        <div id="preset-ergofip">
+        <div id="preset-ergofip" style="display: none">
             <div id="preset-ergofip-container">
                 <button type="button" class="btn btn-success pull-left"
                         id="add-layer">{% trans "Add a layer" %}</button>

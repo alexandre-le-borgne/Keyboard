@@ -59,6 +59,7 @@ function loadPopupDelay(key) {
 
 function loadPopupKey(key) {
     var clone = key.clone();
+    clone.rotation_angle = clone.rotation_x = clone.rotation_y = 0;
     var popupKey = $('#popup-key').data('key', key).data('clone', clone).modal('show');
 
     popupKey.find('input').val('');

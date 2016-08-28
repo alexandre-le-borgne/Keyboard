@@ -162,3 +162,19 @@ h1 {
     margin-top: 20px;
     overflow-wrap: break-word;
 }
+
+#popup-key input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+#popup-key input[type=number]::-webkit-inner-spin-button,
+#popup-key input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+#presets select {
+    width: 200px;
+}
