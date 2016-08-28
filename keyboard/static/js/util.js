@@ -23,6 +23,10 @@ jQuery.extend(jQuery.fn, {
 
 // Vérifier le respects des bornes des input type number lorsque le nombre est entré au clavier
 $('input[type="number"]').on("change", function () {
-    $(this).val() > $(this).attr("max") ? $(this).val($(this).attr("max")) : (
-        $(this).val() < $(this).attr("min") ? $(this).val($(this).attr("min")) : null);
+    if(parseInt($(this).val()) > parseInt($(this).attr("max"))) {
+        $(this).val($(this).attr("max"));
+    }
+    else if(parseInt($(this).val()) < parseInt($(this).attr("min"))) {
+        $(this).val($(this).attr("min"));
+    }
 });

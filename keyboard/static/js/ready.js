@@ -151,8 +151,8 @@ var addSpecialKeys = function (char, scope, connected) {
         zIndex: 1000,
         cursor: 'move',
     };
-    if(typeof connected == 'undefined' || connected) {
-       settings.connectToSortable ="#keys .macro .keys";
+    if (typeof connected == 'undefined' || connected) {
+        settings.connectToSortable = "#keys .macro .keys";
     }
     if (typeof scope !== 'undefined' && scope)
         settings.scope = scope;
@@ -381,11 +381,31 @@ $(function () {
     });
 
     $("#presets-classical").find("select").change(function () {
-        getClassicalPresset($("option:selected", this).text());
+        if ($("option:selected", this).index() > 1) {
+            getClassicalPresset($("option:selected", this).text());
+            $("#presets-classical").find("button").show();
+        }
+        else {
+            $("#presets-classical").find(".preset").empty().css({
+                'min-width': 0,
+                'min-height': 0
+            });
+            $("#presets-classical").find("button").hide();
+        }
     });
 
     $("#presets-ergofip").find("select").change(function () {
-        getErgofipPresset($("option:selected", this).text());
+        if ($("option:selected", this).index() > 1) {
+            getErgofipPresset($("option:selected", this).text());
+            $("#presets-ergofip").find("button").show();
+        }
+        else {
+            $("#presets-ergofip").find(".preset").empty().css({
+                'min-width': 0,
+                'min-height': 0
+            });
+            $("#presets-ergofip").find("button").hide();
+        }
     });
 
     $('#preset-ergofip').find('#add-layer').click(function () {
