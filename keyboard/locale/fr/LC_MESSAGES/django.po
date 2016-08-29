@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-21 17:10+0200\n"
+"POT-Creation-Date: 2016-08-29 15:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,166 +17,170 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\keyboard\settings.py:126
+#: .\settings.py:126
 msgid "French"
 msgstr "Français"
 
-#: .\keyboard\settings.py:127
+#: .\settings.py:127
 msgid "English"
 msgstr "Anglais"
 
-#: .\keyboard\templates\index.html:40
+#: .\templates\index.html:13
+msgid "Ergofip configurator"
+msgstr "Configurateur d'Ergofip"
+
+#: .\templates\index.html:40
 msgid "Presets"
 msgstr "Claviers"
 
-#: .\keyboard\templates\index.html:41
+#: .\templates\index.html:41
 msgid "Layers I"
 msgstr "Placement des touches"
 
-#: .\keyboard\templates\index.html:42
+#: .\templates\index.html:42
 msgid "Layers II"
 msgstr "Couches"
 
-#: .\keyboard\templates\index.html:43 .\keyboard\templates\index.html:106
+#: .\templates\index.html:43 .\templates\index.html.py:108
 msgid "Colors"
 msgstr "Couleurs"
 
-#: .\keyboard\templates\index.html:44 .\keyboard\templates\index.html:151
+#: .\templates\index.html:44 .\templates\index.html.py:154
 msgid "Keys"
 msgstr "Touches"
 
-#: .\keyboard\templates\index.html:45 .\keyboard\templates\index.html:161
+#: .\templates\index.html:45 .\templates\index.html.py:164
 msgid "Brands"
 msgstr "Marques"
 
-#: .\keyboard\templates\index.html:46 .\keyboard\templates\index.html:328
+#: .\templates\index.html:46 .\templates\index.html.py:336
 msgid "Ergonomics"
 msgstr "Formes"
 
-#: .\keyboard\templates\index.html:51
+#: .\templates\index.html:51
 msgid "Classical"
 msgstr "Classique"
 
-#: .\keyboard\templates\index.html:57 .\keyboard\templates\index.html.py:68
+#: .\templates\index.html:57 .\templates\index.html.py:69
 msgid "Choose Keyboard Layout"
 msgstr "Choisir un clavier"
 
-#: .\keyboard\templates\index.html:64 .\keyboard\templates\index.html.py:75
+#: .\templates\index.html:65 .\templates\index.html.py:77
 msgid "Choose this one"
 msgstr "Choisir ce clavier"
 
-#: .\keyboard\templates\index.html:84
+#: .\templates\index.html:86
 msgid "Choose a classical preset first"
 msgstr "Choissisez d'abord un clavier classique"
 
-#: .\keyboard\templates\index.html:86
+#: .\templates\index.html:88
 msgid "Take me to Classical Pressets"
 msgstr "Allez à la selection des claviers classiques"
 
-#: .\keyboard\templates\index.html:90
+#: .\templates\index.html:92
 msgid "Keys for other layers"
 msgstr "Touches de changement de couche"
 
-#: .\keyboard\templates\index.html:94
+#: .\templates\index.html:96
 msgid "Keys to go to another layer"
 msgstr "Touches de selection d'une couche"
 
-#: .\keyboard\templates\index.html:99
+#: .\templates\index.html:101
 msgid "Keys to toggle another layer"
 msgstr "Touche d'activation/désactivation d'une couche"
 
-#: .\keyboard\templates\index.html:121
+#: .\templates\index.html:123
 msgid "...or enter a Color :"
-msgstr "..ou choissisez une couleur"
+msgstr "..ou choissisez une couleur :"
 
-#: .\keyboard\templates\index.html:131
+#: .\templates\index.html:133
 msgid "Wrong Input"
 msgstr "Mauvais choix"
 
-#: .\keyboard\templates\index.html:134
-msgid "...or use HTML5:"
-msgstr "..ou utilisez le HTML5"
+#: .\templates\index.html:136
+msgid "...or use HTML5 :"
+msgstr "..ou utilisez le HTML5 :"
 
-#: .\keyboard\templates\index.html:140
+#: .\templates\index.html:143
 msgid "...and drag your color to your keys !"
 msgstr "..et déplacer votre couleur sur les touches !"
 
-#: .\keyboard\templates\index.html:144
+#: .\templates\index.html:147
 msgid "Apply to selected keys !"
 msgstr "Appliquer sur les touches selectionnées !"
 
-#: .\keyboard\templates\index.html:147
+#: .\templates\index.html:150
 msgid "Apply to all keys !"
-msgstr "Appliquer à toutes les touches de la couche"
+msgstr "Appliquer à toutes les touches de la couche !"
 
-#: .\keyboard\templates\index.html:152
+#: .\templates\index.html:155
 msgid "Add delay between keys in your macro"
 msgstr "Ajouter du délai entre les touches d'une macro"
 
-#: .\keyboard\templates\index.html:157
+#: .\templates\index.html:160
 msgid "Add new macro !"
 msgstr "Ajouter une macro !"
 
-#: .\keyboard\templates\index.html:169
+#: .\templates\index.html:169 .\templates\index.html.py:173
 msgid "Cherry MX Brown Switches"
 msgstr ""
 
-#: .\keyboard\templates\index.html:171 .\keyboard\templates\index.html:197
-#: .\keyboard\templates\index.html:231 .\keyboard\templates\index.html:265
-#: .\keyboard\templates\index.html:303
+#: .\templates\index.html:175 .\templates\index.html.py:201
+#: .\templates\index.html:237 .\templates\index.html.py:271
+#: .\templates\index.html:311
 msgid "Type:"
 msgstr "Type:"
 
-#: .\keyboard\templates\index.html:171 .\keyboard\templates\index.html:303
+#: .\templates\index.html:175 .\templates\index.html.py:311
 msgid "Tactile Switch"
 msgstr "Touche tactile"
 
-#: .\keyboard\templates\index.html:172 .\keyboard\templates\index.html:198
-#: .\keyboard\templates\index.html:232 .\keyboard\templates\index.html:266
-#: .\keyboard\templates\index.html:304
+#: .\templates\index.html:176 .\templates\index.html.py:202
+#: .\templates\index.html:238 .\templates\index.html.py:272
+#: .\templates\index.html:312
 msgid "Tactile:"
 msgstr ""
 
-#: .\keyboard\templates\index.html:172 .\keyboard\templates\index.html:267
-#: .\keyboard\templates\index.html:304
+#: .\templates\index.html:176 .\templates\index.html.py:273
+#: .\templates\index.html:312
 msgid "Yes"
 msgstr "Oui"
 
-#: .\keyboard\templates\index.html:173 .\keyboard\templates\index.html:199
-#: .\keyboard\templates\index.html:233 .\keyboard\templates\index.html:267
-#: .\keyboard\templates\index.html:305
+#: .\templates\index.html:177 .\templates\index.html.py:203
+#: .\templates\index.html:239 .\templates\index.html.py:273
+#: .\templates\index.html:313
 msgid "Clicky:"
 msgstr ""
 
-#: .\keyboard\templates\index.html:173 .\keyboard\templates\index.html:198
-#: .\keyboard\templates\index.html:199 .\keyboard\templates\index.html:232
-#: .\keyboard\templates\index.html:233 .\keyboard\templates\index.html:305
+#: .\templates\index.html:177 .\templates\index.html.py:202
+#: .\templates\index.html:203 .\templates\index.html.py:238
+#: .\templates\index.html:239 .\templates\index.html.py:313
 msgid "No"
 msgstr "Non"
 
-#: .\keyboard\templates\index.html:174 .\keyboard\templates\index.html:200
-#: .\keyboard\templates\index.html:234 .\keyboard\templates\index.html:268
-#: .\keyboard\templates\index.html:306
+#: .\templates\index.html:178 .\templates\index.html.py:204
+#: .\templates\index.html:240 .\templates\index.html.py:274
+#: .\templates\index.html:314
 msgid "Actuation Force:"
 msgstr ""
 
-#: .\keyboard\templates\index.html:174 .\keyboard\templates\index.html:306
+#: .\templates\index.html:178 .\templates\index.html.py:314
 msgid "55g (65G peak force)"
 msgstr ""
 
-#: .\keyboard\templates\index.html:175 .\keyboard\templates\index.html:201
-#: .\keyboard\templates\index.html:235 .\keyboard\templates\index.html:269
-#: .\keyboard\templates\index.html:307
+#: .\templates\index.html:179 .\templates\index.html.py:205
+#: .\templates\index.html:241 .\templates\index.html.py:275
+#: .\templates\index.html:315
 msgid "Key Travel:"
 msgstr "Déplacement de touche"
 
-#: .\keyboard\templates\index.html:175 .\keyboard\templates\index.html:201
-#: .\keyboard\templates\index.html:235 .\keyboard\templates\index.html:269
-#: .\keyboard\templates\index.html:307
+#: .\templates\index.html:179 .\templates\index.html.py:205
+#: .\templates\index.html:241 .\templates\index.html.py:275
+#: .\templates\index.html:315
 msgid "2mm to actuation, 4mm to bottom"
 msgstr ""
 
-#: .\keyboard\templates\index.html:178
+#: .\templates\index.html:182
 msgid ""
 "\n"
 "                            Cherry MX Clear switches have often been called "
@@ -196,15 +200,15 @@ msgid ""
 "                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:197
+#: .\templates\index.html:201
 msgid "Linear"
 msgstr "Linéaire"
 
-#: .\keyboard\templates\index.html:200
+#: .\templates\index.html:204
 msgid "45g"
 msgstr ""
 
-#: .\keyboard\templates\index.html:204
+#: .\templates\index.html:208
 msgid ""
 "\n"
 "                            Cherry MX Reds are a very popular gaming switch "
@@ -222,15 +226,23 @@ msgid ""
 "                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:231
+#: .\templates\index.html:223
+msgid "Cherry MX Red Switches"
+msgstr ""
+
+#: .\templates\index.html:231
+msgid "Cherry MX Black Switches"
+msgstr ""
+
+#: .\templates\index.html:237
 msgid "Linear Switch"
 msgstr "Touche linéaire"
 
-#: .\keyboard\templates\index.html:234
+#: .\templates\index.html:240
 msgid "60g (40g-80g overall)"
 msgstr ""
 
-#: .\keyboard\templates\index.html:238
+#: .\templates\index.html:244
 msgid ""
 "\n"
 "                            Cherry MX Black switches are linear (non-"
@@ -252,7 +264,7 @@ msgid ""
 "                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:253
+#: .\templates\index.html:259
 msgid ""
 "\n"
 "                            If you're a person who tends to hit a wrong key "
@@ -263,19 +275,19 @@ msgid ""
 "                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:265
+#: .\templates\index.html:271
 msgid "Tactile &amp; Clicky Switch"
 msgstr ""
 
-#: .\keyboard\templates\index.html:266
+#: .\templates\index.html:272
 msgid "Yes, precise"
 msgstr "Oui, précis"
 
-#: .\keyboard\templates\index.html:268
+#: .\templates\index.html:274
 msgid "50g (60g Peak Force)"
 msgstr ""
 
-#: .\keyboard\templates\index.html:272
+#: .\templates\index.html:278
 msgid ""
 "\n"
 "                            Cherry MX Blue switches are the best cherry "
@@ -297,7 +309,15 @@ msgid ""
 "                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:310
+#: .\templates\index.html:297
+msgid "Cherry MX Blue Switches"
+msgstr ""
+
+#: .\templates\index.html:305
+msgid "Cherry MX Clear Switches"
+msgstr ""
+
+#: .\templates\index.html:318
 msgid ""
 "\n"
 "                            Cherry MX Clear switches have often been called "
@@ -318,71 +338,71 @@ msgid ""
 "                        "
 msgstr ""
 
-#: .\keyboard\templates\index.html:332
+#: .\templates\index.html:340
 msgid "Generate source of your configuration"
 msgstr "Générer le code source de votre configuration"
 
-#: .\keyboard\templates\index.html:342
+#: .\templates\index.html:350
 msgid "Add a layer"
 msgstr "Ajouter une couche"
 
-#: .\keyboard\templates\index.html:348
+#: .\templates\index.html:356
 msgid "Layer"
 msgstr "Couches"
 
-#: .\keyboard\templates\index.html:351
+#: .\templates\index.html:359
 msgid "Reset"
 msgstr "Réinitialiser"
 
-#: .\keyboard\templates\index.html:353
+#: .\templates\index.html:361
 msgid "Remove"
 msgstr "Supprimer"
 
-#: .\keyboard\templates\index.html:361
+#: .\templates\index.html:369
 msgid "Choose an Ergofip preset first"
 msgstr "Choissisez d'abord un clavier Ergofip"
 
-#: .\keyboard\templates\index.html:363
+#: .\templates\index.html:371
 msgid "Take me to Ergofip Pressets"
 msgstr "Allez à la selection des claviers Ergofip"
 
-#: .\keyboard\templates\index.html:371 .\keyboard\templates\index.html:380
-#: .\keyboard\templates\index.html:390 .\keyboard\templates\index.html:518
+#: .\templates\index.html:379 .\templates\index.html.py:389
+#: .\templates\index.html:399 .\templates\index.html.py:552
 msgid "Close"
 msgstr "Fermer"
 
-#: .\keyboard\templates\index.html:373
+#: .\templates\index.html:381
 msgid "Choose the delay"
 msgstr "Choisir le délai"
 
-#: .\keyboard\templates\index.html:376
-msgid "Delay in ms:"
-msgstr "Délai en ms:"
+#: .\templates\index.html:385
+msgid "Delay in ms :"
+msgstr "Délai en ms :"
 
-#: .\keyboard\templates\index.html:381 .\keyboard\templates\index.html:519
+#: .\templates\index.html:390 .\templates\index.html.py:553
 msgid "Apply changes"
 msgstr "Appliquer les modifications"
 
-#: .\keyboard\templates\index.html:392
+#: .\templates\index.html:401
 msgid "Edit the key"
 msgstr "Editer la touche"
 
-#: .\keyboard\templates\index.html:399
+#: .\templates\index.html:408
 msgid "Top legend :"
-msgstr "Légende du haut"
+msgstr "Légende du haut :"
 
-#: .\keyboard\templates\index.html:424
+#: .\templates\index.html:439
 msgid "Center legend :"
-msgstr "Légende du centre"
+msgstr "Légende du centre :"
 
-#: .\keyboard\templates\index.html:449
+#: .\templates\index.html:473
 msgid "Bottom legend :"
-msgstr "Légende du bas"
+msgstr "Légende du bas :"
 
-#: .\keyboard\templates\index.html:474
+#: .\templates\index.html:506
 msgid "Legend color :"
-msgstr "Couleur des légendes"
+msgstr "Couleur des légendes :"
 
-#: .\keyboard\templates\index.html:485
+#: .\templates\index.html:518
 msgid "Key color :"
-msgstr "Couleur de la touche"
+msgstr "Couleur de la touche :"
