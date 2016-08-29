@@ -60,7 +60,7 @@
     border: 1px dotted black;
 }
 
-#layers-two, #colors, #macros, #keys {
+#layers-two, #colors, #macros, #keys .container {
     background-color: #FFC;
     padding: 10px;
     text-align: center;

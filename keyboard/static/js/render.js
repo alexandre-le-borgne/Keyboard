@@ -3,7 +3,7 @@
  */
 var renderLayers = function () {
     var layers = [];
-    $('#preset-ergofip-container .presets .preset').each(function () {
+    $('#preset-ergofip-container').find('.presets .preset').each(function () {
         var keys = [];
         $('.key', this).each(function () {
             var key = $(this).data('key');
@@ -25,7 +25,8 @@ var renderLayers = function () {
                 labelcolor: key.labelcolor,
                 rotation_angle: key.rotation_angle,
                 rotation_x: key.rotation_x,
-                rotation_y: key.rotation_y
+                rotation_y: key.rotation_y,
+                scancode: key.scancode
             });
         });
         layers.push({
@@ -35,6 +36,7 @@ var renderLayers = function () {
     });
     return {
         preset: selectedErgofip,
+        scancode: ergofipToPrint,
         layers: layers
     };
 };

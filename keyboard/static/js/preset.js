@@ -15,7 +15,8 @@ var parseKeysFromSave = function (keys) {
             label = key.labels[j];
             labels.push(new Label(label.value, label.position, label.size));
         }
-        keysParsed.push(new Key(labels, key.x, key.y, key.width, key.height, key.color, key.labelcolor, key.rotation_angle, key.rotation_x, key.rotation_y))
+        keysParsed.push(new Key(labels, key.x, key.y, key.width, key.height, key.color, key.labelcolor,
+            key.rotation_angle, key.rotation_x, key.rotation_y, key.scancode))
     }
     return keysParsed;
 };
@@ -23,20 +24,23 @@ var parseKeysFromSave = function (keys) {
 var createLayersFromSave = function (data) {
     var layers = [];
     var name = data.preset.name;
-    var i, layer, keyboard;
+    var i, layer, keyboard, scancode, preset;
     for (i in data.layers) {
         layer = data.layers[i];
         keyboard = new Keyboard();
         keyboard.keys = parseKeysFromSave(layer.keys);
         layers.push(new Preset(name, keyboard));
     }
-
+    keyboard = new Keyboard();
+    keyboard.keys = parseKeysFromSave(data.scancode.keyboard.keys);
+    scancode = new Preset(name, keyboard);
     keyboard = new Keyboard();
     keyboard.keys = parseKeysFromSave(data.preset.keyboard.keys);
-    var preset = new Preset(name, keyboard);
+    preset = new Preset(name, keyboard);
 
     return {
         layers: layers,
+        scancode: scancode,
         preset: preset
     };
 };
@@ -44,7 +48,7 @@ var createLayersFromSave = function (data) {
 var Preset = function (name, keyboard) {
     this.name = name;
     this.keyboard = keyboard;
-    this.clone = function() {
+    this.clone = function () {
         return new Preset(this.name, this.keyboard.clone());
     };
     this.draw = function (selector) {
@@ -60,10 +64,10 @@ var Preset = function (name, keyboard) {
 var Keyboard = function () {
     this.keys = [];
     this.element = $('<div></div>').addClass("keyboard");
-    this.clone = function() {
+    this.clone = function () {
         var keyboard = new Keyboard();
         var i;
-        for(i in this.keys) {
+        for (i in this.keys) {
             keyboard.keys.push(this.keys[i].clone());
         }
         return keyboard;
@@ -83,7 +87,7 @@ var Keyboard = function () {
     };
 };
 
-var Key = function (labels, x, y, width, height, color, labelcolor, rotation_angle, rotation_x, rotation_y) {
+var Key = function (labels, x, y, width, height, color, labelcolor, rotation_angle, rotation_x, rotation_y, scancode) {
     this.element = $('<div></div>').addClass("key-container").append(
         $('<div></div>').addClass("key-border").append(
             $('<div></div>').addClass("key")));
@@ -97,14 +101,15 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
     this.rotation_angle = rotation_angle || 0;
     this.rotation_x = rotation_x || 0;
     this.rotation_y = rotation_y || 0;
-    this.clone = function() {
+    this.scancode = scancode || 'EMPTY';
+    this.clone = function () {
         var labels = [];
         var i;
-        for(i in this.labels) {
+        for (i in this.labels) {
             labels.push(this.labels[i].clone());
         }
         return new Key(labels, this.x, this.y, this.width, this.height, this.color, this.labelcolor,
-            this.rotation_angle, this.rotation_x, this.rotation_y);
+            this.rotation_angle, this.rotation_x, this.rotation_y, this.scancode);
     };
     this.draw = function () {
         var left = (this.x * (Constantes.DISTANCE_TO_PX + Constantes.BORDER_SIZE));
@@ -155,6 +160,7 @@ var Key = function (labels, x, y, width, height, color, labelcolor, rotation_ang
         }
         this.color = key.color;
         this.labelcolor = key.labelcolor;
+        this.scancode = key.scancode;
         this.element.css('background-color', this.color);
     };
     this.copyColor = function (key) {
@@ -170,7 +176,7 @@ var Label = function (value, position, size) {
     this.value = value;
     this.position = position;
     this.size = size;
-    this.clone = function() {
+    this.clone = function () {
         return new Label(this.value, this.position, this.size);
     };
     this.draw = function () {

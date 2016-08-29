@@ -9,6 +9,7 @@ var currentMacroIndex = 0;
 var colorKey;
 var classicalPressetsLoaded = [];
 var ergofipPressetsLoaded = [];
+var ergofipToPrint;
 
 /**
  * Récupérer un clavier classique par son nom s'il n'a pas déjà été chargé et le déssiné sur la 1ere page de
@@ -250,11 +251,12 @@ var rapidLaunch = function () {
             ergofipPressetsLoaded['French'] = ergofip;
             selectedErgofip = ergofip;
             var ergofipPresset = ergofip.clone().draw($("#preset-ergofip").find("#preset-ergofip-container").show().find(".preset"));
+            ergofipToPrint = ergofip.clone().draw($('#keys').find('.preset'));
             layers[currentTabLayersIndex] = ergofipPresset;
             loadDraggableClassical(classicalPreset);
             loadSelectableKeys(ergofipPresset);
             $("#layers-one").find("#preset-classical-empty").hide();
-            $("#preset-ergofip").find("#preset-ergofip-empty").hide();
+            $(".preset-ergofip-empty").hide();
             $("#body").tabs("option", "active", 1);
         });
     });
@@ -266,27 +268,35 @@ $(function () {
 
     $("#body").tabs({
         activate: function (event, ui) {
-            if (ui.newPanel.attr('id') == 'presets' || ui.newPanel.attr('id') == 'brands' || ui.newPanel.attr('id') == 'ergonomics') {
+            if (ui.newPanel.attr('id') == 'presets' || ui.newPanel.attr('id') == 'brands'
+                || ui.newPanel.attr('id') == 'ergonomics' || ui.newPanel.attr('id') == 'keys') {
                 $("#preset-ergofip").hide();
             }
             else {
                 $("#preset-ergofip").show();
             }
 
-            if (ui.newPanel.attr('id') == 'keys') {
+            if (ui.newPanel.attr('id') == 'layers-one') {
                 $("#preset-ergofip-container").find(".presets .key").off('click').click(function () {
+                    var key = $(this).data('key');
+                    $('#popup-scancode').data('key', key).modal('show').find('input').val(key.scancode);
+                });
+            }
+            else if (ui.newPanel.attr('id') == 'keys') {
+                $("#keys").find(".preset .key").off('click').click(function () {
                     loadPopupKey($(this).data('key'));
-                })
+                });
             }
             else {
-                $("#preset-ergofip-container .presets .key").off('click');
+                $("#keys").find(".preset .key").off('click');
             }
 
             if (ui.newPanel.attr('id') == 'colors') {
                 $("#preset-ergofip-container").find(".presets").selectable('option', 'disabled', false);
             }
             else {
-                $("#preset-ergofip-container").find(".presets").selectable('option', 'disabled', true).find('.key-border').removeClass('ui-selected');
+                $("#preset-ergofip-container").find(".presets").selectable('option', 'disabled', true)
+                    .find('.key-border').removeClass('ui-selected');
             }
 
             if (ui.newPanel.attr('id') == 'macros') {
@@ -341,7 +351,7 @@ $(function () {
         $("#presets").tabs("option", "active", 0);
     });
 
-    $("#preset-ergofip").find("#preset-ergofip-empty button").click(function () {
+    $(".preset-ergofip-empty button").click(function () {
         $("#body").tabs("option", "active", 0);
         $("#presets").tabs("option", "active", 1);
     });
@@ -361,6 +371,7 @@ $(function () {
         if (layers.length == 0 || confirm(gettext("This action will remove the current configuration of keyboards !\nAre you sure you want to continue ?"))) {
             selectedErgofip = ergofipPressetsLoaded[$("#presets-ergofip").find("select option:selected").text()];
             if (selectedErgofip) {
+                ergofipToPrint = selectedErgofip.clone().draw($('#keys').find('.preset'));
                 var container = $('<div class="preset" data-index="1" id="layers-one-preset-ergofip-1"></div>');
                 $("#preset-ergofip").find("#preset-ergofip-container").show().find('.presets').empty()
                     .append(container);
@@ -368,7 +379,7 @@ $(function () {
                 layers = [];
                 layers[currentTabLayersIndex] = ergofipPresset;
                 loadSelectableKeys(ergofipPresset);
-                $("#preset-ergofip").find("#preset-ergofip-empty").hide();
+                $(".preset-ergofip-empty").hide();
                 $('#preset-ergofip').find('ul').html(
                     '<li><a href="#layers-one-preset-ergofip-1">1 >></a></li>'
                 );

@@ -79,7 +79,7 @@ Parser.parse = function (data) {
                     new Key(labels,
                         position_x + currentSettings.x, position_y + currentSettings.y,
                         currentSettings.w, currentSettings.h, currentSettings.c, currentSettings.t,
-                        currentSettings.r, currentSettings.rx, currentSettings.ry)
+                        currentSettings.r, currentSettings.rx, currentSettings.ry, labels[labels.length-1].value)
                 );
                 position_x += currentSettings.w;
                 currentSettings = $.extend({}, currentSettings, resetSettings);

@@ -15,12 +15,17 @@ var inputToPositions = {
 };
 
 $(function () {
-    $('#popup-delay .save').click(function() {
+    $('#popup-delay').find('.save').click(function() {
         $('#popup-delay').data('key').find('.key-label div').text(gettext('Delay') + ' ' + $('#popup-delay input').val() + 'ms');
         $('#popup-delay').modal('hide');
     });
 
-    $('#popup-key input').change(function () {
+    $('#popup-scancode').find('.save').click(function() {
+        $('#popup-scancode').data('key').scancode = $('#popup-scancode').find('input').val();
+        $('#popup-scancode').modal('hide');
+    });
+
+    $('#popup-key').find('input').change(function () {
         var clone = $('#popup-key').data('clone');
         clone.labels = [];
 

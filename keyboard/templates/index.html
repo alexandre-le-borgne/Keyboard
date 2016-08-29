@@ -162,8 +162,18 @@
             <br>
         </div>
         <div id="keys" style="display: none">
-            <h1>{% trans "Printing of keys" %}</h1>
-            <h3>{% trans "Click the buttons to edit the letters that will be printed." %}</h3>
+            <div class="container">
+                <h1>{% trans "Printing of keys" %}</h1>
+                <h3>{% trans "Click the buttons to edit the letters that will be printed." %}</h3>
+            </div>
+            <br>
+            <div class="preset"></div>
+            <div class="preset-ergofip-empty">
+                <h2>
+                    {% trans "Choose an Ergofip preset first" %}
+                </h2>
+                <button type="button" class="btn btn-success">{% trans "Take me to Ergofip Pressets" %} >></button>
+            </div>
         </div>
         <div id="brands" style="display: none" class="col-md-10 col-md-offset-1">
             <h1>{% trans "Brands" %}</h1>
@@ -369,7 +379,7 @@
                     <div class="preset" data-index="1" id="layers-one-preset-ergofip-1"></div>
                 </div>
             </div>
-            <div id="preset-ergofip-empty">
+            <div class="preset-ergofip-empty">
                 <h2>
                     {% trans "Choose an Ergofip preset first" %}
                 </h2>
@@ -389,6 +399,38 @@
                     <label for="modal_delay_input"
                            class="control-label col-md-3 text-nowrap">{% trans "Delay in ms :" %}</label>
                     <input id="modal_delay_input" type="number" min="0">ms
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+                    <button type="button" class="btn btn-primary save">{% trans "Apply changes" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="popup-scancode">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{% trans "Close" %}"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{% trans "Edit the key" %}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 text-nowrap">{% trans "Scancode :" %}</label>
+                            <div class="col-md-3">
+                                <div class="form-inline">
+                                    <div class="form-group" style="margin-right: 0;">
+                                        <div class="input-group">
+                                            <input title="" class="form-control" type="text"
+                                                   style="max-width: 80px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
