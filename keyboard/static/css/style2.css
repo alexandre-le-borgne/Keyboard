@@ -60,7 +60,7 @@
     border: 1px dotted black;
 }
 
-#layers-two, #colors, #keys {
+#layers-two, #colors, #macros, #keys {
     background-color: #FFC;
     padding: 10px;
     text-align: center;
@@ -105,27 +105,27 @@ h1 {
     background-color: #337AB7;
 }
 
-#keys .macro {
+#macros .macro {
     margin-top: 10px;
     display: flex;
     border: 1px solid #aaa;
 }
 
-#keys .macro.sortable-hover {
+#macros .macro.sortable-hover {
     border: 2px dotted #000;
 }
 
-#keys .macro .macro-key {
+#macros .macro .macro-key {
     border-right: 1px solid #aaa;
     padding: 5px;
 }
 
-#keys .macro .keys {
+#macros .macro .keys {
     padding: 5px;
     width: 100%;
 }
 
-#keys #specials {
+#macros #specials {
     display: inline-block;
 }
 

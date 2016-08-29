@@ -111,7 +111,7 @@ var loadSelectableKeys = function (ergofip) {
                 $(this).removeClass('drop-accept');
             }
         }).draggable({
-            connectToSortable: "#keys .macro .keys",
+            connectToSortable: "#macros .macro .keys",
             helper: "clone",
             disabled: true,
             opacity: 0.9,
@@ -152,7 +152,7 @@ var addSpecialKeys = function (char, scope, connected) {
         cursor: 'move',
     };
     if (typeof connected == 'undefined' || connected) {
-        settings.connectToSortable = "#keys .macro .keys";
+        settings.connectToSortable = "#macros .macro .keys";
     }
     if (typeof scope !== 'undefined' && scope)
         settings.scope = scope;
@@ -201,7 +201,7 @@ var addMacro = function () {
             }).addClass('btn').addClass('btn-danger')
         ).addClass('macro-delete')
     ).addClass('macro');
-    $('#keys').find('#macros').append(
+    $('#macros').find('#macros-container').append(
         macroContainer
     );
 };
@@ -273,8 +273,8 @@ $(function () {
                 $("#preset-ergofip").show();
             }
 
-            if (ui.newPanel.attr('id') == 'layers-one') {
-                $("#preset-ergofip-container .presets .key").off('click').click(function () {
+            if (ui.newPanel.attr('id') == 'keys') {
+                $("#preset-ergofip-container").find(".presets .key").off('click').click(function () {
                     loadPopupKey($(this).data('key'));
                 })
             }
@@ -283,17 +283,17 @@ $(function () {
             }
 
             if (ui.newPanel.attr('id') == 'colors') {
-                $("#preset-ergofip-container .presets").selectable('option', 'disabled', false);
+                $("#preset-ergofip-container").find(".presets").selectable('option', 'disabled', false);
             }
             else {
-                $("#preset-ergofip-container .presets").selectable('option', 'disabled', true).find('.key-border').removeClass('ui-selected');
+                $("#preset-ergofip-container").find(".presets").selectable('option', 'disabled', true).find('.key-border').removeClass('ui-selected');
             }
 
-            if (ui.newPanel.attr('id') == 'keys') {
+            if (ui.newPanel.attr('id') == 'macros') {
                 $('#preset-ergofip').find(".key-border").draggable('option', 'disabled', false);
             }
 
-            if (ui.oldPanel.attr('id') == 'keys') {
+            if (ui.oldPanel.attr('id') == 'macros') {
                 $('#preset-ergofip').find(".key-border").draggable('option', 'disabled', true);
             }
 
@@ -316,7 +316,7 @@ $(function () {
     colorKey.find('.key');
     $('#colors #key').append(colorKey);
 
-    $('#keys #specials').append(addSpecialKeys(gettext('Delay') + ' 10ms', 'macro').addClass('delay'));
+    $('#macros #specials').append(addSpecialKeys(gettext('Delay') + ' 10ms', 'macro').addClass('delay'));
 
     addMacro();
 
@@ -332,7 +332,7 @@ $(function () {
     // EVENTS
     // ------------------------------------------------------------------------------
 
-    $("#keys #macros .keys").on('click', ' .delay .key', function () {
+    $("#macros #macros-container .keys").on('click', ' .delay .key', function () {
         loadPopupDelay($(this));
     });
 
@@ -442,7 +442,7 @@ $(function () {
                 $(this).text(($(this).parent().index() + 1) + ' >>');
             });
             generateSpecialKeys();
-            //if ($('nav li.active a').attr('href') == '#keys') {
+            //if ($('nav li.active a').attr('href') == '#macros') {
             //    preset.find(".key-border").draggable('option', 'disabled', false);
             //}
             $('#preset-ergofip').find('#preset-ergofip-container').tabs("refresh");
@@ -497,7 +497,7 @@ $(function () {
         });
     });
 
-    $('#keys #keys-add-macro').click(function () {
+    $('#macros #macros-add-macro').click(function () {
         addMacro();
     });
 

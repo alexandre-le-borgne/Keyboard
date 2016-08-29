@@ -41,6 +41,7 @@
             <li><a href="#layers-one">{% trans "Layers I" %}</a></li>
             <li><a href="#layers-two">{% trans "Layers II" %}</a></li>
             <li class="hide"><a href="#colors">{% trans "Colors" %}</a></li>
+            <li><a href="#macros">{% trans "Macros" %}</a></li>
             <li><a href="#keys">{% trans "Keys" %}</a></li>
             <li><a href="#brands">{% trans "Brands" %}</a></li>
             <li><a href="#ergonomics">{% trans "Ergonomics" %}</a></li>
@@ -133,7 +134,7 @@
                 <div id="wronginputDIV" style="display: none;">{% trans "Wrong Input" %}</div>
                 <br>
                 <div id="html5DIV">
-                    <h3>{% trans "...or use HTML5:" %}</h3>
+                    <h3>{% trans "...or use HTML5 :" %}</h3>
                     <input title="" type="color" id="html5colorpicker" class="form-control" onchange="clickColor(0, -1,
                      -1, 5)"
                            value="#f0f000">
@@ -150,15 +151,19 @@
                 <button type="button" id="colors-all" class="btn btn-success">{% trans "Apply to all keys !" %}</button>
             </div>
         </div>
-        <div id="keys" style="display: none">
-            <h1>{% trans "Keys" %}</h1>
+        <div id="macros" style="display: none">
+            <h1>{% trans "Macros" %}</h1>
             <h3>{% trans "Add delay between keys in your macro" %}</h3>
             <div id="specials"></div>
             <br>
-            <div id="macros"></div>
+            <div id="macros-container"></div>
             <br>
-            <button id="keys-add-macro" class="btn btn-success">{% trans "Add new macro !" %}</button>
+            <button id="macros-add-macro" class="btn btn-success">{% trans "Add new macro !" %}</button>
             <br>
+        </div>
+        <div id="keys" style="display: none">
+            <h1>{% trans "Printing of keys" %}</h1>
+            <h3>{% trans "Click the buttons to edit the letters that will be printed." %}</h3>
         </div>
         <div id="brands" style="display: none" class="col-md-10 col-md-offset-1">
             <h1>{% trans "Brands" %}</h1>
@@ -172,11 +177,11 @@
                 <div class="media-body">
                     <span>{% trans "Cherry MX Brown Switches" %}</span>
                     <ul>
-                        <li>{% trans "Type:" %} {% trans "Tactile Switch" %}</li>
-                        <li>{% trans "Tactile:" %} {% trans "Yes" %}</li>
-                        <li>{% trans "Clicky:" %} {% trans "No" %}</li>
-                        <li>{% trans "Actuation Force:" %} {% trans "55g (65G peak force)" %}</li>
-                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                        <li>{% trans "Type :" %} {% trans "Tactile Switch" %}</li>
+                        <li>{% trans "Tactile :" %} {% trans "Yes" %}</li>
+                        <li>{% trans "Clicky :" %} {% trans "No" %}</li>
+                        <li>{% trans "Actuation Force :" %} {% trans "55g (65G peak force)" %}</li>
+                        <li>{% trans "Key Travel :" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
                     </ul>
                     <p>
                         {% blocktrans %}
@@ -198,11 +203,11 @@
                 <div class="media-body">
                     <span>Cherry MX Red Switches</span>
                     <ul>
-                        <li>{% trans "Type:" %} {% trans "Linear" %}</li>
-                        <li>{% trans "Tactile:" %} {% trans "No" %}</li>
-                        <li>{% trans "Clicky:" %} {% trans "No" %}</li>
-                        <li>{% trans "Actuation Force:" %} {% trans "45g" %}</li>
-                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                        <li>{% trans "Type :" %} {% trans "Linear" %}</li>
+                        <li>{% trans "Tactile :" %} {% trans "No" %}</li>
+                        <li>{% trans "Clicky :" %} {% trans "No" %}</li>
+                        <li>{% trans "Actuation Force :" %} {% trans "45g" %}</li>
+                        <li>{% trans "Key Travel :" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
                     </ul>
                     <p>
                         {% blocktrans %}
@@ -234,11 +239,11 @@
                 <div class="media-body">
                     <span>Cherry MX Black Switches</span>
                     <ul>
-                        <li>{% trans "Type:" %} {% trans "Linear Switch" %}</li>
-                        <li>{% trans "Tactile:" %} {% trans "No" %}</li>
-                        <li>{% trans "Clicky:" %} {% trans "No" %}</li>
-                        <li>{% trans "Actuation Force:" %} {% trans "60g (40g-80g overall)" %}</li>
-                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                        <li>{% trans "Type :" %} {% trans "Linear Switch" %}</li>
+                        <li>{% trans "Tactile :" %} {% trans "No" %}</li>
+                        <li>{% trans "Clicky :" %} {% trans "No" %}</li>
+                        <li>{% trans "Actuation Force :" %} {% trans "60g (40g-80g overall)" %}</li>
+                        <li>{% trans "Key Travel :" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
                     </ul>
                     <p>
                         {% blocktrans %}
@@ -268,11 +273,11 @@
                 <div class="media-body">
                     <span>Cherry MX Blue Switches</span>
                     <ul>
-                        <li>{% trans "Type:" %} {% trans "Tactile &amp; Clicky Switch" %}</li>
-                        <li>{% trans "Tactile:" %} {% trans "Yes, precise" %}</li>
-                        <li>{% trans "Clicky:" %} {% trans "Yes" %}</li>
-                        <li>{% trans "Actuation Force:" %} {% trans "50g (60g Peak Force)" %}</li>
-                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                        <li>{% trans "Type :" %} {% trans "Tactile &amp; Clicky Switch" %}</li>
+                        <li>{% trans "Tactile :" %} {% trans "Yes, precise" %}</li>
+                        <li>{% trans "Clicky :" %} {% trans "Yes" %}</li>
+                        <li>{% trans "Actuation Force :" %} {% trans "50g (60g Peak Force)" %}</li>
+                        <li>{% trans "Key Travel :" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
                     </ul>
                     <p>
                         {% blocktrans %}
@@ -308,11 +313,11 @@
                 <div class="media-body">
                     <span>Cherry MX Clear Switches</span>
                     <ul>
-                        <li>{% trans "Type:" %} {% trans "Tactile Switch" %}</li>
-                        <li>{% trans "Tactile:" %} {% trans "Yes" %}</li>
-                        <li>{% trans "Clicky:" %} {% trans "No" %}</li>
-                        <li>{% trans "Actuation Force:" %} {% trans "55g (65G peak force)" %}</li>
-                        <li>{% trans "Key Travel:" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
+                        <li>{% trans "Type :" %} {% trans "Tactile Switch" %}</li>
+                        <li>{% trans "Tactile :" %} {% trans "Yes" %}</li>
+                        <li>{% trans "Clicky :" %} {% trans "No" %}</li>
+                        <li>{% trans "Actuation Force :" %} {% trans "55g (65G peak force)" %}</li>
+                        <li>{% trans "Key Travel :" %} {% trans "2mm to actuation, 4mm to bottom" %}</li>
                     </ul>
                     <p>
                         {% blocktrans %}
@@ -382,7 +387,7 @@
                 </div>
                 <div class="modal-body">
                     <label for="modal_delay_input"
-                           class="control-label col-md-3 text-nowrap">{% trans "Delay in ms:" %}</label>
+                           class="control-label col-md-3 text-nowrap">{% trans "Delay in ms :" %}</label>
                     <input id="modal_delay_input" type="number" min="0">ms
                 </div>
                 <div class="modal-footer">
