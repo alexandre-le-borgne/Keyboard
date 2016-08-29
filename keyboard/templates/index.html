@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="{% static "css/style.css" %}">
     <link rel="stylesheet" href="{% static "css/style2.css" %}">
+    <title>{% trans "Ergofip configurator" %}</title>
 </head>
 <body>
-
 <div class="container">
     <form class="pull-right" style="position: relative" name="ui" action="{% url 'set_language' %}" method="post">
         {% csrf_token %}
@@ -29,7 +29,7 @@
         </a>
         <ul class="dropdown-menu">
             {% for language in languages %}
-                <li><a href="#"
+                <li><a href="#" hreflang="{{ language.code }}"
                        onclick="document.ui.language.value='{{ language.code }}'; document.ui.submit();">{{ language.name_local }}</a>
                 </li>
             {% endfor %}
@@ -53,7 +53,7 @@
             </ul>
             <br>
             <div id="presets-classical">
-                <select>
+                <select title="">
                     <option>{% trans "Choose Keyboard Layout" %}</option>
                     <option>----------------------</option>
                 </select>
@@ -65,7 +65,7 @@
                         class="btn btn-success">{% trans "Choose this one" %}</button>
             </div>
             <div id="presets-ergofip" style="display: none">
-                <select>
+                <select title="">
                     <option>{% trans "Choose Keyboard Layout" %}</option>
                     <option>----------------------</option>
                 </select>
@@ -108,11 +108,11 @@
             <h1>{% trans "Colors" %}</h1>
             <div class="color-div">
                 <div id="hexagon">
-                    <img id="hexagonwheel" style="margin:20px;" src="static/img/colormap.gif" usemap="#colormap"
+                    <img id="hexagonwheel" style="margin:20px;" src="{% static 'img/colormap.gif' %}" usemap="#colormap"
                          alt="colormap">
                     <map id="colormap" name="colormap" onmouseout="mouseOutMap()"></map>
                     <div id="selectedhexagon" style="position: relative; width: 21px; height: 21px; display: block;
-            top: -99px; left: 128px; background-image: url('static/img/selectedcolor.gif');">
+                            top: -99px; left: 128px; background-image: url('{% static 'img/selectedcolor.gif' %}');">
                     </div>
                 </div>
             </div>
@@ -134,7 +134,8 @@
                 <br>
                 <div id="html5DIV">
                     <h3>{% trans "...or use HTML5:" %}</h3>
-                    <input type="color" id="html5colorpicker" class="form-control" onchange="clickColor(0, -1, -1, 5)"
+                    <input title="" type="color" id="html5colorpicker" class="form-control" onchange="clickColor(0, -1,
+                     -1, 5)"
                            value="#f0f000">
                 </div>
             </div>
@@ -164,7 +165,8 @@
             <div class="media">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object" src="{% static 'img/brown.gif' %}">
+                        <img class="media-object" src="{% static 'img/brown.gif' %}"
+                             alt="{% trans "Cherry MX Brown Switches" %}">
                     </a>
                 </div>
                 <div class="media-body">
@@ -217,14 +219,16 @@
                 </div>
                 <div class="media-right">
                     <a href="#">
-                        <img class="media-object" src="{% static 'img/red.gif' %}">
+                        <img class="media-object" src="{% static 'img/red.gif' %}"
+                             alt="{% trans "Cherry MX Red Switches" %}">
                     </a>
                 </div>
             </div>
             <div class="media">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object" src="{% static 'img/black.gif' %}">
+                        <img class="media-object" src="{% static 'img/black.gif' %}"
+                             alt="{% trans "Cherry MX Black Switches" %}">
                     </a>
                 </div>
                 <div class="media-body">
@@ -289,14 +293,16 @@
                 </div>
                 <div class="media-right">
                     <a href="#">
-                        <img class="media-object" src="{% static 'img/blue.gif' %}">
+                        <img class="media-object" src="{% static 'img/blue.gif' %}"
+                             alt="{% trans "Cherry MX Blue Switches" %}">
                     </a>
                 </div>
             </div>
             <div class="media">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object" src="{% static 'img/white.gif' %}">
+                        <img class="media-object" src="{% static 'img/white.gif' %}"
+                             alt="{% trans "Cherry MX Clear Switches" %}">
                     </a>
                 </div>
                 <div class="media-body">
@@ -347,7 +353,7 @@
                 </ul>
                 <h3>
                 <span class="label label-info">
-                    {% trans "Layer" %} <span class="badge">1</span></a>
+                    {% trans "Layer" %} <span class="badge">1</span>
                 </span>
                     <button type="button" id="reset-layer"
                             class="btn btn-warning pull-right">{% trans "Reset" %}</button>
@@ -375,8 +381,9 @@
                     <h4 class="modal-title">{% trans "Choose the delay" %}</h4>
                 </div>
                 <div class="modal-body">
-                    <label class="control-label col-md-3 text-nowrap">{% trans "Delay in ms:" %}</label>
-                    <input type="number" min="0">ms
+                    <label for="modal_delay_input"
+                           class="control-label col-md-3 text-nowrap">{% trans "Delay in ms:" %}</label>
+                    <input id="modal_delay_input" type="number" min="0">ms
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
@@ -403,23 +410,26 @@
                                 <div class="form-inline">
                                     <div class="form-group" style="margin-right: 0;">
                                         <div class="input-group">
-                                            <input class="form-control" type="text" style="max-width: 80px">
-                                            <input class="form-control" type="number" min="3" max="16"
-                                                   style="max-width: 50px">
+                                            <input title="" class="form-control" type="text"
+                                                   style="max-width: 80px">
+                                            <input title="" class="form-control" type="number"
+                                                   min="3" max="16" style="max-width: 50px">
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin: 0;">
                                         <div class="input-group">
-                                            <input class="form-control" type="text" style="max-width: 80px">
-                                            <input class="form-control" type="number" min="3" max="16"
-                                                   style="max-width: 50px">
+                                            <input title="" class="form-control" type="text"
+                                                   style="max-width: 80px">
+                                            <input title="" class="form-control" type="number"
+                                                   min="3" max="16" style="max-width: 50px">
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin: 0;">
                                         <div class="input-group">
-                                            <input class="form-control" type="text" style="max-width: 80px">
-                                            <input class="form-control" type="number" min="3" max="16"
-                                                   style="max-width: 50px">
+                                            <input title="" class="form-control" type="text"
+                                                   style="max-width: 80px">
+                                            <input title="" class="form-control" type="number" min="3"
+                                                   max="16" style="max-width: 50px">
                                         </div>
                                     </div>
                                 </div>
@@ -431,22 +441,28 @@
                                 <div class="form-inline">
                                     <div class="form-group" style="margin-right: 0;">
                                         <div class="input-group">
-                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                            <input size="4" class="form-control" type="number" min="3" max="16"
+                                            <input title="" size="6" class="form-control" type="text"
+                                                   style="max-width: 80px">
+                                            <input title="" size="4" class="form-control"
+                                                   type="number" min="3" max="16"
                                                    style="max-width: 50px">
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin: 0;">
                                         <div class="input-group">
-                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                            <input size="4" class="form-control" type="number" min="3" max="16"
+                                            <input title="" size="6" class="form-control" type="text"
+                                                   style="max-width: 80px">
+                                            <input title="" size="4" class="form-control"
+                                                   type="number" min="3" max="16"
                                                    style="max-width: 50px">
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin: 0;">
                                         <div class="input-group">
-                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                            <input size="4" class="form-control" type="number" min="3" max="16"
+                                            <input title="" size="6" class="form-control"
+                                                   type="text" style="max-width: 80px">
+                                            <input title="" size="4" class="form-control"
+                                                   type="number" min="3" max="16"
                                                    style="max-width: 50px">
                                         </div>
                                     </div>
@@ -459,22 +475,27 @@
                                 <div class="form-inline">
                                     <div class="form-group" style="margin-right: 0;">
                                         <div class="input-group">
-                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                            <input size="4" class="form-control" type="number" min="3" max="16"
+                                            <input title="" size="6" class="form-control" type="text"
+                                                   style="max-width: 80px">
+                                            <input title="" size="4" class="form-control"
+                                                   type="number" min="3" max="16"
                                                    style="max-width: 50px">
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin: 0;">
                                         <div class="input-group">
-                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                            <input size="4" class="form-control" type="number" min="3" max="16"
-                                                   style="max-width: 50px">
+                                            <input title="" size="6" class="form-control" type="text"
+                                                   style="max-width: 80px">
+                                            <input title="" size="4" class="form-control"
+                                                   type="number" min="3" max="16" style="max-width: 50px">
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin: 0;">
                                         <div class="input-group">
-                                            <input size="6" class="form-control" type="text" style="max-width: 80px">
-                                            <input size="4" class="form-control" type="number" min="3" max="16"
+                                            <input title="" size="6" class="form-control" type="text"
+                                                   style="max-width: 80px">
+                                            <input title="" size="4" class="form-control"
+                                                   type="number" min="3" max="16"
                                                    style="max-width: 50px">
                                         </div>
                                     </div>
@@ -486,7 +507,8 @@
                             <div class="col-md-9">
                                 <div class="form-inline">
                                     <div class="form-group">
-                                        <input size="10" class="form-control" type="color" value="#000000"
+                                        <input title="" size="10" class="form-control" type="color"
+                                               value="#000000"
                                                style="width: 60px">
                                     </div>
                                 </div>
@@ -497,7 +519,8 @@
                             <div class="col-md-9">
                                 <div class="form-inline">
                                     <div class="form-group">
-                                        <input size="10" class="form-control" type="color" value="#000000"
+                                        <input title="" size="10" class="form-control" type="color"
+                                               value="#000000"
                                                style="width: 60px">
                                     </div>
                                 </div>
@@ -532,21 +555,19 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div>
-
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
-    <script src="{% static "js/util.js" %}"></script>
-    <script src="{% static "js/consts.js" %}"></script>
-    <script src="{% static "js/parser.js" %}"></script>
-    <script src="{% static "js/preset.js" %}"></script>
-    <script src="{% static "js/ready.js" %}"></script>
-    <script src="{% static "js/color.js" %}"></script>
-    <script src="{% static "js/popup.js" %}"></script>
-    <script src="{% static "js/render.js" %}"></script>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+<script src="{% static "js/util.js" %}"></script>
+<script src="{% static "js/consts.js" %}"></script>
+<script src="{% static "js/parser.js" %}"></script>
+<script src="{% static "js/preset.js" %}"></script>
+<script src="{% static "js/ready.js" %}"></script>
+<script src="{% static "js/color.js" %}"></script>
+<script src="{% static "js/popup.js" %}"></script>
+<script src="{% static "js/render.js" %}"></script>
 </body>
 </html>
