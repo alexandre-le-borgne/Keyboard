@@ -342,6 +342,19 @@ $(function () {
     // EVENTS
     // ------------------------------------------------------------------------------
 
+    $('#popup-scancode').on('shown.bs.modal', function () {
+            $(this).find('input').focus();
+    });
+
+    $('#popup-key').on('shown.bs.modal', function () {
+            $(this).find('input:eq(0)').focus();
+    });
+
+    $('#popup-delay').on('shown.bs.modal', function () {
+            $(this).find('input').focus();
+    });
+
+
     $("#macros #macros-container .keys").on('click', ' .delay .key', function () {
         loadPopupDelay($(this));
     });
