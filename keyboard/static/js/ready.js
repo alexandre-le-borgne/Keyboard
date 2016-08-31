@@ -354,7 +354,6 @@ $(function () {
             $(this).find('input').focus();
     });
 
-
     $("#macros #macros-container .keys").on('click', ' .delay .key', function () {
         loadPopupDelay($(this));
     });

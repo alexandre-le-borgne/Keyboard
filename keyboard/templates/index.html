@@ -40,7 +40,7 @@
             <li class="active"><a href="#presets">{% trans "Presets" %}</a></li>
             <li><a href="#layers-one">{% trans "Layers I" %}</a></li>
             <li><a href="#layers-two">{% trans "Layers II" %}</a></li>
-            <li class="hide"><a href="#colors">{% trans "Colors" %}</a></li>
+            <li><a href="#colors">{% trans "Colors" %}</a></li>
             <li><a href="#macros">{% trans "Macros" %}</a></li>
             <li><a href="#keys">{% trans "Keys" %}</a></li>
             <li><a href="#brands">{% trans "Brands" %}</a></li>
@@ -105,7 +105,7 @@
                 </div>
             </div>
         </div>
-        <div id="colors" style="display: none" class="hide">
+        <div id="colors" style="display: none">
             <h1>{% trans "Colors" %}</h1>
             <div class="color-div">
                 <div id="hexagon">
@@ -123,7 +123,7 @@
                 </div>
                 <h3>{% trans "...or enter a Color :" %}</h3>
                 <div id="entercolorDIV" class="input-group">
-                    <input type="text" id="entercolor" class="form-control" placeholder="Colorvalue"
+                    <input type="text" id="entercolor" class="form-control" placeholder="#FFFFFF"
                            onfocus="clearWrongInput();">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" onclick="clickColor(0,-1,-1)">
