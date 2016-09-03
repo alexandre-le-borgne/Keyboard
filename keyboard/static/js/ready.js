@@ -278,6 +278,7 @@ $(function () {
 
             if (ui.newPanel.attr('id') == 'layers-one') {
                 $("#preset-ergofip-container").find(".presets .key").off('click').click(function () {
+                    if($(this).closest('.key-container').hasClass('special')) return;
                     var key = $(this).data('key');
                     $('#popup-scancode').data('key', key).modal('show').find('input').val(key.scancode);
                 });
