@@ -12,8 +12,6 @@ js_info_dict = {
 }
 
 urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^fr$', views.index, {'lang' : 'fr'}),
     url(r'^classicals$', views.classicals),
     url(r'^classical/(?P<name>.*)$', views.classical),
     url(r'^ergofips$', views.ergofips),
@@ -21,4 +19,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^(?P<lang>.*)$', views.index),
 ]

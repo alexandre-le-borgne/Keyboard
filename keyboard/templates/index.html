@@ -29,8 +29,11 @@
         </a>
         <ul class="dropdown-menu">
             {% for language in languages %}
-                <li><a href="#" hreflang="{{ language.code }}"
-                       onclick="document.ui.language.value='{{ language.code }}'; document.ui.submit();">{{ language.name_local }}</a>
+{#                <li><a href="#" hreflang="{{ language.code }}"#}
+{#                       onclick="document.ui.language.value='{{ language.code }}'; document.ui.submit();">{{ language.name_local }}</a>#}
+{#                </li> #}
+                <li>
+                    <a href="/{{ language.code }}" hreflang="{{ language.code }}">{{ language.name_local }}</a>
                 </li>
             {% endfor %}
         </ul>
