@@ -13,6 +13,7 @@ js_info_dict = {
 
 urlpatterns = [
     url(r'^$', views.index),
+    url(r'^fr$', views.index, {'lang' : 'fr'}),
     url(r'^classicals$', views.classicals),
     url(r'^classical/(?P<name>.*)$', views.classical),
     url(r'^ergofips$', views.ergofips),
