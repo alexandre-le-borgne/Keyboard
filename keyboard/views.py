@@ -9,9 +9,10 @@ from keyboard.models.preset import Preset
 
 
 def index(request, lang='en'):
-    user_language = lang
-    translation.activate(user_language)
-    request.session[translation.LANGUAGE_SESSION_KEY] = user_language
+    if lang in {'fr', 'en'}:
+        user_language = lang
+        translation.activate(user_language)
+        request.session[translation.LANGUAGE_SESSION_KEY] = user_language
     return render(request, 'index.html', locals())
 
 
